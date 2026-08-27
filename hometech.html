@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DOBTECH – Công ty Cổ phần Phát triển Công nghệ DOB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0A0F2C;
+      --navy2:  #0D1533;
+      --cyan:   #00D4FF;
+      --cyan2:  #0099BB;
+      --gold:   #FFD166;
+      --white:  #F0F4FF;
+      --slate:  #8892B0;
+      --card:   rgba(255,255,255,0.04);
+      --border: rgba(0,212,255,0.15);
+      --glow:   0 0 32px rgba(0,212,255,0.18);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ─── CANVAS BACKGROUND ─── */
+    #circuit-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.18;
+    }
+
+    /* ─── NAVBAR ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      height: 72px;
+      background: rgba(10,15,44,0.85);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .logo-mark {
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, var(--cyan), var(--cyan2));
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--navy);
+      letter-spacing: -0.5px;
+      box-shadow: var(--glow);
+    }
+    .logo-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--white);
+      letter-spacing: 0.5px;
+    }
+    .logo-text span { color: var(--cyan); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--slate);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--cyan); }
+
+    .nav-cta {
+      padding: 9px 22px;
+      background: transparent;
+      border: 1px solid var(--cyan);
+      border-radius: 8px;
+      color: var(--cyan) !important;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      transition: background 0.2s, box-shadow 0.2s !important;
+    }
+    .nav-cta:hover {
+      background: rgba(0,212,255,0.1) !important;
+      box-shadow: var(--glow) !important;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 5% 80px;
+    }
+
+    .hero-inner {
+      max-width: 760px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 24px;
+    }
+    .eyebrow-dot {
+      width: 6px; height: 6px;
+      background: var(--cyan);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: 0.4; transform: scale(1.5); }
+    }
+
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(42px, 6vw, 80px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      margin-bottom: 28px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(90deg, var(--cyan), #7B8CFF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      color: var(--slate);
+      max-width: 540px;
+      margin-bottom: 48px;
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      padding: 14px 32px;
+      background: var(--cyan);
+      color: var(--navy);
+      border: none;
+      border-radius: 10px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 24px rgba(0,212,255,0.35);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,212,255,0.5);
+    }
+
+    .btn-ghost {
+      padding: 14px 32px;
+      background: transparent;
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 10px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-ghost:hover {
+      border-color: var(--cyan);
+      background: rgba(0,212,255,0.06);
+    }
+
+    /* ─── TICKER STRIP ─── */
+    .ticker {
+      position: relative; z-index: 1;
+      background: rgba(0,212,255,0.06);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+      overflow: hidden;
+    }
+    .ticker-inner {
+      display: flex;
+      gap: 60px;
+      white-space: nowrap;
+      animation: ticker-scroll 30s linear infinite;
+    }
+    @keyframes ticker-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .ticker-item {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--slate);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .ticker-item strong { color: var(--white); }
+    .ticker-item .up   { color: #4ADE80; }
+    .ticker-item .down { color: #F87171; }
+
+    /* ─── SECTION BASE ─── */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 100px 5%;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 16px;
+    }
+
+    .section-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(28px, 3.5vw, 48px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.8px;
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      font-size: 17px;
+      color: var(--slate);
+      max-width: 520px;
+      margin-bottom: 56px;
+    }
+
+    /* ─── STATS ─── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-top: 64px;
+    }
+    .stat-cell {
+      background: var(--navy2);
+      padding: 40px 32px;
+      text-align: center;
+    }
+    .stat-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--cyan);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-size: 14px;
+      color: var(--slate);
+      font-weight: 500;
+    }
+
+    /* ─── SERVICES PREVIEW ─── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .service-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      cursor: default;
+    }
+    .service-card:hover {
+      border-color: var(--cyan);
+      transform: translateY(-4px);
+      box-shadow: var(--glow);
+    }
+    .service-icon {
+      width: 52px; height: 52px;
+      background: rgba(0,212,255,0.1);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px;
+      margin-bottom: 24px;
+    }
+    .service-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .service-card p {
+      font-size: 14px;
+      color: var(--slate);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .service-link {
+      color: var(--cyan);
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap 0.2s;
+    }
+    .service-link:hover { gap: 10px; }
+
+    /* ─── STOCK SNAPSHOT ─── */
+    .stock-section {
+      background: linear-gradient(135deg, rgba(0,212,255,0.06) 0%, rgba(123,140,255,0.06) 100%);
+      border-radius: 24px;
+      padding: 64px;
+      border: 1px solid var(--border);
+    }
+    .stock-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 32px;
+    }
+    .stock-price-block .ticker-code {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--cyan);
+      margin-bottom: 8px;
+    }
+    .stock-price-block .price {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 56px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stock-price-block .change {
+      font-size: 18px;
+      font-weight: 600;
+      color: #4ADE80;
+    }
+    .stock-metrics {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px 40px;
+    }
+    .metric { }
+    .metric-label {
+      font-size: 12px;
+      color: var(--slate);
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .metric-val {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    /* ─── WHY DOBTECH ─── */
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .why-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .why-item {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+    .why-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--cyan);
+      letter-spacing: 1px;
+      padding-top: 3px;
+      min-width: 28px;
+    }
+    .why-content h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .why-content p {
+      font-size: 14px;
+      color: var(--slate);
+      line-height: 1.7;
+    }
+
+    .chip-visual {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .chip-svg { width: 100%; max-width: 340px; }
+
+    /* ─── PARTNERS ─── */
+    .partners {
+      text-align: center;
+      padding-top: 60px;
+    }
+    .partners p {
+      font-size: 13px;
+      color: var(--slate);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 40px;
+    }
+    .partner-logos {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 48px;
+      flex-wrap: wrap;
+    }
+    .partner-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: rgba(136,146,176,0.5);
+      letter-spacing: 1px;
+      transition: color 0.3s;
+    }
+    .partner-logo:hover { color: var(--slate); }
+
+    /* ─── CTA BANNER ─── */
+    .cta-banner {
+      text-align: center;
+      padding: 80px 5%;
+      background: linear-gradient(180deg, transparent, rgba(0,212,255,0.04));
+    }
+    .cta-banner h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(28px, 4vw, 52px);
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 20px;
+    }
+    .cta-banner p {
+      font-size: 17px;
+      color: var(--slate);
+      margin-bottom: 40px;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      position: relative; z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 60px 5% 40px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+    .footer-brand p {
+      font-size: 14px;
+      color: var(--slate);
+      margin-top: 16px;
+      max-width: 260px;
+      line-height: 1.7;
+    }
+    .footer-col h5 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col a {
+      color: var(--slate);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--cyan); }
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: var(--slate);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-bottom a { color: var(--slate); text-decoration: none; }
+    .footer-bottom a:hover { color: var(--cyan); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .why-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .stock-section { padding: 36px 24px; }
+      .stock-metrics { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ─── SCROLL REVEAL ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Circuit canvas -->
+<canvas id="circuit-canvas"></canvas>
+
+<!-- NAV -->
+<nav>
+  <a href="hometech.html" class="logo">
+    <div class="logo-mark">DOB</div>
+    <span class="logo-text">DOB<span>TECH</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="aboutt.html">Về chúng tôi</a></li>
+    <li><a href="servicest.html">Sản phẩm & Dịch vụ</a></li>
+    <li><a href="shareholdert.html">Quan hệ cổ đông</a></li>
+    <li><a href="shareholdert.html" class="nav-cta">DOT ↑</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow"><span class="eyebrow-dot"></span>Công nghệ thế hệ tiếp theo</div>
+    <h1>Kiến tạo tương lai<br/>với <em>Fintech · AI<br/>& Bán dẫn</em></h1>
+    <p class="hero-sub">
+      DOBTECH phát triển hạ tầng công nghệ tài chính, giải pháp AI và chip bán dẫn tiên tiến — 
+      thúc đẩy nền kinh tế số Việt Nam vươn ra thị trường toàn cầu.
+    </p>
+    <div class="hero-actions">
+      <a href="servicest.html" class="btn-primary">Khám phá giải pháp</a>
+      <a href="aboutt.html" class="btn-ghost">Về DOBTECH →</a>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner" id="ticker-inner"></div>
+</div>
+
+<!-- STATS -->
+<section>
+  <div class="reveal">
+    <div class="section-label">Thành tựu</div>
+    <div class="section-heading">Những con số<br/>nói lên tất cả</div>
+  </div>
+  <div class="stats-grid reveal">
+    <div class="stat-cell">
+      <div class="stat-num" data-target="2018">2018</div>
+      <div class="stat-label">Năm thành lập</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">500<sup style="font-size:24px">+</sup></div>
+      <div class="stat-label">Kỹ sư & chuyên gia</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">42</div>
+      <div class="stat-label">Đối tác chiến lược</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">15</div>
+      <div class="stat-label">Quốc gia triển khai</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES PREVIEW -->
+<section style="padding-top: 0;">
+  <div class="reveal" style="margin-bottom: 48px;">
+    <div class="section-label">Lĩnh vực cốt lõi</div>
+    <div class="section-heading">Ba mũi nhọn<br/>công nghệ</div>
+    <p class="section-sub">Từ hạ tầng thanh toán đến silicon tùy chỉnh và trí tuệ nhân tạo — chúng tôi xây dựng nền tảng cho nền kinh tế số.</p>
+  </div>
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <div class="service-icon">💳</div>
+      <h3>Công nghệ Tài chính</h3>
+      <p>Hệ thống thanh toán tức thì, core banking thế hệ mới, ví điện tử và hạ tầng Open Banking đạt chuẩn PCI-DSS và Basel III.</p>
+      <a href="servicest.html" class="service-link">Tìm hiểu thêm →</a>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🔬</div>
+      <h3>Chip & Bán dẫn</h3>
+      <p>Thiết kế SoC tùy chỉnh, RISC-V processors, chip bảo mật thanh toán và module IoT hiệu suất cao cho ứng dụng công nghiệp.</p>
+      <a href="servicest.html" class="service-link">Tìm hiểu thêm →</a>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🤖</div>
+      <h3>Trí tuệ Nhân tạo</h3>
+      <p>Mô hình AI phát hiện gian lận tài chính, phân tích tín dụng, xử lý ngôn ngữ tự nhiên tiếng Việt và thị giác máy tính edge.</p>
+      <a href="servicest.html" class="service-link">Tìm hiểu thêm →</a>
+    </div>
+  </div>
+</section>
+
+<!-- STOCK SNAPSHOT -->
+<section style="padding-top: 0;">
+  <div class="stock-section reveal">
+    <div class="stock-row">
+      <div class="stock-price-block">
+        <div class="ticker-code">HOSE: DOT</div>
+        <div class="price">48.200<span style="font-size:28px;color:var(--slate)"> đ</span></div>
+        <div class="change">▲ +1.400 (+2,99%)</div>
+        <div style="font-size:13px;color:var(--slate);margin-top:8px;">Cập nhật: 09/06/2026 — 15:00 ICT</div>
+      </div>
+      <div class="stock-metrics">
+        <div class="metric">
+          <div class="metric-label">Vốn hóa thị trường</div>
+          <div class="metric-val">4.820 tỷ đ</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Khối lượng khớp lệnh</div>
+          <div class="metric-val">2.340.000</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">P/E Ratio</div>
+          <div class="metric-val">18,4×</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">EPS (TTM)</div>
+          <div class="metric-val">2.618 đ</div>
+        </div>
+      </div>
+      <a href="shareholdert.html" class="btn-primary" style="align-self:flex-end;">Quan hệ cổ đông</a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY DOBTECH -->
+<section>
+  <div class="why-grid">
+    <div>
+      <div class="section-label reveal">Vì sao chọn DOBTECH</div>
+      <div class="section-heading reveal">Công nghệ<br/>được tạo ra ở đây</div>
+      <ul class="why-list reveal">
+        <li class="why-item">
+          <span class="why-num">01</span>
+          <div class="why-content">
+            <h4>R&D sâu, không chỉ tích hợp</h4>
+            <p>Hơn 60% doanh thu tái đầu tư vào nghiên cứu phát triển chip và mô hình AI nội địa.</p>
+          </div>
+        </li>
+        <li class="why-item">
+          <span class="why-num">02</span>
+          <div class="why-content">
+            <h4>Tuân thủ & bảo mật chuẩn quốc tế</h4>
+            <p>Đạt chứng nhận ISO 27001, PCI-DSS Level 1, SOC 2 Type II cho toàn bộ nền tảng tài chính.</p>
+          </div>
+        </li>
+        <li class="why-item">
+          <span class="why-num">03</span>
+          <div class="why-content">
+            <h4>Hệ sinh thái mở & có thể mở rộng</h4>
+            <p>API-first, kiến trúc microservices và SDK đa nền tảng cho phép tích hợp trong vòng 72 giờ.</p>
+          </div>
+        </li>
+        <li class="why-item">
+          <span class="why-num">04</span>
+          <div class="why-content">
+            <h4>Đội ngũ người Việt, tầm nhìn toàn cầu</h4>
+            <p>Kỹ sư được đào tạo tại MIT, Stanford, KAIST — xây dựng sản phẩm hiểu thị trường Đông Nam Á.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="chip-visual reveal">
+      <!-- Inline SVG chip illustration -->
+      <svg class="chip-svg" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- outer glow -->
+        <rect x="60" y="60" width="200" height="200" rx="18" fill="rgba(0,212,255,0.06)" stroke="rgba(0,212,255,0.5)" stroke-width="1.5"/>
+        <!-- inner chip body -->
+        <rect x="90" y="90" width="140" height="140" rx="12" fill="rgba(0,212,255,0.1)" stroke="rgba(0,212,255,0.7)" stroke-width="1.5"/>
+        <!-- chip label -->
+        <text x="160" y="154" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="16" font-weight="700" fill="#00D4FF">DOB</text>
+        <text x="160" y="174" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="10" fill="rgba(0,212,255,0.6)">SoC-X1</text>
+        <!-- pins top -->
+        <line x1="110" y1="60" x2="110" y2="90" stroke="rgba(0,212,255,0.6)" stroke-width="2"/>
+        <line x1="130" y1="60" x2="130" y2="90" stroke="rgba(0,212,255,0.6)" stroke-width="2"/>
+        <line x1="150" y1="60" x2="150" y2="90" stroke="rgba(0,212,255,0.6)" stroke-width="2"/>
+        <line x1="170" y1="60" x2="170" y2="90" stroke="rgba(0,212,255,0.6)" stroke-width="2"/>
+        <line x1="190" y1="60" x2="190" y2="90" stroke="rgba(0,212,255,0.6)" stroke-width="2"/>
+        <line x1="210" y1="60" x2="210" y2="90" stroke="rgba(0,212,255,0.6)" stroke-width="2"/>
+        <!-- pins bottom -->
+        <line x1="110" y1="230" x2="110" y2="260" stroke="rgba(0,212,255,0.6)" stroke-width="2"/>
+        <line x1="130" y1="230" x2="130" y2="260" stroke="rgba(0,212,255,0.6)" stroke-width="2"/>
+        <line x1="150" y1="230" x2="150" y2="260" stroke="rgba(0,212,255,0.6)" stroke-width="2"/>
+        <line x1="170" y1="230" x2="170" y2="260" stroke="rgba(0,212,255,0.6)" stroke-width="2"/>
+        <line x1="190" y1="230" x2="190" y2="260" stroke="rgba(0,212,255,0.6)" stroke-width="2"/>
+        <line x1="210" y1="230" x2="210" y2="260" stroke="rgba(0,212,255,0.6)" stroke-width="2"/>
+        <!-- pins left -->
+        <line x1="60" y1="110" x2="90" y2="110" stroke="rgba(0,212,255,0.6)" stroke-width="2"/>
+        <line x1="60" y1="130" x2="90" y2="130" stroke="rgba(0,212,255,0.6)" stroke-width="2"/>
+        <line x1="60" y1="150" x2="90" y2="150" stroke="rgba(0,212,255,0.6)" stroke-width="2"/>
+        <line x1="60" y1="170" x2="90" y2="170" stroke="rgba(0,212,255,0.6)" stroke-width="2"/>
+        <line x1="60" y1="190" x2="90" y2="190" stroke="rgba(0,212,255,0.6)" stroke-width="2"/>
+        <line x1="60" y1="210" x2="90" y2="210" stroke="rgba(0,212,255,0.6)" stroke-width="2"/>
+        <!-- pins right -->
+        <line x1="230" y1="110" x2="260" y2="110" stroke="rgba(0,212,255,0.6)" stroke-width="2"/>
+        <line x1="230" y1="130" x2="260" y2="130" stroke="rgba(0,212,255,0.6)" stroke-width="2"/>
+        <line x1="230" y1="150" x2="260" y2="150" stroke="rgba(0,212,255,0.6)" stroke-width="2"/>
+        <line x1="230" y1="170" x2="260" y2="170" stroke="rgba(0,212,255,0.6)" stroke-width="2"/>
+        <line x1="230" y1="190" x2="260" y2="190" stroke="rgba(0,212,255,0.6)" stroke-width="2"/>
+        <line x1="230" y1="210" x2="260" y2="210" stroke="rgba(0,212,255,0.6)" stroke-width="2"/>
+        <!-- inner circuit lines -->
+        <path d="M110 120 L140 120 L140 140 L180 140 L180 160 L200 160" stroke="rgba(0,212,255,0.35)" stroke-width="1" fill="none"/>
+        <path d="M110 200 L130 200 L130 180 L160 180" stroke="rgba(0,212,255,0.35)" stroke-width="1" fill="none"/>
+        <path d="M200 110 L200 130 L185 130" stroke="rgba(0,212,255,0.35)" stroke-width="1" fill="none"/>
+        <!-- corner marks -->
+        <rect x="94" y="94" width="10" height="10" rx="2" fill="rgba(0,212,255,0.3)"/>
+        <rect x="216" y="94" width="10" height="10" rx="2" fill="rgba(0,212,255,0.3)"/>
+        <rect x="94" y="216" width="10" height="10" rx="2" fill="rgba(0,212,255,0.3)"/>
+        <rect x="216" y="216" width="10" height="10" rx="2" fill="rgba(0,212,255,0.3)"/>
+        <!-- scan line animation -->
+        <rect x="90" y="90" width="140" height="4" fill="rgba(0,212,255,0.15)">
+          <animateTransform attributeName="transform" type="translate" values="0,0;0,136;0,0" dur="3s" repeatCount="indefinite"/>
+        </rect>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<section class="partners" style="padding-top: 0;">
+  <p>Đối tác & Khách hàng tin tưởng</p>
+  <div class="partner-logos">
+    <span class="partner-logo">VIETCOMBANK</span>
+    <span class="partner-logo">VNPAY</span>
+    <span class="partner-logo">MOMO</span>
+    <span class="partner-logo">FPT</span>
+    <span class="partner-logo">SAMSUNG SDS</span>
+    <span class="partner-logo">TECHCOMBANK</span>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<div class="cta-banner reveal">
+  <h2>Sẵn sàng xây dựng<br/>cùng DOBTECH?</h2>
+  <p>Đội ngũ kỹ thuật của chúng tôi luôn sẵn sàng tư vấn giải pháp phù hợp với doanh nghiệp bạn.</p>
+  <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+    <a href="mailto:contact@dobtech.vn" class="btn-primary">Liên hệ ngay</a>
+    <a href="servicest.html" class="btn-ghost">Xem sản phẩm</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="hometech.html" class="logo">
+        <div class="logo-mark">DOB</div>
+        <span class="logo-text">DOB<span>TECH</span></span>
+      </a>
+      <p>Công ty Cổ phần Phát triển Công nghệ DOB — kiến tạo hạ tầng số cho Việt Nam và Đông Nam Á.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Công ty</h5>
+      <ul>
+        <li><a href="aboutt.html">Về chúng tôi</a></li>
+        <li><a href="aboutt.html#team">Ban lãnh đạo</a></li>
+        <li><a href="aboutt.html#mission">Tầm nhìn & Sứ mệnh</a></li>
+        <li><a href="#">Tuyển dụng</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Giải pháp</h5>
+      <ul>
+        <li><a href="servicest.html#fintech">Fintech</a></li>
+        <li><a href="servicest.html#chip">Chip & Bán dẫn</a></li>
+        <li><a href="servicest.html#ai">Trí tuệ Nhân tạo</a></li>
+        <li><a href="servicest.html#platform">Nền tảng SaaS</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Nhà đầu tư</h5>
+      <ul>
+        <li><a href="shareholdert.html">Quan hệ cổ đông</a></li>
+        <li><a href="shareholdert.html#reports">Báo cáo tài chính</a></li>
+        <li><a href="shareholdert.html#governance">Quản trị công ty</a></li>
+        <li><a href="shareholdert.html#contact">Liên hệ IR</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 DOBTECH. Mã cổ phiếu: <strong style="color:var(--cyan)">DOT</strong> — HOSE. Mọi quyền được bảo lưu.</span>
+    <span>
+      <a href="#">Chính sách bảo mật</a> &nbsp;·&nbsp;
+      <a href="#">Điều khoản sử dụng</a> &nbsp;·&nbsp;
+      <a href="#">Công bố thông tin</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+// ── Circuit canvas background
+const canvas = document.getElementById('circuit-canvas');
+const ctx = canvas.getContext('2d');
+let nodes = [];
+
+function resize() {
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+  initNodes();
+}
+
+function initNodes() {
+  nodes = [];
+  const cols = Math.floor(canvas.width  / 80);
+  const rows = Math.floor(canvas.height / 80);
+  for (let r = 0; r <= rows; r++) {
+    for (let c = 0; c <= cols; c++) {
+      if (Math.random() > 0.55) {
+        nodes.push({
+          x: c * 80 + (Math.random() - 0.5) * 20,
+          y: r * 80 + (Math.random() - 0.5) * 20,
+          pulse: Math.random() * Math.PI * 2
+        });
+      }
+    }
+  }
+}
+
+function drawCircuit(t) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.strokeStyle = 'rgba(0,212,255,0.5)';
+  ctx.lineWidth   = 0.8;
+  // draw lines between nearby nodes
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      const dx = nodes[j].x - nodes[i].x;
+      const dy = nodes[j].y - nodes[i].y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < 130) {
+        ctx.beginPath();
+        // right-angle routing
+        ctx.moveTo(nodes[i].x, nodes[i].y);
+        if (Math.abs(dx) > Math.abs(dy)) {
+          ctx.lineTo(nodes[i].x + dx / 2, nodes[i].y);
+          ctx.lineTo(nodes[i].x + dx / 2, nodes[j].y);
+        } else {
+          ctx.lineTo(nodes[i].x, nodes[i].y + dy / 2);
+          ctx.lineTo(nodes[j].x, nodes[i].y + dy / 2);
+        }
+        ctx.lineTo(nodes[j].x, nodes[j].y);
+        ctx.stroke();
+      }
+    }
+  }
+  // draw nodes
+  nodes.forEach(n => {
+    const a = 0.4 + 0.4 * Math.sin(t * 0.001 + n.pulse);
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, 2.5, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(0,212,255,${a})`;
+    ctx.fill();
+  });
+}
+
+let animT = 0;
+function animate() {
+  animT++;
+  drawCircuit(animT);
+  requestAnimationFrame(animate);
+}
+
+window.addEventListener('resize', resize);
+resize();
+animate();
+
+// ── Ticker
+const tickerItems = [
+  { sym:'DOT',  price:'48.200', chg:'+2,99%', up:true },
+  { sym:'VN-Index', price:'1.287,45', chg:'+0,54%', up:true },
+  { sym:'HNX',  price:'228,34', chg:'-0,12%', up:false },
+  { sym:'UPCOM',price:'96,71',  chg:'+0,23%', up:true },
+  { sym:'VCB',  price:'87.500', chg:'+0,46%', up:true },
+  { sym:'FPT',  price:'134.200',chg:'+1,21%', up:true },
+  { sym:'MBB',  price:'24.350', chg:'-0,61%', up:false },
+];
+
+function buildTicker() {
+  const inner = document.getElementById('ticker-inner');
+  const doubled = [...tickerItems, ...tickerItems];
+  inner.innerHTML = doubled.map(i => `
+    <span class="ticker-item">
+      <strong>${i.sym}</strong>
+      ${i.price} đ
+      <span class="${i.up ? 'up' : 'down'}">${i.chg}</span>
+    </span>
+  `).join('');
+}
+buildTicker();
+
+// ── Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => io.observe(el));
+</script>
+</body>
+</html>

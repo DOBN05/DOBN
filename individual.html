@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Khách Hàng Cá Nhân — DOBN Securities Corporation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy: #0a1628;
+      --navy-mid: #122040;
+      --navy-light: #1a2f50;
+      --gold: #c9a84c;
+      --gold-light: #e2c47a;
+      --gold-dim: rgba(201,168,76,0.15);
+      --cream: #f5f0e8;
+      --white: #ffffff;
+      --gray: #8a8f9a;
+      --light-bg: #f8f6f1;
+      --green: #22c55e;
+      --red: #ef4444;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--white); overflow-x: hidden; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 60px; height: 72px;
+      background: rgba(10,22,40,0.95); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,168,76,0.2); transition: background 0.3s;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-box {
+      width: 40px; height: 40px; background: var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif; font-weight: 900; font-size: 18px; color: var(--navy);
+      clip-path: polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+    }
+    .logo-text { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--white); letter-spacing: 0.04em; }
+    .logo-text span { color: var(--gold); }
+    .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+    .nav-links a { text-decoration: none; color: rgba(255,255,255,0.75); font-size: 14px; font-weight: 500; letter-spacing: 0.03em; position: relative; transition: color 0.25s; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 1px; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold-light); }
+    .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+    .nav-cta { background: var(--gold); color: var(--navy) !important; padding: 8px 22px; border-radius: 2px; font-weight: 600 !important; }
+    .nav-cta:hover { background: var(--gold-light) !important; }
+    .nav-cta::after { display: none !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      padding: 160px 60px 100px; position: relative; overflow: hidden;
+      background: linear-gradient(135deg, #060e1c 0%, #0f1e3a 50%, #122040 100%);
+    }
+    .page-hero-grid {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-glow-left {
+      position: absolute; bottom: -200px; left: -100px; width: 500px; height: 500px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%);
+    }
+    .hero-glow-right {
+      position: absolute; top: 50px; right: -100px; width: 400px; height: 400px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(34,197,94,0.05) 0%, transparent 70%);
+    }
+    .page-hero-inner {
+      position: relative; z-index: 2;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .breadcrumb { display: flex; align-items: center; gap: 10px; font-size: 13px; color: rgba(255,255,255,0.4); margin-bottom: 24px; }
+    .breadcrumb a { color: var(--gold); text-decoration: none; }
+    .page-label { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+    .page-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(36px, 4.5vw, 60px); font-weight: 700; line-height: 1.1; margin-bottom: 24px; }
+    .page-hero h1 em { font-style: normal; color: var(--gold); }
+    .page-hero p { font-size: 17px; line-height: 1.7; color: rgba(255,255,255,0.6); margin-bottom: 36px; }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 10px; background: var(--gold); color: var(--navy); padding: 14px 28px; border-radius: 2px; font-weight: 600; font-size: 15px; text-decoration: none; transition: background 0.2s, transform 0.2s; }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .btn-outline { display: inline-flex; align-items: center; gap: 10px; border: 1px solid rgba(201,168,76,0.5); color: var(--gold-light); padding: 14px 28px; border-radius: 2px; font-weight: 500; font-size: 15px; text-decoration: none; transition: 0.2s; }
+    .btn-outline:hover { border-color: var(--gold); background: var(--gold-dim); }
+
+    /* Mock Trading Panel */
+    .trade-panel {
+      background: rgba(18,32,64,0.8); border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 8px; padding: 28px; backdrop-filter: blur(10px);
+    }
+    .trade-panel-header {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
+      padding-bottom: 16px; border-bottom: 1px solid rgba(201,168,76,0.15);
+    }
+    .trade-panel-header h3 { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; color: var(--gold); }
+    .live-dot {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 11px; font-weight: 600; color: var(--green); letter-spacing: 0.08em;
+    }
+    .live-dot::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+    .stock-list { display: flex; flex-direction: column; gap: 2px; margin-bottom: 20px; }
+    .stock-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 14px; background: rgba(255,255,255,0.03);
+      border-radius: 3px; cursor: pointer; transition: background 0.2s;
+    }
+    .stock-row:hover { background: rgba(201,168,76,0.08); }
+    .stock-row.selected { background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.2); }
+    .stock-left { display: flex; gap: 12px; align-items: center; }
+    .stock-sym-tag { font-weight: 700; font-size: 14px; color: var(--white); letter-spacing: 0.05em; }
+    .stock-name-sm { font-size: 11px; color: rgba(255,255,255,0.4); }
+    .stock-price { font-weight: 600; font-size: 14px; color: var(--white); }
+    .stock-chg { font-size: 12px; font-weight: 600; }
+    .up { color: var(--green); } .dn { color: var(--red); }
+
+    .trade-form { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+    .tf-group label { font-size: 11px; color: rgba(255,255,255,0.4); margin-bottom: 6px; display: block; letter-spacing: 0.06em; }
+    .tf-group input, .tf-group select {
+      width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 3px; padding: 10px 12px; color: var(--white); font-family: 'DM Sans', sans-serif;
+      font-size: 14px; outline: none; transition: border-color 0.2s;
+    }
+    .tf-group input:focus, .tf-group select:focus { border-color: var(--gold); }
+    .tf-group select option { background: var(--navy-mid); }
+    .trade-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .btn-buy { background: var(--green); color: #000; padding: 12px; border-radius: 3px; font-weight: 700; font-size: 14px; border: none; cursor: pointer; transition: opacity 0.2s; }
+    .btn-buy:hover { opacity: 0.85; }
+    .btn-sell { background: var(--red); color: #fff; padding: 12px; border-radius: 3px; font-weight: 700; font-size: 14px; border: none; cursor: pointer; transition: opacity 0.2s; }
+    .btn-sell:hover { opacity: 0.85; }
+
+    /* ── SECTION BASE ── */
+    section { padding: 100px 60px; }
+    .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(28px,3.5vw,44px); font-weight: 700; line-height: 1.2; margin-bottom: 20px; }
+    .section-desc { font-size: 16px; line-height: 1.75; color: rgba(255,255,255,0.6); max-width: 560px; margin-bottom: 56px; }
+
+    /* ── ACCOUNT TYPES ── */
+    .accounts { background: var(--light-bg); color: var(--navy); }
+    .accounts .section-label { color: var(--gold); }
+    .accounts .section-title { color: var(--navy); }
+    .accounts .section-desc { color: rgba(10,22,40,0.65); }
+    .account-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; }
+    .account-card {
+      background: var(--white); padding: 48px 36px; position: relative; overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .account-card.featured {
+      background: var(--navy); color: var(--white);
+    }
+    .account-card.featured .account-desc { color: rgba(255,255,255,0.6); }
+    .account-card.featured .feature-item { color: rgba(255,255,255,0.75); }
+    .account-card.featured .feature-item::before { color: var(--gold); }
+    .account-card:hover { transform: translateY(-6px); box-shadow: 0 24px 48px rgba(10,22,40,0.15); }
+    .account-tag {
+      display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 4px 12px; border-radius: 2px;
+      background: var(--gold-dim); color: var(--gold); border: 1px solid rgba(201,168,76,0.3);
+      margin-bottom: 20px;
+    }
+    .account-card.featured .account-tag { background: rgba(201,168,76,0.2); }
+    .account-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .account-card.featured .account-name { color: var(--gold); }
+    .account-price { font-size: 13px; color: rgba(10,22,40,0.5); margin-bottom: 28px; }
+    .account-desc { font-size: 14px; line-height: 1.7; color: rgba(10,22,40,0.65); margin-bottom: 24px; }
+    .feature-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; }
+    .feature-item { font-size: 14px; color: rgba(10,22,40,0.75); padding-left: 20px; position: relative; }
+    .feature-item::before { content: '✓'; position: absolute; left: 0; color: var(--gold); font-weight: 700; }
+    .account-btn {
+      display: block; text-align: center; padding: 14px;
+      background: var(--gold); color: var(--navy); font-weight: 700; font-size: 14px;
+      text-decoration: none; border-radius: 2px; transition: background 0.2s;
+    }
+    .account-btn:hover { background: var(--gold-light); }
+    .account-card.featured .account-btn { background: var(--gold); color: var(--navy); }
+
+    /* ── HOW TO OPEN ── */
+    .how-to { background: var(--navy); }
+    .steps-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 40px; }
+    .step-card { text-align: center; }
+    .step-num {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: var(--gold-dim); border: 2px solid rgba(201,168,76,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 900; color: var(--gold);
+      margin: 0 auto 24px;
+    }
+    .step-icon { font-size: 28px; margin-bottom: 16px; }
+    .step-card h4 { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 12px; }
+    .step-card p { font-size: 14px; line-height: 1.65; color: rgba(255,255,255,0.5); }
+
+    /* ── FEES ── */
+    .fees { background: var(--navy-mid); }
+    .fees-table {
+      width: 100%; border-collapse: collapse;
+      background: var(--navy); border: 1px solid rgba(201,168,76,0.15);
+    }
+    .fees-table th {
+      background: var(--gold); color: var(--navy);
+      padding: 16px 24px; font-size: 13px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em; text-align: left;
+    }
+    .fees-table td { padding: 16px 24px; font-size: 14px; color: rgba(255,255,255,0.75); border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .fees-table tr:last-child td { border-bottom: none; }
+    .fees-table tr:hover td { background: rgba(201,168,76,0.05); }
+    .fees-table .highlight { color: var(--gold); font-weight: 700; }
+
+    /* ── TOOLS ── */
+    .tools { background: var(--light-bg); color: var(--navy); }
+    .tools .section-label { color: var(--gold); }
+    .tools .section-title { color: var(--navy); }
+    .tools .section-desc { color: rgba(10,22,40,0.65); }
+    .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 24px; }
+    .tool-card {
+      background: var(--white); padding: 36px 28px; border-radius: 2px;
+      transition: transform 0.3s, box-shadow 0.3s; cursor: default;
+      border-bottom: 3px solid transparent; transition: all 0.3s;
+    }
+    .tool-card:hover { transform: translateY(-4px); box-shadow: 0 16px 36px rgba(10,22,40,0.1); border-bottom-color: var(--gold); }
+    .tool-icon { font-size: 32px; margin-bottom: 18px; }
+    .tool-card h4 { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+    .tool-card p { font-size: 13px; line-height: 1.65; color: rgba(10,22,40,0.6); }
+    .tool-badge { display: inline-block; margin-top: 14px; font-size: 11px; font-weight: 700; color: var(--gold); letter-spacing: 0.08em; text-transform: uppercase; }
+
+    /* ── FAQ ── */
+    .faq { background: var(--navy); }
+    .faq-list { max-width: 800px; display: flex; flex-direction: column; gap: 2px; }
+    .faq-item { background: var(--navy-mid); border: 1px solid rgba(201,168,76,0.1); }
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 22px 28px; cursor: pointer; gap: 20px;
+      transition: background 0.2s;
+    }
+    .faq-q:hover { background: rgba(201,168,76,0.05); }
+    .faq-q span { font-size: 16px; font-weight: 500; color: var(--white); line-height: 1.4; }
+    .faq-icon { flex-shrink: 0; font-size: 20px; color: var(--gold); transition: transform 0.3s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s; }
+    .faq-item.open .faq-a { max-height: 300px; }
+    .faq-a-inner { padding: 0 28px 24px; font-size: 15px; line-height: 1.75; color: rgba(255,255,255,0.6); }
+
+    /* ── OPEN ACCOUNT FORM ── */
+    .open-account { background: var(--light-bg); color: var(--navy); }
+    .open-account .section-label { color: var(--gold); }
+    .open-account .section-title { color: var(--navy); }
+    .open-account .section-desc { color: rgba(10,22,40,0.65); }
+    .form-card { background: var(--white); padding: 56px; max-width: 720px; border-radius: 2px; box-shadow: 0 20px 60px rgba(10,22,40,0.1); }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-group label { font-size: 13px; font-weight: 600; color: var(--navy); letter-spacing: 0.03em; }
+    .form-group input, .form-group select {
+      padding: 12px 16px; border: 1.5px solid rgba(10,22,40,0.15);
+      border-radius: 2px; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--navy);
+      outline: none; transition: border-color 0.2s; background: var(--white);
+    }
+    .form-group input:focus, .form-group select:focus { border-color: var(--gold); }
+    .form-full { grid-column: 1/-1; }
+    .form-note { font-size: 12px; color: rgba(10,22,40,0.45); margin-top: 4px; }
+    .form-check { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 28px; }
+    .form-check input[type=checkbox] { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--gold); cursor: pointer; }
+    .form-check label { font-size: 14px; color: rgba(10,22,40,0.65); line-height: 1.6; }
+    .form-check a { color: var(--gold); text-decoration: none; }
+    .btn-form {
+      width: 100%; padding: 16px;
+      background: var(--gold); color: var(--navy);
+      font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 700;
+      border: none; border-radius: 2px; cursor: pointer; transition: background 0.2s;
+      letter-spacing: 0.03em;
+    }
+    .btn-form:hover { background: var(--gold-light); }
+    .form-security { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 16px; font-size: 12px; color: rgba(10,22,40,0.4); }
+
+    /* ── CTA BANNER ── */
+    .cta-banner { background: var(--gold); padding: 80px 60px; text-align: center; }
+    .cta-banner h2 { font-family: 'Playfair Display', serif; font-size: clamp(28px,4vw,48px); font-weight: 700; color: var(--navy); margin-bottom: 16px; }
+    .cta-banner p { font-size: 17px; color: rgba(10,22,40,0.75); max-width: 560px; margin: 0 auto 36px; line-height: 1.6; }
+    .btn-dark { display: inline-flex; align-items: center; gap: 10px; background: var(--navy); color: var(--white); padding: 15px 36px; border-radius: 2px; font-weight: 600; font-size: 15px; text-decoration: none; transition: background 0.2s; }
+    .btn-dark:hover { background: var(--navy-mid); }
+
+    /* ── FOOTER ── */
+    footer { background: #060e1c; padding: 72px 60px 40px; border-top: 1px solid rgba(201,168,76,0.12); }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; margin-bottom: 56px; }
+    .footer-brand p { font-size: 14px; line-height: 1.75; color: rgba(255,255,255,0.45); margin-top: 20px; max-width: 280px; }
+    .footer-col h4 { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-col ul a { font-size: 14px; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--gold-light); }
+    .footer-bottom { padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: space-between; }
+    .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.3); }
+    .footer-socials { display: flex; gap: 16px; }
+    .social-btn { width: 36px; height: 36px; border: 1px solid rgba(201,168,76,0.2); border-radius: 2px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.4); font-size: 14px; text-decoration: none; transition: border-color 0.2s, color 0.2s; }
+    .social-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s, transform 0.7s; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .page-hero { padding: 120px 24px 72px; }
+      .page-hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      section, .accounts, .fees, .tools, .faq, .open-account { padding: 72px 24px; }
+      .account-grid { grid-template-columns: 1fr; gap: 1px; }
+      .steps-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .trade-panel { display: none; }
+      .form-card { padding: 32px 24px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+      .cta-banner { padding: 60px 24px; }
+      footer { padding: 60px 24px 32px; }
+      .fees-table { font-size: 13px; }
+      .fees-table th, .fees-table td { padding: 12px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="home.html" class="nav-logo">
+    <div class="logo-box">DB</div>
+    <span class="logo-text">DOBN <span>Securities</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="abouts.html">About Us</a></li>
+    <li><a href="individual.html" class="active">Khách Hàng Cá Nhân</a></li>
+    <li><a href="institutional.html">Khách Hàng Tổ Chức</a></li>
+    <li><a href="shareholder.html">Quan Hệ Cổ Đông</a></li>
+    <li><a href="newss.html">Tin Tức</a></li>
+    <li><a href="#mo-tai-khoan" class="nav-cta">Liên hệ tư vấn</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-grid"></div>
+  <div class="hero-glow-left"></div>
+  <div class="hero-glow-right"></div>
+  <div class="page-hero-inner" style="animation: fadeUp 0.9s ease both;">
+    <div class="page-hero-left">
+      <div class="breadcrumb">
+        <a href="home.html">Trang Chủ</a><span>›</span><span>Khách Hàng Cá Nhân</span>
+      </div>
+      <div class="page-label">Dành Cho Nhà Đầu Tư Cá Nhân</div>
+      <h1>Đầu Tư Thông Minh<br/>Với <em>Công Nghệ DOBN</em></h1>
+      <p>Mở tài khoản trong 15 phút, giao dịch tức thì trên HOSE, HNX và UPCOM. Phí môi giới cạnh tranh, phân tích chuyên sâu và hỗ trợ 24/7 dành riêng cho bạn.</p>
+      <div class="hero-btns">
+        <a href="#mo-tai-khoan" class="btn-primary">Mở Tài Khoản Ngay ↗</a>
+        <a href="#tai-khoan" class="btn-outline">Xem Gói Dịch Vụ →</a>
+      </div>
+    </div>
+    <!-- Live Trading Panel -->
+    <div class="trade-panel">
+      <div class="trade-panel-header">
+        <h3>Bảng Lệnh DOBN</h3>
+        <div class="live-dot">LIVE</div>
+      </div>
+      <div class="stock-list">
+        <div class="stock-row selected" onclick="selectStock(this,'VCB','87,200','+1.40%')">
+          <div class="stock-left">
+            <div><div class="stock-sym-tag">VCB</div><div class="stock-name-sm">Vietcombank</div></div>
+          </div>
+          <div><div class="stock-price">87,200</div><div class="stock-chg up">▲ +1.40%</div></div>
+        </div>
+        <div class="stock-row" onclick="selectStock(this,'VIC','44,350','-0.56%')">
+          <div class="stock-left">
+            <div><div class="stock-sym-tag">VIC</div><div class="stock-name-sm">Vingroup</div></div>
+          </div>
+          <div><div class="stock-price">44,350</div><div class="stock-chg dn">▼ -0.56%</div></div>
+        </div>
+        <div class="stock-row" onclick="selectStock(this,'HPG','29,800','+1.36%')">
+          <div class="stock-left">
+            <div><div class="stock-sym-tag">HPG</div><div class="stock-name-sm">Hòa Phát</div></div>
+          </div>
+          <div><div class="stock-price">29,800</div><div class="stock-chg up">▲ +1.36%</div></div>
+        </div>
+        <div class="stock-row" onclick="selectStock(this,'MBB','24,550','+0.61%')">
+          <div class="stock-left">
+            <div><div class="stock-sym-tag">MBB</div><div class="stock-name-sm">MBBank</div></div>
+          </div>
+          <div><div class="stock-price">24,550</div><div class="stock-chg up">▲ +0.61%</div></div>
+        </div>
+      </div>
+      <div class="trade-form">
+        <div class="tf-group">
+          <label>MÃ CK</label>
+          <input type="text" id="tf-sym" value="VCB" readonly/>
+        </div>
+        <div class="tf-group">
+          <label>GIÁ (VNĐ)</label>
+          <input type="text" id="tf-price" value="87,200"/>
+        </div>
+        <div class="tf-group">
+          <label>LOẠI LỆNH</label>
+          <select><option>LO</option><option>ATO</option><option>ATC</option><option>MP</option></select>
+        </div>
+        <div class="tf-group">
+          <label>KHỐI LƯỢNG</label>
+          <input type="number" value="1000" min="100" step="100"/>
+        </div>
+      </div>
+      <div class="trade-btns">
+        <button class="btn-buy" onclick="tradeAlert('MUA')">▲ MUA</button>
+        <button class="btn-sell" onclick="tradeAlert('BÁN')">▼ BÁN</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ACCOUNT TYPES -->
+<section class="accounts reveal" id="tai-khoan">
+  <div class="section-label">Loại Tài Khoản</div>
+  <div class="section-title">Chọn Gói Phù Hợp Với Bạn</div>
+  <div class="section-desc">Từ nhà đầu tư mới bắt đầu đến trader chuyên nghiệp — DOBN có gói dịch vụ tối ưu cho mỗi nhu cầu.</div>
+
+  <div class="account-grid">
+    <div class="account-card">
+      <div class="account-tag">Cơ Bản</div>
+      <div class="account-name">DOBN Start</div>
+      <div class="account-price">Không phí duy trì · Mở miễn phí</div>
+      <div class="account-desc">Dành cho nhà đầu tư mới bắt đầu hành trình. Đầy đủ tính năng cơ bản để giao dịch cổ phiếu và trái phiếu.</div>
+      <ul class="feature-list">
+        <li class="feature-item">Giao dịch cổ phiếu, ETF trên 3 sàn</li>
+        <li class="feature-item">Ứng dụng mobile DOBN</li>
+        <li class="feature-item">Báo cáo phân tích cơ bản hàng tuần</li>
+        <li class="feature-item">Hỗ trợ hotline 8h–17h</li>
+        <li class="feature-item">Phí môi giới từ 0.15%</li>
+      </ul>
+      <a href="#mo-tai-khoan" class="account-btn">Mở Tài Khoản</a>
+    </div>
+    <div class="account-card featured">
+      <div class="account-tag">Phổ Biến Nhất</div>
+      <div class="account-name">DOBN Pro</div>
+      <div class="account-price">Không phí duy trì · Nâng cấp miễn phí</div>
+      <div class="account-desc">Dành cho nhà đầu tư muốn tối ưu hóa danh mục với công cụ phân tích nâng cao và margin linh hoạt.</div>
+      <ul class="feature-list">
+        <li class="feature-item">Tất cả tính năng Start</li>
+        <li class="feature-item">Margin tỷ lệ đến 1:2.5</li>
+        <li class="feature-item">Phân tích kỹ thuật & AI gợi ý</li>
+        <li class="feature-item">Báo cáo phân tích cổ phiếu chuyên sâu</li>
+        <li class="feature-item">Tư vấn viên riêng</li>
+        <li class="feature-item">Phí môi giới từ 0.12%</li>
+      </ul>
+      <a href="#mo-tai-khoan" class="account-btn">Mở Tài Khoản</a>
+    </div>
+    <div class="account-card">
+      <div class="account-tag">Cao Cấp</div>
+      <div class="account-name">DOBN Elite</div>
+      <div class="account-price">Yêu cầu tài sản từ 2 tỷ đồng</div>
+      <div class="account-desc">Dành cho nhà đầu tư chuyên nghiệp với danh mục lớn, cần dịch vụ VIP và chiến lược đầu tư riêng.</div>
+      <ul class="feature-list">
+        <li class="feature-item">Tất cả tính năng Pro</li>
+        <li class="feature-item">Margin tỷ lệ đến 1:3</li>
+        <li class="feature-item">Chuyên viên quản lý danh mục riêng</li>
+        <li class="feature-item">Báo cáo phân tích định chế</li>
+        <li class="feature-item">Truy cập IPO & phát hành riêng lẻ</li>
+        <li class="feature-item">Phí môi giới từ 0.08%</li>
+      </ul>
+      <a href="#mo-tai-khoan" class="account-btn">Liên Hệ Tư Vấn</a>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO OPEN -->
+<section class="how-to reveal">
+  <div class="section-label">Hướng Dẫn Mở Tài Khoản</div>
+  <div class="section-title">Chỉ 4 Bước Đơn Giản</div>
+  <div class="section-desc">Hoàn thành đăng ký trực tuyến trong 15 phút — không cần đến văn phòng.</div>
+
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num">01</div>
+      <div class="step-icon">📝</div>
+      <h4>Điền Thông Tin</h4>
+      <p>Nhập họ tên, email, số điện thoại và thông tin cá nhân vào form đăng ký trực tuyến bên dưới.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">02</div>
+      <div class="step-icon">🪪</div>
+      <h4>Xác Thực eKYC</h4>
+      <p>Chụp ảnh CCCD/CMND và selfie để xác thực danh tính tự động qua công nghệ eKYC trong vài giây.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">03</div>
+      <div class="step-icon">✍️</div>
+      <h4>Ký Hợp Đồng</h4>
+      <p>Ký hợp đồng mở tài khoản điện tử với chữ ký số — hoàn toàn không cần in ấn hay đến chi nhánh.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">04</div>
+      <div class="step-icon">🚀</div>
+      <h4>Nạp Tiền & Giao Dịch</h4>
+      <p>Nạp tiền qua chuyển khoản ngân hàng, nhận mã tài khoản trong 2 giờ và bắt đầu đầu tư ngay.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEES TABLE -->
+<section class="fees reveal">
+  <div class="section-label">Biểu Phí Dịch Vụ</div>
+  <div class="section-title">Minh Bạch — Cạnh Tranh</div>
+  <div class="section-desc">Không phí ẩn, không chi phí duy trì tài khoản. Chỉ trả phí khi giao dịch thành công.</div>
+
+  <table class="fees-table">
+    <thead>
+      <tr>
+        <th>Dịch Vụ</th>
+        <th>DOBN Start</th>
+        <th>DOBN Pro</th>
+        <th>DOBN Elite</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Phí môi giới cổ phiếu</td>
+        <td>0.15% – 0.25%</td>
+        <td class="highlight">0.12% – 0.20%</td>
+        <td class="highlight">0.08% – 0.15%</td>
+      </tr>
+      <tr>
+        <td>Phí môi giới phái sinh</td>
+        <td>6,600 VNĐ/hợp đồng</td>
+        <td class="highlight">5,500 VNĐ/hợp đồng</td>
+        <td class="highlight">4,400 VNĐ/hợp đồng</td>
+      </tr>
+      <tr>
+        <td>Phí duy trì tài khoản</td>
+        <td class="highlight">Miễn phí</td>
+        <td class="highlight">Miễn phí</td>
+        <td class="highlight">Miễn phí</td>
+      </tr>
+      <tr>
+        <td>Lãi suất margin (năm)</td>
+        <td>11.5% / năm</td>
+        <td class="highlight">10.5% / năm</td>
+        <td class="highlight">9.5% / năm</td>
+      </tr>
+      <tr>
+        <td>Phí chuyển khoản nội bộ</td>
+        <td class="highlight">Miễn phí</td>
+        <td class="highlight">Miễn phí</td>
+        <td class="highlight">Miễn phí</td>
+      </tr>
+      <tr>
+        <td>Phí rút tiền</td>
+        <td class="highlight">Miễn phí</td>
+        <td class="highlight">Miễn phí</td>
+        <td class="highlight">Miễn phí</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- TOOLS -->
+<section class="tools reveal">
+  <div class="section-label">Công Cụ Đầu Tư</div>
+  <div class="section-title">Trang Bị Đầy Đủ Cho Nhà Đầu Tư</div>
+  <div class="section-desc" style="color:rgba(10,22,40,0.65)">Hệ sinh thái công cụ mạnh mẽ giúp bạn phân tích, theo dõi và thực hiện giao dịch tối ưu.</div>
+
+  <div class="tools-grid">
+    <div class="tool-card">
+      <div class="tool-icon">📱</div>
+      <h4>DOBN Mobile App</h4>
+      <p>Giao dịch mọi lúc, mọi nơi. Bảng giá real-time, đặt lệnh nhanh, theo dõi danh mục và nhận thông báo push tức thì.</p>
+      <div class="tool-badge">iOS & Android ↗</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon">🤖</div>
+      <h4>AI Phân Tích Thị Trường</h4>
+      <p>Mô hình AI dự báo xu hướng, nhận diện tín hiệu kỹ thuật và gợi ý cổ phiếu phù hợp với khẩu vị rủi ro của bạn.</p>
+      <div class="tool-badge">Pro & Elite</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon">📊</div>
+      <h4>Biểu Đồ Kỹ Thuật</h4>
+      <p>Hơn 80 chỉ báo kỹ thuật, vẽ tay trên biểu đồ, so sánh cổ phiếu và xuất báo cáo PDF chuyên nghiệp.</p>
+      <div class="tool-badge">TradingView Pro</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon">🔔</div>
+      <h4>Cảnh Báo Thông Minh</h4>
+      <p>Thiết lập cảnh báo giá, khối lượng, breakout kỹ thuật và tin tức doanh nghiệp. Nhận ngay qua app, email hoặc SMS.</p>
+      <div class="tool-badge">Real-time Alert</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon">🗂️</div>
+      <h4>Quản Lý Danh Mục</h4>
+      <p>Dashboard trực quan theo dõi P&L, phân bổ tài sản, lịch sử giao dịch và báo cáo thuế năm đầy đủ.</p>
+      <div class="tool-badge">Portfolio Tracker</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon">📚</div>
+      <h4>Học Viện DOBN</h4>
+      <p>Hơn 200 video bài học, khóa học phân tích cơ bản, kỹ thuật và quản lý rủi ro từ chuyên gia hàng đầu.</p>
+      <div class="tool-badge">Miễn Phí</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq reveal">
+  <div class="section-label">Câu Hỏi Thường Gặp</div>
+  <div class="section-title">Giải Đáp Thắc Mắc</div>
+  <div class="section-desc">Không tìm được câu trả lời? Liên hệ hotline <strong style="color:var(--gold)">1900 xxxx</strong> để được hỗ trợ ngay.</div>
+
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>Tôi cần chuẩn bị những gì để mở tài khoản?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        <div class="faq-a-inner">Bạn chỉ cần CCCD/CMND còn hiệu lực, số điện thoại và email cá nhân. Với quy trình eKYC online, bạn hoàn toàn không cần photo giấy tờ hay đến chi nhánh. Toàn bộ quá trình hoàn thành trong 15 phút.</div>
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>Số tiền tối thiểu để bắt đầu giao dịch là bao nhiêu?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        <div class="faq-a-inner">Không có yêu cầu số dư tối thiểu để mở tài khoản. Tuy nhiên, để giao dịch cổ phiếu, đơn vị tối thiểu là 100 cổ phiếu. Với các cổ phiếu giá thấp (khoảng 10,000đ), bạn có thể bắt đầu với chỉ 1–2 triệu đồng.</div>
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>Phí môi giới được tính như thế nào?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        <div class="faq-a-inner">Phí môi giới được tính theo tỷ lệ phần trăm trên giá trị giao dịch. Ví dụ với tài khoản Start: mua 1,000 cổ phiếu VCB giá 87,200đ = giá trị 87,200,000đ × 0.15% = phí 130,800đ/lệnh. Thuế TNCN 0.1% chỉ tính khi bán.</div>
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>Tôi có thể rút tiền về ngân hàng khi nào?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        <div class="faq-a-inner">Tiền rút về tài khoản ngân hàng được xử lý trong ngày làm việc (T+0). Tiền từ bán chứng khoán được thanh toán theo nguyên tắc T+2 (2 ngày sau ngày giao dịch). Phí rút tiền hoàn toàn miễn phí.</div>
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>DOBN có dịch vụ giao dịch phái sinh không?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        <div class="faq-a-inner">Có. DOBN cung cấp đầy đủ dịch vụ giao dịch Hợp đồng tương lai chỉ số VN30 và Hợp đồng tương lai trái phiếu Chính phủ trên sàn HNX. Để giao dịch phái sinh, bạn cần mở thêm tài khoản phái sinh và ký quỹ tối thiểu theo quy định.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OPEN ACCOUNT FORM -->
+<section class="open-account reveal" id="mo-tai-khoan">
+  <div class="section-label">Đăng Ký</div>
+  <div class="section-title">Mở Tài Khoản Ngay Hôm Nay</div>
+  <div class="section-desc">Điền thông tin bên dưới — chuyên viên DOBN sẽ liên hệ hỗ trợ bạn trong vòng 30 phút.</div>
+
+  <div class="form-card">
+    <div class="form-grid">
+      <div class="form-group">
+        <label>HỌ VÀ TÊN *</label>
+        <input type="text" placeholder="Nguyễn Văn A"/>
+      </div>
+      <div class="form-group">
+        <label>NGÀY SINH *</label>
+        <input type="date"/>
+      </div>
+      <div class="form-group">
+        <label>SỐ ĐIỆN THOẠI *</label>
+        <input type="tel" placeholder="0912 345 678"/>
+      </div>
+      <div class="form-group">
+        <label>EMAIL *</label>
+        <input type="email" placeholder="email@example.com"/>
+      </div>
+      <div class="form-group">
+        <label>SỐ CMND/CCCD *</label>
+        <input type="text" placeholder="079xxxxxxxx"/>
+      </div>
+      <div class="form-group">
+        <label>NGÂN HÀNG LIÊN KẾT</label>
+        <select>
+          <option value="">-- Chọn ngân hàng --</option>
+          <option>Vietcombank</option>
+          <option>Techcombank</option>
+          <option>BIDV</option>
+          <option>VietinBank</option>
+          <option>MBBank</option>
+          <option>Agribank</option>
+          <option>TPBank</option>
+          <option>VPBank</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>GÓI TÀI KHOẢN</label>
+        <select>
+          <option>DOBN Start — Cơ Bản</option>
+          <option>DOBN Pro — Chuyên Nghiệp</option>
+          <option>DOBN Elite — Cao Cấp</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>KINH NGHIỆM ĐẦU TƯ</label>
+        <select>
+          <option>Mới bắt đầu (dưới 1 năm)</option>
+          <option>Có kinh nghiệm (1–3 năm)</option>
+          <option>Chuyên nghiệp (trên 3 năm)</option>
+        </select>
+      </div>
+      <div class="form-group form-full">
+        <label>GHI CHÚ THÊM</label>
+        <input type="text" placeholder="Nhu cầu đặc biệt hoặc câu hỏi..."/>
+        <div class="form-note">Không bắt buộc — chuyên viên sẽ tư vấn phù hợp nhất cho bạn</div>
+      </div>
+    </div>
+    <div class="form-check">
+      <input type="checkbox" id="agree"/>
+      <label for="agree">Tôi đồng ý với <a href="#">Điều Khoản Dịch Vụ</a> và <a href="#">Chính Sách Bảo Mật</a> của DOBN Securities. Tôi xác nhận thông tin cung cấp là chính xác và chịu trách nhiệm về tính trung thực.</label>
+    </div>
+    <button class="btn-form" onclick="submitForm()">Đăng Ký Mở Tài Khoản — Miễn Phí ↗</button>
+    <div class="form-security">🔒 Dữ liệu được mã hóa SSL 256-bit · Bảo mật theo tiêu chuẩn ISO 27001</div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-banner reveal">
+  <h2>Cần Tư Vấn Trực Tiếp?</h2>
+  <p>Đội ngũ chuyên viên DOBN sẵn sàng hỗ trợ bạn chọn gói đầu tư phù hợp và trả lời mọi thắc mắc.</p>
+  <a href="tel:1900xxxx" class="btn-dark">📞 Gọi Ngay 1900 xxxx</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="home.html" class="nav-logo">
+        <div class="logo-box">DB</div>
+        <span class="logo-text">DOBN <span>Securities</span></span>
+      </a>
+      <p>Công ty Cổ phần Chứng khoán DOBN — Giấy phép kinh doanh chứng khoán số 01/UBCK-GPKD. Thành viên HOSE, HNX, UPCOM.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Dịch Vụ</h4>
+      <ul>
+        <li><a href="individual.html">Khách Hàng Cá Nhân</a></li>
+        <li><a href="institutional.html">Khách Hàng Tổ Chức</a></li>
+        <li><a href="individual.html">Margin & Tài Chính</a></li>
+        <li><a href="individual.html">Phân Tích Đầu Tư</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Công Ty</h4>
+      <ul>
+        <li><a href="about.html">Giới Thiệu</a></li>
+        <li><a href="shareholder.html">Quan Hệ Cổ Đông</a></li>
+        <li><a href="news.html">Tin Tức</a></li>
+        <li><a href="about.html">Tuyển Dụng</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Hỗ Trợ</h4>
+      <ul>
+        <li><a href="#">Hotline: 1900 xxxx</a></li>
+        <li><a href="#">info@dobn.com.vn</a></li>
+        <li><a href="#">Câu Hỏi Thường Gặp</a></li>
+        <li><a href="#">Chính Sách Bảo Mật</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 DOBN Securities Corporation. All rights reserved.</p>
+    <div class="footer-socials">
+      <a href="#" class="social-btn">f</a>
+      <a href="#" class="social-btn">in</a>
+      <a href="#" class="social-btn">▶</a>
+      <a href="#" class="social-btn">Z</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => io.observe(r));
+
+  // Nav scroll
+  window.addEventListener('scroll', () => {
+    document.querySelector('nav').style.background =
+      window.scrollY > 40 ? 'rgba(6,14,28,0.98)' : 'rgba(10,22,40,0.95)';
+  });
+
+  // Mobile menu
+  function toggleMenu() {
+    const links = document.querySelector('.nav-links');
+    links.style.cssText = links.style.display === 'flex' ? '' :
+      'display:flex;flex-direction:column;position:fixed;top:72px;left:0;right:0;background:#0a1628;padding:24px;gap:20px;border-bottom:1px solid rgba(201,168,76,0.2);z-index:99;';
+  }
+
+  // Trading panel interaction
+  function selectStock(el, sym, price, chg) {
+    document.querySelectorAll('.stock-row').forEach(r => r.classList.remove('selected'));
+    el.classList.add('selected');
+    document.getElementById('tf-sym').value = sym;
+    document.getElementById('tf-price').value = price;
+  }
+
+  function tradeAlert(type) {
+    const sym = document.getElementById('tf-sym').value;
+    alert(`Vui lòng đăng nhập để đặt lệnh ${type} ${sym}.\nLiên hệ 1900 xxxx để mở tài khoản ngay!`);
+  }
+
+  // FAQ accordion
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // Form submit
+  function submitForm() {
+    const checked = document.getElementById('agree').checked;
+    if (!checked) { alert('Vui lòng đồng ý với điều khoản dịch vụ.'); return; }
+    alert('Cảm ơn bạn đã đăng ký!\nChuyên viên DOBN sẽ liên hệ với bạn trong vòng 30 phút.');
+  }
+</script>
+</body>
+</html>

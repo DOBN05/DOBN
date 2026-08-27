@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Về chúng tôi – DOBTECH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:#0A0F2C; --navy2:#0D1533; --cyan:#00D4FF; --cyan2:#0099BB;
+      --gold:#FFD166; --white:#F0F4FF; --slate:#8892B0;
+      --card:rgba(255,255,255,0.04); --border:rgba(0,212,255,0.15);
+      --glow:0 0 32px rgba(0,212,255,0.18);
+    }
+    html { scroll-behavior: smooth; }
+    body { background:var(--navy); color:var(--white); font-family:'Inter',sans-serif; font-size:16px; line-height:1.7; overflow-x:hidden; }
+
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:100;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 5%; height:72px;
+      background:rgba(10,15,44,0.85); backdrop-filter:blur(18px);
+      border-bottom:1px solid var(--border);
+    }
+    .logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
+    .logo-mark { width:40px; height:40px; background:linear-gradient(135deg,var(--cyan),var(--cyan2)); border-radius:10px; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:16px; color:var(--navy); }
+    .logo-text { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:20px; color:var(--white); }
+    .logo-text span { color:var(--cyan); }
+    .nav-links { display:flex; align-items:center; gap:36px; list-style:none; }
+    .nav-links a { color:var(--slate); text-decoration:none; font-size:14px; font-weight:500; transition:color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color:var(--cyan); }
+    .nav-cta { padding:9px 22px; border:1px solid var(--cyan); border-radius:8px; color:var(--cyan)!important; }
+
+    /* PAGE HERO */
+    .page-hero {
+      padding: 160px 5% 80px;
+      position: relative;
+    }
+    .page-hero::before {
+      content:'';
+      position:absolute; top:0; left:0; right:0; bottom:0;
+      background: radial-gradient(ellipse 60% 50% at 80% 40%, rgba(0,212,255,0.07), transparent);
+      pointer-events:none;
+    }
+    .breadcrumb {
+      font-size:13px; color:var(--slate); margin-bottom:24px;
+    }
+    .breadcrumb a { color:var(--cyan); text-decoration:none; }
+    .breadcrumb span { margin:0 8px; }
+    .page-hero h1 {
+      font-family:'Space Grotesk',sans-serif;
+      font-size:clamp(36px,5vw,68px);
+      font-weight:700; line-height:1.1; letter-spacing:-1.5px;
+      margin-bottom:24px; max-width:700px;
+    }
+    .page-hero h1 em { font-style:normal; color:var(--cyan); }
+    .page-hero p {
+      font-size:18px; color:var(--slate); max-width:560px; line-height:1.8;
+    }
+
+    section { padding:80px 5%; }
+
+    .section-label { font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--cyan); margin-bottom:14px; }
+    .section-heading { font-family:'Space Grotesk',sans-serif; font-size:clamp(26px,3vw,42px); font-weight:700; line-height:1.15; letter-spacing:-0.8px; margin-bottom:16px; }
+    .section-sub { font-size:17px; color:var(--slate); max-width:540px; margin-bottom:48px; }
+
+    /* MISSION / VISION */
+    .mv-grid {
+      display:grid; grid-template-columns:1fr 1fr; gap:24px;
+    }
+    .mv-card {
+      background:var(--card); border:1px solid var(--border); border-radius:20px; padding:48px 40px;
+      position:relative; overflow:hidden;
+    }
+    .mv-card::before {
+      content:''; position:absolute; top:-40px; right:-40px;
+      width:160px; height:160px; border-radius:50%;
+      background:radial-gradient(circle, rgba(0,212,255,0.12), transparent 70%);
+    }
+    .mv-icon { font-size:36px; margin-bottom:24px; }
+    .mv-card h3 { font-family:'Space Grotesk',sans-serif; font-size:22px; font-weight:700; margin-bottom:16px; }
+    .mv-card p { font-size:15px; color:var(--slate); line-height:1.8; }
+
+    /* TIMELINE */
+    .timeline { position:relative; padding-left:32px; }
+    .timeline::before {
+      content:''; position:absolute; left:0; top:8px; bottom:8px;
+      width:2px; background:linear-gradient(180deg, var(--cyan), rgba(0,212,255,0.1));
+    }
+    .tl-item { position:relative; margin-bottom:48px; }
+    .tl-item::before {
+      content:''; position:absolute; left:-37px; top:8px;
+      width:12px; height:12px; border-radius:50%;
+      background:var(--cyan); box-shadow: 0 0 12px rgba(0,212,255,0.6);
+    }
+    .tl-year {
+      font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700;
+      color:var(--cyan); letter-spacing:1px; margin-bottom:8px;
+    }
+    .tl-item h4 { font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:600; margin-bottom:8px; }
+    .tl-item p { font-size:14px; color:var(--slate); line-height:1.7; }
+
+    /* TEAM */
+    #team { scroll-margin-top:80px; }
+    .team-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:24px; }
+    .team-card {
+      background:var(--card); border:1px solid var(--border); border-radius:16px;
+      padding:32px 28px; text-align:center;
+      transition:border-color 0.3s, transform 0.3s;
+    }
+    .team-card:hover { border-color:var(--cyan); transform:translateY(-4px); }
+    .team-avatar {
+      width:80px; height:80px; border-radius:50%; margin:0 auto 20px;
+      background:linear-gradient(135deg, rgba(0,212,255,0.3), rgba(123,140,255,0.3));
+      display:flex; align-items:center; justify-content:center;
+      font-family:'Space Grotesk',sans-serif; font-size:28px; font-weight:700; color:var(--cyan);
+      border:2px solid var(--border);
+    }
+    .team-card h4 { font-family:'Space Grotesk',sans-serif; font-size:17px; font-weight:600; margin-bottom:4px; }
+    .team-role { font-size:13px; color:var(--cyan); font-weight:500; margin-bottom:12px; }
+    .team-bio { font-size:13px; color:var(--slate); line-height:1.6; }
+
+    /* VALUES */
+    .values-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+    .value-item {
+      background:var(--card); border:1px solid var(--border); border-radius:14px; padding:28px;
+    }
+    .value-item .v-num { font-family:'Space Grotesk',sans-serif; font-size:40px; font-weight:700; color:rgba(0,212,255,0.15); line-height:1; margin-bottom:12px; }
+    .value-item h4 { font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:600; margin-bottom:8px; }
+    .value-item p { font-size:13px; color:var(--slate); line-height:1.7; }
+
+    /* AWARDS */
+    .awards-row { display:flex; flex-wrap:wrap; gap:20px; }
+    .award-badge {
+      background:var(--card); border:1px solid var(--border); border-radius:12px;
+      padding:20px 24px; display:flex; align-items:center; gap:16px;
+    }
+    .award-icon { font-size:28px; }
+    .award-text small { font-size:11px; color:var(--slate); display:block; margin-bottom:2px; }
+    .award-text strong { font-size:15px; font-family:'Space Grotesk',sans-serif; }
+
+    /* BTN */
+    .btn-primary { padding:14px 32px; background:var(--cyan); color:var(--navy); border:none; border-radius:10px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:15px; cursor:pointer; text-decoration:none; display:inline-block; transition:transform 0.2s,box-shadow 0.2s; box-shadow:0 4px 24px rgba(0,212,255,0.35); }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 32px rgba(0,212,255,0.5); }
+    .btn-ghost { padding:14px 32px; background:transparent; color:var(--white); border:1px solid rgba(255,255,255,0.2); border-radius:10px; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px; cursor:pointer; text-decoration:none; display:inline-block; transition:border-color 0.2s,background 0.2s; }
+    .btn-ghost:hover { border-color:var(--cyan); background:rgba(0,212,255,0.06); }
+
+    footer { border-top:1px solid var(--border); padding:60px 5% 40px; }
+    .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:48px; margin-bottom:48px; }
+    .footer-brand p { font-size:14px; color:var(--slate); margin-top:16px; max-width:260px; line-height:1.7; }
+    .footer-col h5 { font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--white); margin-bottom:20px; }
+    .footer-col ul { list-style:none; display:flex; flex-direction:column; gap:10px; }
+    .footer-col a { color:var(--slate); text-decoration:none; font-size:14px; transition:color 0.2s; }
+    .footer-col a:hover { color:var(--cyan); }
+    .footer-bottom { border-top:1px solid var(--border); padding-top:28px; display:flex; justify-content:space-between; align-items:center; font-size:13px; color:var(--slate); flex-wrap:wrap; gap:12px; }
+    .footer-bottom a { color:var(--slate); text-decoration:none; }
+
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity 0.6s,transform 0.6s; }
+    .reveal.visible { opacity:1; transform:none; }
+
+    @media(max-width:768px){
+      .nav-links{display:none;}
+      .mv-grid,.values-grid,.footer-grid{grid-template-columns:1fr;}
+      .team-grid{grid-template-columns:1fr 1fr;}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="hometech.html" class="logo">
+    <div class="logo-mark">DOB</div>
+    <span class="logo-text">DOB<span>TECH</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="aboutt.html" class="active">Về chúng tôi</a></li>
+    <li><a href="servicest.html">Sản phẩm & Dịch vụ</a></li>
+    <li><a href="shareholdert.html">Quan hệ cổ đông</a></li>
+    <li><a href="shareholdert.html" class="nav-cta">DOT ↑</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="breadcrumb"><a href="hometech.html">Trang chủ</a><span>/</span>Về chúng tôi</div>
+  <h1>Chúng tôi xây dựng<br/><em>hạ tầng công nghệ</em><br/>cho Việt Nam</h1>
+  <p>DOBTECH ra đời với một niềm tin: Việt Nam hoàn toàn có thể tự thiết kế chip, tự xây hệ thống tài chính và tự phát triển AI ở tầm thế giới.</p>
+</div>
+
+<!-- MISSION / VISION -->
+<section id="mission">
+  <div class="section-label reveal">Định hướng chiến lược</div>
+  <div class="section-heading reveal">Tầm nhìn & Sứ mệnh</div>
+  <div class="mv-grid reveal">
+    <div class="mv-card">
+      <div class="mv-icon">🎯</div>
+      <h3>Sứ mệnh</h3>
+      <p>Xây dựng và cung cấp hạ tầng công nghệ tài chính, bán dẫn và AI tiên tiến — giúp các tổ chức tài chính, doanh nghiệp và chính phủ trong khu vực hoạt động hiệu quả, an toàn và toàn diện hơn trong kỷ nguyên số.</p>
+    </div>
+    <div class="mv-card">
+      <div class="mv-icon">🌏</div>
+      <h3>Tầm nhìn 2030</h3>
+      <p>Trở thành tập đoàn công nghệ nền tảng hàng đầu Đông Nam Á — niêm yết trên cả HOSE và sàn quốc tế, với hơn 50 triệu người dùng cuối sử dụng sản phẩm do DOBTECH cung cấp mỗi ngày.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HISTORY TIMELINE -->
+<section style="padding-top:0;">
+  <div class="section-label reveal">Hành trình</div>
+  <div class="section-heading reveal">Từ startup đến<br/>công ty đại chúng</div>
+  <div class="timeline reveal">
+    <div class="tl-item">
+      <div class="tl-year">2018</div>
+      <h4>DOBTECH được thành lập</h4>
+      <p>Đội ngũ 12 kỹ sư sáng lập tại TP.HCM, tập trung vào phát triển gateway thanh toán cho các ngân hàng nội địa.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2019</div>
+      <h4>Ra mắt DOBPay — nền tảng thanh toán tức thì</h4>
+      <p>Xử lý thành công 10 triệu giao dịch trong năm đầu tiên, đạt uptime 99,97%.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2021</div>
+      <h4>Mở rộng sang R&D chip bán dẫn</h4>
+      <p>Thành lập bộ phận Silicon Engineering, bắt đầu thiết kế chip bảo mật thanh toán đầu tiên mang thương hiệu DOBTECH.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2022</div>
+      <h4>Vòng Series B — 45 triệu USD</h4>
+      <p>Nhận đầu tư từ quỹ công nghệ Đông Nam Á và hai tập đoàn bán dẫn Hàn Quốc, định giá công ty đạt 320 triệu USD.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2023</div>
+      <h4>Ra mắt DOB-AI Platform và niêm yết HOSE</h4>
+      <p>Mã cổ phiếu DOT chính thức giao dịch trên Sở Giao dịch Chứng khoán TP.HCM; ra mắt nền tảng AI phát hiện gian lận tài chính.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2025</div>
+      <h4>SoC-X1 — chip RISC-V đầu tiên made in Vietnam</h4>
+      <p>Chip được tape-out thành công tại xưởng đúc TSMC 7nm, triển khai thử nghiệm tại 3 ngân hàng quốc doanh.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2026</div>
+      <h4>Mở rộng 15 quốc gia, 500+ nhân sự</h4>
+      <p>Văn phòng đại diện tại Singapore, Seoul, Tokyo và Bangkok. Doanh thu hợp nhất đạt 3.200 tỷ đồng.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team" style="padding-top:0;">
+  <div class="section-label reveal">Con người</div>
+  <div class="section-heading reveal">Ban lãnh đạo</div>
+  <p class="section-sub reveal">Đội ngũ kết hợp kinh nghiệm thực chiến từ Wall Street, Silicon Valley và các tập đoàn bán dẫn hàng đầu châu Á.</p>
+  <div class="team-grid reveal">
+    <div class="team-card">
+      <div class="team-avatar">NV</div>
+      <h4>Nguyễn Văn Đức</h4>
+      <div class="team-role">Chủ tịch HĐQT & CEO</div>
+      <p class="team-bio">Cựu VP Engineering tại PayPal APAC. 20 năm kinh nghiệm trong lĩnh vực thanh toán điện tử và hạ tầng tài chính.</p>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">LT</div>
+      <h4>Lê Thị Minh Châu</h4>
+      <div class="team-role">Phó TGĐ & CTO</div>
+      <p class="team-bio">Tiến sĩ Khoa học Máy tính tại MIT. Cựu kỹ sư chip tại ARM Holdings, chuyên gia thiết kế kiến trúc RISC-V.</p>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">PT</div>
+      <h4>Phạm Thanh Long</h4>
+      <div class="team-role">Giám đốc Tài chính (CFO)</div>
+      <p class="team-bio">Cựu Director tại Goldman Sachs Singapore, chuyên gia cấu trúc vốn và M&A trong lĩnh vực fintech.</p>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">TH</div>
+      <h4>Trần Hoàng Anh</h4>
+      <div class="team-role">Giám đốc AI & Data</div>
+      <p class="team-bio">Cựu Research Scientist tại Google Brain. Chủ biên 24 công trình khoa học về NLP tiếng Việt và computer vision.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section style="padding-top:0;">
+  <div class="section-label reveal">Văn hóa</div>
+  <div class="section-heading reveal">Giá trị cốt lõi</div>
+  <div class="values-grid reveal">
+    <div class="value-item">
+      <div class="v-num">01</div>
+      <h4>Độ sâu kỹ thuật</h4>
+      <p>Chúng tôi xây dựng từ nền tảng, không lắp ghép giải pháp có sẵn. Mỗi dòng code và mỗi transistor đều được tính toán kỹ lưỡng.</p>
+    </div>
+    <div class="value-item">
+      <div class="v-num">02</div>
+      <h4>Trung thực tuyệt đối</h4>
+      <p>Với nhà đầu tư, khách hàng và đội ngũ — chúng tôi chia sẻ cả thành công lẫn thất bại một cách minh bạch.</p>
+    </div>
+    <div class="value-item">
+      <div class="v-num">03</div>
+      <h4>Tư duy dài hạn</h4>
+      <p>Quyết định kinh doanh của chúng tôi được đo bằng thập kỷ, không phải quý. R&D chip là minh chứng rõ nhất.</p>
+    </div>
+    <div class="value-item">
+      <div class="v-num">04</div>
+      <h4>Tốc độ có kiểm soát</h4>
+      <p>Trong lĩnh vực tài chính và bán dẫn, sai lầm có giá rất đắt. Chúng tôi chạy nhanh — nhưng luôn có safety net.</p>
+    </div>
+    <div class="value-item">
+      <div class="v-num">05</div>
+      <h4>Bản sắc Việt Nam</h4>
+      <p>Chúng tôi tự hào xây dựng sản phẩm xuất phát từ Việt Nam, hiểu người dùng Việt Nam và phục vụ thế giới.</p>
+    </div>
+    <div class="value-item">
+      <div class="v-num">06</div>
+      <h4>Trách nhiệm xã hội</h4>
+      <p>1% lợi nhuận hàng năm đầu tư vào học bổng kỹ thuật và chương trình đào tạo AI miễn phí cho sinh viên.</p>
+    </div>
+  </div>
+</section>
+
+<!-- AWARDS -->
+<section style="padding-top:0;">
+  <div class="section-label reveal">Ghi nhận</div>
+  <div class="section-heading reveal">Giải thưởng & Chứng nhận</div>
+  <div class="awards-row reveal">
+    <div class="award-badge">
+      <div class="award-icon">🏆</div>
+      <div class="award-text"><small>Vietnam Tech Awards 2025</small><strong>Công ty Fintech của năm</strong></div>
+    </div>
+    <div class="award-badge">
+      <div class="award-icon">🛡️</div>
+      <div class="award-text"><small>BSI Certification</small><strong>ISO/IEC 27001:2022</strong></div>
+    </div>
+    <div class="award-badge">
+      <div class="award-icon">💳</div>
+      <div class="award-text"><small>PCI Security Standards Council</small><strong>PCI-DSS Level 1</strong></div>
+    </div>
+    <div class="award-badge">
+      <div class="award-icon">🌟</div>
+      <div class="award-text"><small>Forbes Vietnam 2025</small><strong>Top 50 Công ty Công nghệ</strong></div>
+    </div>
+    <div class="award-badge">
+      <div class="award-icon">🔬</div>
+      <div class="award-text"><small>Bộ KH&CN Việt Nam</small><strong>Đề án chip bán dẫn quốc gia</strong></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="text-align:center; padding-top:40px;">
+  <div class="reveal">
+    <div class="section-heading">Gia nhập DOBTECH</div>
+    <p class="section-sub" style="margin:0 auto 40px;">Chúng tôi đang tìm kiếm những kỹ sư và nhà lãnh đạo dám nghĩ lớn.</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+      <a href="#" class="btn-primary">Xem vị trí tuyển dụng</a>
+      <a href="mailto:contact@dobtech.vn" class="btn-ghost">Liên hệ chúng tôi</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="hometech.html" class="logo">
+        <div class="logo-mark">DOB</div>
+        <span class="logo-text">DOB<span>TECH</span></span>
+      </a>
+      <p>Công ty Cổ phần Phát triển Công nghệ DOB — kiến tạo hạ tầng số cho Việt Nam và Đông Nam Á.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Công ty</h5>
+      <ul>
+        <li><a href="aboutt.html">Về chúng tôi</a></li>
+        <li><a href="aboutt.html#team">Ban lãnh đạo</a></li>
+        <li><a href="aboutt.html#mission">Tầm nhìn & Sứ mệnh</a></li>
+        <li><a href="#">Tuyển dụng</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Giải pháp</h5>
+      <ul>
+        <li><a href="servicest.html#fintech">Fintech</a></li>
+        <li><a href="servicest.html#chip">Chip & Bán dẫn</a></li>
+        <li><a href="servicest.html#ai">Trí tuệ Nhân tạo</a></li>
+        <li><a href="servicest.html#platform">Nền tảng SaaS</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Nhà đầu tư</h5>
+      <ul>
+        <li><a href="shareholdert.html">Quan hệ cổ đông</a></li>
+        <li><a href="shareholdert.html#reports">Báo cáo tài chính</a></li>
+        <li><a href="shareholdert.html#governance">Quản trị công ty</a></li>
+        <li><a href="shareholdert.html#contact">Liên hệ IR</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 DOBTECH. Mã cổ phiếu: <strong style="color:var(--cyan)">DOT</strong> — HOSE.</span>
+    <span><a href="#">Chính sách bảo mật</a> &nbsp;·&nbsp; <a href="#">Điều khoản</a></span>
+  </div>
+</footer>
+
+<script>
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);} });
+},{threshold:0.1});
+reveals.forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

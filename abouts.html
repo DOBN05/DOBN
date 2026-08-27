@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Về Chúng Tôi — DOBN Securities Corporation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy: #0a1628;
+      --navy-mid: #122040;
+      --navy-light: #1a2f50;
+      --gold: #c9a84c;
+      --gold-light: #e2c47a;
+      --gold-dim: rgba(201,168,76,0.15);
+      --cream: #f5f0e8;
+      --white: #ffffff;
+      --gray: #8a8f9a;
+      --light-bg: #f8f6f1;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--white); overflow-x: hidden; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 60px; height: 72px;
+      background: rgba(10,22,40,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      transition: background 0.3s;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-box {
+      width: 40px; height: 40px; background: var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif; font-weight: 900; font-size: 18px; color: var(--navy);
+      clip-path: polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+    }
+    .logo-text { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--white); letter-spacing: 0.04em; }
+    .logo-text span { color: var(--gold); }
+    .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: rgba(255,255,255,0.75); font-size: 14px; font-weight: 500;
+      letter-spacing: 0.03em; position: relative; transition: color 0.25s;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 1px;
+      background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+    }
+    .nav-links a:hover { color: var(--gold-light); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-links a.active { color: var(--gold-light); }
+    .nav-links a.active::after { transform: scaleX(1); }
+    .nav-cta {
+      background: var(--gold); color: var(--navy) !important;
+      padding: 8px 22px; border-radius: 2px; font-weight: 600 !important; transition: background 0.25s !important;
+    }
+    .nav-cta:hover { background: var(--gold-light) !important; }
+    .nav-cta::after { display: none !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      padding: 160px 60px 100px;
+      position: relative; overflow: hidden;
+      background: linear-gradient(135deg, #060e1c 0%, var(--navy-mid) 60%, #0d1f3c 100%);
+    }
+    .page-hero-grid {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .page-hero-glow {
+      position: absolute; top: -200px; right: -200px;
+      width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+    }
+    .breadcrumb {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 13px; color: rgba(255,255,255,0.4);
+      margin-bottom: 24px; position: relative; z-index: 2;
+    }
+    .breadcrumb a { color: var(--gold); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--gold-light); }
+    .page-hero-content { position: relative; z-index: 2; max-width: 720px; }
+    .page-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 16px;
+    }
+    .page-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(40px, 5vw, 68px); font-weight: 700; line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .page-hero h1 em { font-style: normal; color: var(--gold); }
+    .page-hero p { font-size: 18px; line-height: 1.7; color: rgba(255,255,255,0.6); max-width: 580px; }
+
+    /* ── SECTION BASE ── */
+    section { padding: 100px 60px; }
+    .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(28px, 3.5vw, 44px); font-weight: 700; line-height: 1.2; margin-bottom: 20px; }
+    .section-desc { font-size: 16px; line-height: 1.75; color: rgba(255,255,255,0.6); max-width: 560px; margin-bottom: 56px; }
+
+    /* ── MISSION ── */
+    .mission { background: var(--light-bg); color: var(--navy); padding: 100px 60px; }
+    .mission .section-label { color: var(--gold); }
+    .mission .section-title { color: var(--navy); }
+    .mission-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+    .mission-card {
+      background: var(--white); padding: 56px 48px;
+      border-left: 4px solid transparent; transition: border-color 0.3s, transform 0.3s;
+    }
+    .mission-card:hover { border-color: var(--gold); transform: translateX(4px); }
+    .mission-icon { font-size: 36px; margin-bottom: 24px; display: block; }
+    .mission-card h3 { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: var(--navy); margin-bottom: 16px; }
+    .mission-card p { font-size: 15px; line-height: 1.75; color: rgba(10,22,40,0.65); }
+
+    /* ── HISTORY TIMELINE ── */
+    .history { background: var(--navy); }
+    .timeline { position: relative; max-width: 900px; }
+    .timeline::before {
+      content: ''; position: absolute; left: 130px; top: 0; bottom: 0; width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.4) 10%, rgba(201,168,76,0.4) 90%, transparent);
+    }
+    .tl-item {
+      display: flex; gap: 48px; align-items: flex-start;
+      padding: 0 0 56px; position: relative;
+      opacity: 0; transform: translateX(-30px);
+      transition: opacity 0.6s, transform 0.6s;
+    }
+    .tl-item.visible { opacity: 1; transform: none; }
+    .tl-year {
+      width: 130px; flex-shrink: 0;
+      font-family: 'Playfair Display', serif;
+      font-size: 28px; font-weight: 700; color: var(--gold);
+      text-align: right; padding-right: 24px; padding-top: 4px;
+    }
+    .tl-dot {
+      position: absolute; left: 122px; top: 10px;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 0 4px rgba(201,168,76,0.2);
+    }
+    .tl-content { flex: 1; padding-left: 30px; }
+    .tl-content h3 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--white); margin-bottom: 10px; }
+    .tl-content p { font-size: 14px; line-height: 1.75; color: rgba(255,255,255,0.55); }
+
+    /* ── STATS ── */
+    .stats-band { background: var(--gold); padding: 72px 60px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 40px; text-align: center; }
+    .stat-item .num {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(40px, 5vw, 64px); font-weight: 900; color: var(--navy); line-height: 1;
+    }
+    .stat-item .unit { font-size: 20px; font-weight: 700; color: var(--navy-mid); }
+    .stat-item .lbl { font-size: 14px; font-weight: 600; color: rgba(10,22,40,0.65); margin-top: 10px; letter-spacing: 0.03em; }
+
+    /* ── LEADERSHIP ── */
+    .leadership { background: var(--navy-mid); }
+    .leadership .section-desc { color: rgba(255,255,255,0.55); }
+    .team-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; }
+    .team-card {
+      background: var(--navy); padding: 48px 36px;
+      position: relative; overflow: hidden;
+      transition: transform 0.3s;
+    }
+    .team-card:hover { transform: translateY(-6px); }
+    .team-card::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+      background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.35s;
+    }
+    .team-card:hover::after { transform: scaleX(1); }
+    .team-avatar {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: var(--gold-dim); border: 2px solid rgba(201,168,76,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px; margin-bottom: 24px;
+    }
+    .team-name { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+    .team-role { font-size: 12px; font-weight: 700; color: var(--gold); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 18px; }
+    .team-bio { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,0.5); }
+    .team-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 20px; }
+    .badge-tag {
+      font-size: 11px; font-weight: 600; padding: 4px 10px;
+      background: var(--gold-dim); border: 1px solid rgba(201,168,76,0.25);
+      color: var(--gold-light); border-radius: 2px; letter-spacing: 0.06em;
+    }
+
+    /* ── LICENSES ── */
+    .licenses { background: var(--light-bg); color: var(--navy); }
+    .licenses .section-label { color: var(--gold); }
+    .licenses .section-title { color: var(--navy); }
+    .licenses .section-desc { color: rgba(10,22,40,0.65); }
+    .license-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 24px; }
+    .license-card {
+      background: var(--white); padding: 36px 32px;
+      border-radius: 2px; border-top: 3px solid var(--gold);
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+    .license-card:hover { box-shadow: 0 16px 40px rgba(10,22,40,0.1); transform: translateY(-4px); }
+    .license-icon { font-size: 28px; margin-bottom: 16px; }
+    .license-card h4 { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .license-card p { font-size: 13px; line-height: 1.65; color: rgba(10,22,40,0.6); }
+    .license-num { font-size: 11px; font-weight: 700; color: var(--gold); margin-top: 12px; letter-spacing: 0.08em; }
+
+    /* ── CTA BANNER ── */
+    .cta-banner { background: var(--gold); padding: 80px 60px; text-align: center; }
+    .cta-banner h2 { font-family: 'Playfair Display', serif; font-size: clamp(28px,4vw,48px); font-weight: 700; color: var(--navy); margin-bottom: 16px; }
+    .cta-banner p { font-size: 17px; color: rgba(10,22,40,0.75); max-width: 560px; margin: 0 auto 36px; line-height: 1.6; }
+    .btn-dark { display: inline-flex; align-items: center; gap: 10px; background: var(--navy); color: var(--white); padding: 15px 36px; border-radius: 2px; font-weight: 600; font-size: 15px; text-decoration: none; transition: background 0.2s; }
+    .btn-dark:hover { background: var(--navy-mid); }
+
+    /* ── FOOTER ── */
+    footer { background: #060e1c; padding: 72px 60px 40px; border-top: 1px solid rgba(201,168,76,0.12); }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; margin-bottom: 56px; }
+    .footer-brand p { font-size: 14px; line-height: 1.75; color: rgba(255,255,255,0.45); margin-top: 20px; max-width: 280px; }
+    .footer-col h4 { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-col ul a { font-size: 14px; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--gold-light); }
+    .footer-bottom { padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: space-between; }
+    .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.3); }
+    .footer-socials { display: flex; gap: 16px; }
+    .social-btn { width: 36px; height: 36px; border: 1px solid rgba(201,168,76,0.2); border-radius: 2px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.4); font-size: 14px; cursor: pointer; transition: border-color 0.2s, color 0.2s; text-decoration: none; }
+    .social-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s, transform 0.7s; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .page-hero { padding: 120px 24px 72px; }
+      section, .mission, .stats-band, .licenses, .leadership { padding: 72px 24px; }
+      .mission-grid { grid-template-columns: 1fr; gap: 1px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .team-grid { grid-template-columns: 1fr; gap: 1px; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+      .timeline::before { left: 0; }
+      .tl-item { flex-direction: column; gap: 8px; padding-left: 28px; }
+      .tl-year { width: auto; text-align: left; padding: 0; font-size: 22px; }
+      .tl-dot { left: -8px; }
+      .tl-content { padding-left: 0; }
+      .cta-banner { padding: 60px 24px; }
+      footer { padding: 60px 24px 32px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="home.html" class="nav-logo">
+    <div class="logo-box">DB</div>
+    <span class="logo-text">DOBN <span>Securities</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="about.html" class="active">About Us</a></li>
+    <li><a href="individual.html">Khách Hàng Cá Nhân</a></li>
+    <li><a href="institutional.html">Khách Hàng Tổ Chức</a></li>
+    <li><a href="shareholder.html">Quan Hệ Cổ Đông</a></li>
+    <li><a href="news.html">Tin Tức</a></li>
+    <li><a href="individual.html" class="nav-cta">Liên hệ tư vấn</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-grid"></div>
+  <div class="page-hero-glow"></div>
+  <div class="page-hero-content" style="animation: fadeUp 0.9s ease both;">
+    <div class="breadcrumb">
+      <a href="home.html">Trang Chủ</a>
+      <span>›</span>
+      <span>About Us</span>
+    </div>
+    <div class="page-label">Về Chúng Tôi</div>
+    <h1>Hơn 15 Năm<br/><em>Kiến Tạo Giá Trị</em></h1>
+    <p>DOBN Securities là công ty chứng khoán hàng đầu Việt Nam, được thành lập với sứ mệnh mang lại cơ hội đầu tư bình đẳng và chuyên nghiệp cho mọi nhà đầu tư.</p>
+  </div>
+</div>
+
+<!-- MISSION & VISION -->
+<section class="mission reveal">
+  <div class="section-label">Tầm Nhìn & Sứ Mệnh</div>
+  <div class="section-title" style="color:var(--navy)">Định Hướng Phát Triển</div>
+  <div class="mission-grid">
+    <div class="mission-card">
+      <span class="mission-icon">🎯</span>
+      <h3>Sứ Mệnh</h3>
+      <p>Kết nối nhà đầu tư với cơ hội tăng trưởng tài sản bền vững thông qua dịch vụ chứng khoán minh bạch, công nghệ tiên tiến và đội ngũ chuyên gia tận tâm. Chúng tôi cam kết đặt lợi ích khách hàng lên trên hết trong mọi quyết định.</p>
+    </div>
+    <div class="mission-card">
+      <span class="mission-icon">🌟</span>
+      <h3>Tầm Nhìn</h3>
+      <p>Trở thành công ty chứng khoán số 1 Việt Nam vào năm 2030, với nền tảng công nghệ đẳng cấp quốc tế, phục vụ hơn 500,000 nhà đầu tư và đóng góp tích cực vào sự phát triển của thị trường vốn Việt Nam.</p>
+    </div>
+    <div class="mission-card">
+      <span class="mission-icon">⚖️</span>
+      <h3>Giá Trị Cốt Lõi</h3>
+      <p>Minh bạch — Chính trực — Đổi mới — Trách nhiệm. Bốn giá trị này là kim chỉ nam trong mọi hoạt động của DOBN, từ giao dịch hàng ngày đến chiến lược phát triển dài hạn.</p>
+    </div>
+    <div class="mission-card">
+      <span class="mission-icon">🤝</span>
+      <h3>Cam Kết</h3>
+      <p>Bảo vệ tài sản khách hàng tuyệt đối. Cung cấp thông tin chính xác, kịp thời. Không ngừng cải thiện chất lượng dịch vụ. Đồng hành cùng nhà đầu tư trong mọi biến động của thị trường.</p>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-band reveal">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div class="num">15<span class="unit">+</span></div>
+      <div class="lbl">Năm Hoạt Động</div>
+    </div>
+    <div class="stat-item">
+      <div class="num">50<span class="unit">K+</span></div>
+      <div class="lbl">Nhà Đầu Tư</div>
+    </div>
+    <div class="stat-item">
+      <div class="num">200<span class="unit">+</span></div>
+      <div class="lbl">Chuyên Gia</div>
+    </div>
+    <div class="stat-item">
+      <div class="num">Top<span class="unit"> 10</span></div>
+      <div class="lbl">Thị Phần VN</div>
+    </div>
+  </div>
+</div>
+
+<!-- HISTORY TIMELINE -->
+<section class="history reveal">
+  <div class="section-label">Lịch Sử Hình Thành</div>
+  <div class="section-title">Hành Trình Phát Triển</div>
+  <div class="section-desc">Từ những ngày đầu thành lập đến vị thế hàng đầu ngành chứng khoán Việt Nam.</div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-year">2009</div>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3>Thành Lập Công Ty</h3>
+        <p>DOBN Securities được thành lập với vốn điều lệ ban đầu 300 tỷ đồng, nhận giấy phép hoạt động kinh doanh chứng khoán từ Ủy ban Chứng khoán Nhà nước. Văn phòng đầu tiên đặt tại TP.HCM với 50 nhân viên.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2012</div>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3>Mở Rộng Toàn Quốc</h3>
+        <p>Khai trương chi nhánh Hà Nội và Đà Nẵng. Vốn điều lệ tăng lên 500 tỷ đồng. Số lượng tài khoản khách hàng vượt mốc 10,000. Ra mắt nền tảng giao dịch trực tuyến đầu tiên.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2016</div>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3>Lên Sàn Chứng Khoán</h3>
+        <p>Cổ phiếu DOBN chính thức niêm yết trên sàn HoSE. Vốn hóa thị trường đạt 2,500 tỷ đồng. Được vinh danh "Công ty chứng khoán tốt nhất Việt Nam" bởi Finance Asia.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2019</div>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3>Chuyển Đổi Số</h3>
+        <p>Ra mắt ứng dụng DOBN Mobile với hơn 1 triệu lượt tải trong năm đầu tiên. Triển khai AI phân tích thị trường và hệ thống giao dịch thuật toán. Thị phần môi giới vươn lên Top 5 toàn thị trường.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2023</div>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3>Kỷ Nguyên Mới</h3>
+        <p>Hoàn thành nâng vốn điều lệ lên 1,500 tỷ đồng. Ra mắt dịch vụ quản lý tài sản và quỹ đầu tư DOBN Capital. Mở rộng sang thị trường phái sinh và chứng quyền có bảo đảm. Số lượng khách hàng vượt 50,000.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEADERSHIP -->
+<section class="leadership reveal">
+  <div class="section-label">Ban Lãnh Đạo</div>
+  <div class="section-title">Đội Ngũ Dẫn Dắt</div>
+  <div class="section-desc">Những chuyên gia tài chính hàng đầu với hàng chục năm kinh nghiệm trong nước và quốc tế.</div>
+
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-avatar">👨‍💼</div>
+      <div class="team-name">Nguyễn Minh Khoa</div>
+      <div class="team-role">Chủ Tịch HĐQT</div>
+      <div class="team-bio">Hơn 25 năm kinh nghiệm trong lĩnh vực tài chính và ngân hàng đầu tư. Từng giữ vị trí CEO tại các tập đoàn tài chính hàng đầu khu vực Đông Nam Á.</div>
+      <div class="team-badges"><span class="badge-tag">MBA Harvard</span><span class="badge-tag">CFA</span><span class="badge-tag">25+ năm KN</span></div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">👩‍💼</div>
+      <div class="team-name">Trần Thị Thu Hà</div>
+      <div class="team-role">Tổng Giám Đốc</div>
+      <div class="team-bio">Tiến sĩ Tài chính tại ĐH Quốc gia Singapore. 18 năm kinh nghiệm quản lý danh mục đầu tư và phát triển chiến lược tại Goldman Sachs và Morgan Stanley Asia.</div>
+      <div class="team-badges"><span class="badge-tag">PhD Finance</span><span class="badge-tag">CFA</span><span class="badge-tag">FRM</span></div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">👨‍💻</div>
+      <div class="team-name">Lê Quốc Hùng</div>
+      <div class="team-role">Giám Đốc Công Nghệ</div>
+      <div class="team-bio">Chuyên gia công nghệ tài chính (FinTech) với kinh nghiệm xây dựng hệ thống giao dịch tốc độ cao. Từng làm việc tại Bloomberg và Refinitiv tại London.</div>
+      <div class="team-badges"><span class="badge-tag">MIT CS</span><span class="badge-tag">FinTech</span><span class="badge-tag">AI/ML</span></div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">📊</div>
+      <div class="team-name">Phạm Thanh Bình</div>
+      <div class="team-role">Giám Đốc Tài Chính</div>
+      <div class="team-bio">ACCA, CPA với 20 năm kinh nghiệm kiểm toán và quản lý tài chính tại Big4. Chuyên gia về cấu trúc vốn, quản lý rủi ro và tuân thủ quy định tài chính.</div>
+      <div class="team-badges"><span class="badge-tag">ACCA</span><span class="badge-tag">CPA</span><span class="badge-tag">Big4</span></div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">🔍</div>
+      <div class="team-name">Vũ Thị Lan Anh</div>
+      <div class="team-role">Giám Đốc Phân Tích</div>
+      <div class="team-bio">15 năm nghiên cứu thị trường chứng khoán Việt Nam và ASEAN. Tốt nghiệp Wharton School. Thường xuyên xuất hiện trên Bloomberg TV, CNBC Asia với bình luận thị trường.</div>
+      <div class="team-badges"><span class="badge-tag">Wharton MBA</span><span class="badge-tag">CFA L3</span><span class="badge-tag">15+ năm</span></div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">🌏</div>
+      <div class="team-name">Đỗ Văn Nam</div>
+      <div class="team-role">Giám Đốc Kinh Doanh</div>
+      <div class="team-bio">Chuyên gia phát triển kinh doanh và quản lý quan hệ khách hàng tổ chức. 12 năm xây dựng mạng lưới nhà đầu tư tổ chức trong và ngoài nước tại DOBN.</div>
+      <div class="team-badges"><span class="badge-tag">RMIT Finance</span><span class="badge-tag">CMT</span><span class="badge-tag">12+ năm</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- LICENSES -->
+<section class="licenses reveal">
+  <div class="section-label">Giấy Phép & Chứng Nhận</div>
+  <div class="section-title">Hoạt Động Minh Bạch, Tuân Thủ Pháp Luật</div>
+  <div class="section-desc" style="color:rgba(10,22,40,0.65)">DOBN hoạt động đầy đủ theo các quy định của pháp luật Việt Nam và tiêu chuẩn quốc tế.</div>
+
+  <div class="license-grid">
+    <div class="license-card">
+      <div class="license-icon">🏛️</div>
+      <h4>Môi Giới Chứng Khoán</h4>
+      <p>Giấy phép môi giới chứng khoán đầy đủ trên các sàn HOSE, HNX và UPCOM.</p>
+      <div class="license-num">GP SỐ: 01/UBCK-GPKD</div>
+    </div>
+    <div class="license-card">
+      <div class="license-icon">📋</div>
+      <h4>Tự Doanh Chứng Khoán</h4>
+      <p>Được phép giao dịch tự doanh cổ phiếu, trái phiếu và chứng khoán phái sinh.</p>
+      <div class="license-num">GP SỐ: 02/UBCK-GPTD</div>
+    </div>
+    <div class="license-card">
+      <div class="license-icon">🔒</div>
+      <h4>Lưu Ký Chứng Khoán</h4>
+      <p>Thành viên lưu ký tại Trung tâm Lưu ký Chứng khoán Việt Nam (VSD).</p>
+      <div class="license-num">TV LƯU KÝ: VSD-DOBN-2010</div>
+    </div>
+    <div class="license-card">
+      <div class="license-icon">💼</div>
+      <h4>Quản Lý Danh Mục</h4>
+      <p>Cung cấp dịch vụ quản lý danh mục đầu tư cho khách hàng cá nhân và tổ chức.</p>
+      <div class="license-num">GP SỐ: 05/UBCK-GPQLDM</div>
+    </div>
+    <div class="license-card">
+      <div class="license-icon">📊</div>
+      <h4>Tư Vấn Đầu Tư</h4>
+      <p>Giấy phép tư vấn đầu tư chứng khoán và tư vấn tài chính doanh nghiệp.</p>
+      <div class="license-num">GP SỐ: 08/UBCK-GPTV</div>
+    </div>
+    <div class="license-card">
+      <div class="license-icon">🌐</div>
+      <h4>Thành Viên ASIFMA</h4>
+      <p>Thành viên chính thức của Hiệp hội Thị trường Tài chính Châu Á (ASIFMA) từ 2018.</p>
+      <div class="license-num">MÃ TV: ASIFMA-VN-0024</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-banner reveal">
+  <h2>Sẵn Sàng Đầu Tư Cùng DOBN?</h2>
+  <p>Tham gia cùng hơn 50,000 nhà đầu tư tin tưởng lựa chọn DOBN. Mở tài khoản miễn phí ngay hôm nay.</p>
+  <a href="individual.html" class="btn-dark">Mở Tài Khoản Ngay ↗</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="home.html" class="nav-logo">
+        <div class="logo-box">DB</div>
+        <span class="logo-text">DOBN <span>Securities</span></span>
+      </a>
+      <p>Công ty Cổ phần Chứng khoán DOBN — Giấy phép kinh doanh chứng khoán số 01/UBCK-GPKD. Thành viên HOSE, HNX, UPCOM.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Dịch Vụ</h4>
+      <ul>
+        <li><a href="individual.html">Khách Hàng Cá Nhân</a></li>
+        <li><a href="institutional.html">Khách Hàng Tổ Chức</a></li>
+        <li><a href="individual.html">Margin & Tài Chính</a></li>
+        <li><a href="individual.html">Phân Tích Đầu Tư</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Công Ty</h4>
+      <ul>
+        <li><a href="about.html">Giới Thiệu</a></li>
+        <li><a href="shareholder.html">Quan Hệ Cổ Đông</a></li>
+        <li><a href="news.html">Tin Tức</a></li>
+        <li><a href="about.html">Tuyển Dụng</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Hỗ Trợ</h4>
+      <ul>
+        <li><a href="#">Hotline: 1900 xxxx</a></li>
+        <li><a href="#">info@dobn.com.vn</a></li>
+        <li><a href="#">Câu Hỏi Thường Gặp</a></li>
+        <li><a href="#">Chính Sách Bảo Mật</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 DOBN Securities Corporation. All rights reserved.</p>
+    <div class="footer-socials">
+      <a href="#" class="social-btn">f</a>
+      <a href="#" class="social-btn">in</a>
+      <a href="#" class="social-btn">▶</a>
+      <a href="#" class="social-btn">Z</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal, .tl-item');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), e.target.classList.contains('tl-item') ? 0 : 0);
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => io.observe(r));
+
+  // Stagger timeline items
+  document.querySelectorAll('.tl-item').forEach((el, i) => {
+    el.style.transitionDelay = (i * 0.1) + 's';
+  });
+
+  function toggleMenu() {
+    const links = document.querySelector('.nav-links');
+    links.style.cssText = links.style.display === 'flex' ? '' :
+      'display:flex;flex-direction:column;position:fixed;top:72px;left:0;right:0;background:#0a1628;padding:24px;gap:20px;border-bottom:1px solid rgba(201,168,76,0.2);z-index:99;';
+  }
+
+  window.addEventListener('scroll', () => {
+    document.querySelector('nav').style.background =
+      window.scrollY > 40 ? 'rgba(6,14,28,0.98)' : 'rgba(10,22,40,0.95)';
+  });
+</script>
+</body>
+</html>

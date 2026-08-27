@@ -1,0 +1,289 @@
+/* RESET */
+body{
+  margin:0;
+  font-family: Arial, sans-serif;
+  background:#e9edf5;
+}
+
+/* WRAPPER */
+.wrapper{
+  width:95%;
+  margin:20px auto;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 5px 20px rgba(0,0,0,0.15);
+  background:white;
+}
+
+/* HEADER */
+header{
+  background:white;
+  color:#1d3f8f;
+  padding:15px 25px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+/* LOGO */
+.logo{
+  display:flex;
+  align-items:center;
+  background:white;
+  padding:5px 10px;
+  border-radius:12px;
+}
+
+.logo img{
+  height:80px; /* giảm lại cho cân */
+  transform:scale(1.5);
+}
+
+/* MENU */
+nav{
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap; /* 👈 thêm dòng này */
+}
+
+nav a{
+  color:#1d3f8f;
+  margin-left:20px;
+  text-decoration:none;
+  font-size:16px;
+  font-weight:bold;
+  position:relative;
+}
+
+nav a:hover{
+  color:#4da6ff;
+}
+
+/* ACTIVE MENU */
+nav a.active::after{
+  content:'';
+  position:absolute;
+  width:100%;
+  height:3px;
+  background:#1e90ff;
+  left:0;
+  bottom:-5px;
+}
+
+/* HERO */
+.hero {
+  position: relative;
+  height: 450px; /* tăng chiều cao cho đúng hero */
+  text-align: center;
+  color: white;
+
+  background: url('DOBN/1.png') center 20%/cover no-repeat;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* overlay */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+  z-index: 1;/* giảm từ 0.5 -> 0.3 cho đỡ tối */
+}
+
+/* text */
+.hero h1{
+  position: relative;
+  z-index: 2;
+  color:white; /* đảm bảo trắng 100% */
+  text-shadow: 0 3px 10px rgba(0,0,0,0.8);
+},
+.hero h2 {
+  position: relative;
+  z-index: 3;
+  color:white; /* đảm bảo trắng 100% */
+  text-shadow: 0 3px 10px rgba(0,0,0,0.8);
+}
+
+.hero h1 {
+  font-size: 40px;
+  margin: 0;
+  font-weight: 700;
+}
+
+.hero h2 {
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+
+/* content nổi lên */
+.hero-content {
+  position: relative;
+  z-index: 0;
+}
+/* CONTAINER */
+.container{
+  padding:30px;
+}
+
+/* CARD */
+.card{
+  background:white;
+  padding:20px;
+  margin-bottom:20px;
+  border-radius:10px;
+  box-shadow:0 2px 5px rgba(0,0,0,0.1);
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+}
+
+/* TABLE */
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th{
+  background:#0b3d91;
+  color:white;
+}
+
+th,td{
+  padding:10px;
+  border-bottom:1px solid #ddd;
+  text-align:center;
+}
+
+/* GALLERY */
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+}
+
+.gallery img{
+  width:100%;
+  height:200px;
+  object-fit:cover;
+  border-radius:10px;
+  transition:0.3s;
+}
+
+.gallery img:hover{
+  transform:scale(1.05);
+}
+
+/* BUTTON */
+button{
+  padding:10px 15px;
+  margin:5px;
+  border:none;
+  background:#1e90ff;
+  color:white;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#0b3d91;
+}
+.container {
+  width: 95%;
+  margin: auto;
+  overflow-x: auto; /* ✅ cho phép scroll ngang */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 1200px; /* ✅ giữ layout không bị bể */
+}
+
+.card {
+  overflow-x: auto; /* ✅ backup thêm */
+}
+/* FOOTER */
+/* FOOTER */
+footer {
+  background: #0b3d91;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  
+  /* Thêm những dòng này */
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: auto;
+}
+
+/* Đảm bảo body full height */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #e9edf5;
+  min-height: 100vh;        /* ← thêm */
+  display: flex;            /* ← thêm */
+  flex-direction: column;   /* ← thêm */
+}
+
+/* Wrapper không được chiếm hết không gian */
+.wrapper {
+  width: 95%;
+  margin: 20px auto;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+  background: white;
+  flex: 1;   /* ← thêm dòng này */
+}
+
+.video-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.video-card {
+  position: relative;
+  width: 1200px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  transition: 0.3s ease;
+  background: #000;
+}
+
+.video-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 45px rgba(0,0,0,0.35);
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+/* lớp phủ làm video nhìn “cinematic” hơn */
+.video-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.55),
+    rgba(0,0,0,0.05)
+  );
+  pointer-events: none;
+}
+/* Fix oklch cho html2canvas */
+* {
+    --tw-shadow-color: rgba(0,0,0,0.1) !important;
+}

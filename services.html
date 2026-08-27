@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sản phẩm & Dịch vụ – DOB Bank</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy:   #04045d;
+      --navy2:  #07078a;
+      --navy-light: #0c0ca8;
+      --gold:   #c9a84c;
+      --gold-light: #e8c96e;
+      --cream:  #f7f5ef;
+      --white:  #ffffff;
+      --gray:   #f0eff9;
+      --text:   #1a1a3e;
+      --muted:  #6b6b9a;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Be Vietnam Pro', sans-serif; background: var(--white); color: var(--text); overflow-x: hidden; }
+
+    /* ── TOPBAR ── */
+    .topbar { background: var(--navy); color: rgba(255,255,255,.6); font-size: .72rem; letter-spacing: .04em; padding: .45rem 0; }
+    .topbar-inner { max-width: 1280px; margin: auto; padding: 0 2rem; display: flex; justify-content: space-between; }
+    .topbar a { color: inherit; text-decoration: none; } .topbar a:hover { color: var(--gold-light); }
+    .topbar-links { display: flex; gap: 1.4rem; }
+
+    /* ── NAVBAR ── */
+    nav { position: sticky; top: 0; z-index: 100; background: var(--white); box-shadow: 0 2px 20px rgba(4,4,93,.1); border-bottom: 3px solid var(--gold); }
+    .nav-inner { max-width: 1280px; margin: auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 72px; }
+    .logo-wrap { display: flex; align-items: center; gap: .9rem; text-decoration: none; }
+    .logo-wrap img { height: 46px; width: auto; object-fit: contain; }
+    .logo-name { font-family: 'Playfair Display', serif; font-size: 1.55rem; font-weight: 700; color: var(--navy); }
+    .logo-sub { font-size: .62rem; color: var(--gold); letter-spacing: .14em; text-transform: uppercase; font-weight: 600; }
+    .nav-menu { display: flex; align-items: center; gap: .15rem; }
+    .nav-item { position: relative; }
+    .nav-link { display: block; padding: .55rem 1rem; font-size: .82rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--navy); text-decoration: none; border-radius: 4px; transition: background .2s, color .2s; }
+    .nav-link:hover { background: var(--gray); } .nav-link.active { color: var(--gold); }
+    .dropdown { position: absolute; top: calc(100% + 8px); left: 0; background: var(--white); border-top: 3px solid var(--gold); box-shadow: 0 12px 40px rgba(4,4,93,.15); min-width: 220px; border-radius: 0 0 8px 8px; opacity: 0; pointer-events: none; transform: translateY(-8px); transition: all .22s ease; z-index: 200; }
+    .nav-item:hover .dropdown { opacity: 1; pointer-events: auto; transform: none; }
+    .dropdown a { display: block; padding: .7rem 1.2rem; font-size: .8rem; color: var(--text); text-decoration: none; font-weight: 500; border-bottom: 1px solid var(--gray); transition: background .15s, padding-left .15s; }
+    .dropdown a:last-child { border-bottom: none; } .dropdown a:hover { background: var(--gray); padding-left: 1.6rem; }
+    .nav-cta { background: var(--navy); color: var(--white) !important; border-radius: 4px; padding: .55rem 1.3rem !important; }
+    .nav-cta:hover { background: var(--navy2) !important; }
+
+    /* ── HERO ── */
+    .page-hero { background: var(--navy); position: relative; overflow: hidden; padding: 7rem 0 5rem; }
+    .page-hero-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 90% 50%, rgba(12,12,168,.5) 0%, transparent 65%),
+                  radial-gradient(ellipse 40% 60% at 10% 80%, rgba(201,168,76,.08) 0%, transparent 55%),
+                  linear-gradient(135deg, #04045d 0%, #06067a 100%);
+    }
+    .page-hero-lines { position: absolute; inset: 0; opacity: .04;
+      background: repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(255,255,255,.5) 79px, rgba(255,255,255,.5) 80px); }
+    .page-hero-inner { position: relative; z-index: 1; max-width: 1280px; margin: auto; padding: 0 2rem; }
+    .breadcrumb { display: flex; align-items: center; gap: .5rem; font-size: .75rem; color: rgba(255,255,255,.5); margin-bottom: 1.5rem; }
+    .breadcrumb a { color: var(--gold); text-decoration: none; } .breadcrumb span { color: rgba(255,255,255,.3); }
+    .page-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 4vw, 3.4rem); font-weight: 700; color: var(--white); line-height: 1.2; margin-bottom: 1rem; }
+    .page-hero h1 em { color: var(--gold-light); font-style: normal; }
+    .page-hero p { color: rgba(255,255,255,.7); font-size: 1rem; line-height: 1.75; max-width: 600px; }
+
+    /* ── SEGMENT TABS ── */
+    .segment-nav { background: var(--white); border-bottom: 1px solid rgba(4,4,93,.1); position: sticky; top: 72px; z-index: 90; }
+    .segment-tabs { max-width: 1280px; margin: auto; padding: 0 2rem; display: flex; gap: 0; overflow-x: auto; }
+    .seg-tab { display: flex; align-items: center; gap: .6rem; padding: 1.1rem 1.6rem; font-size: .82rem; font-weight: 600; color: var(--muted); text-decoration: none; border-bottom: 3px solid transparent; transition: color .2s, border-color .2s; white-space: nowrap; cursor: pointer; }
+    .seg-tab:hover { color: var(--navy); border-color: rgba(4,4,93,.2); }
+    .seg-tab.active { color: var(--navy); border-color: var(--gold); }
+    .seg-tab .tab-icon { font-size: 1.1rem; }
+
+    /* ── SECTION COMMONS ── */
+    .seg-section { padding: 5rem 0; }
+    .seg-section:nth-child(even) { background: var(--cream); }
+    .section-inner { max-width: 1280px; margin: auto; padding: 0 2rem; }
+    .section-tag { font-size: .7rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); margin-bottom: .7rem; display: flex; align-items: center; gap: .5rem; }
+    .section-tag::before { content: ''; width: 22px; height: 2px; background: var(--gold); }
+    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.7rem, 2.8vw, 2.4rem); font-weight: 700; color: var(--navy); line-height: 1.25; margin-bottom: 1rem; }
+    .section-desc { color: var(--muted); font-size: .92rem; line-height: 1.75; max-width: 680px; margin-bottom: 3rem; }
+
+    /* segment anchor */
+    .seg-anchor { scroll-margin-top: 140px; }
+
+    /* ── HERO SEGMENT BANNER ── */
+    .seg-banner { border-radius: 16px; overflow: hidden; position: relative; padding: 3.5rem; margin-bottom: 3.5rem; }
+    .seg-banner::before { content: ''; position: absolute; inset: 0; }
+    .seg-banner.dinh-che::before { background: linear-gradient(135deg, #04045d 0%, #060680 100%); }
+    .seg-banner.doanh-nghiep::before { background: linear-gradient(135deg, #06064a 0%, #0d0d70 60%, #04045d 100%); }
+    .seg-banner.ca-nhan::before { background: linear-gradient(135deg, #0a0a6e 0%, #04045d 100%); }
+    .seg-banner.premium::before { background: linear-gradient(135deg, #1a0f03 0%, #2a1a05 40%, #04045d 100%); }
+    .seg-banner-content { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: center; }
+    .seg-banner-icon { font-size: 4.5rem; opacity: .85; }
+    .seg-banner-badge { display: inline-flex; align-items: center; gap: .5rem; background: rgba(201,168,76,.15); border: 1px solid rgba(201,168,76,.3); color: var(--gold-light); font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: .35rem .9rem; border-radius: 100px; margin-bottom: 1rem; }
+    .seg-banner h2 { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--white); font-weight: 700; line-height: 1.2; margin-bottom: .8rem; }
+    .seg-banner p { color: rgba(255,255,255,.7); font-size: .88rem; line-height: 1.7; max-width: 520px; }
+
+    /* ── PRODUCT CARDS ── */
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+    .prod-card { background: var(--white); border-radius: 14px; overflow: hidden; border: 1px solid rgba(4,4,93,.08); box-shadow: 0 2px 16px rgba(4,4,93,.05); transition: transform .25s, box-shadow .25s, border-color .25s; }
+    .prod-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(4,4,93,.12); border-color: var(--gold); }
+    .prod-card-header { padding: 1.8rem 1.8rem 1.2rem; background: var(--gray); display: flex; align-items: flex-start; justify-content: space-between; }
+    .prod-icon { width: 52px; height: 52px; border-radius: 12px; background: var(--navy); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; }
+    .prod-badge { font-size: .65rem; font-weight: 700; padding: .25rem .7rem; border-radius: 100px; letter-spacing: .06em; text-transform: uppercase; }
+    .prod-badge.new { background: rgba(26,107,47,.12); color: #1a6b2f; }
+    .prod-badge.hot { background: rgba(201,168,76,.15); color: #8a6010; }
+    .prod-badge.popular { background: rgba(4,4,93,.1); color: var(--navy); }
+    .prod-card-body { padding: 1.4rem 1.8rem 1.8rem; }
+    .prod-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 600; color: var(--navy); margin-bottom: .6rem; }
+    .prod-desc { font-size: .8rem; color: var(--muted); line-height: 1.65; margin-bottom: 1.2rem; }
+    .prod-highlights { display: flex; flex-direction: column; gap: .45rem; margin-bottom: 1.4rem; }
+    .prod-hl { display: flex; align-items: center; gap: .6rem; font-size: .78rem; color: var(--text); }
+    .prod-hl::before { content: '✓'; color: var(--gold); font-weight: 700; font-size: .7rem; flex-shrink: 0; }
+    .prod-rate { background: rgba(4,4,93,.05); border-radius: 8px; padding: .7rem 1rem; display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; }
+    .prod-rate-label { font-size: .7rem; color: var(--muted); }
+    .prod-rate-val { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--navy); font-weight: 700; }
+    .prod-rate-unit { font-size: .65rem; color: var(--muted); }
+    .btn-apply { display: block; text-align: center; background: var(--navy); color: var(--white); padding: .75rem; border-radius: 8px; font-size: .8rem; font-weight: 700; text-decoration: none; letter-spacing: .04em; transition: background .2s; }
+    .btn-apply:hover { background: var(--navy2); }
+    .btn-apply.gold { background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: var(--navy); box-shadow: 0 4px 16px rgba(201,168,76,.3); }
+
+    /* ── FEATURES TABLE ── */
+    .feat-table { width: 100%; border-collapse: collapse; border-radius: 12px; overflow: hidden; }
+    .feat-table thead tr { background: var(--navy); color: var(--white); }
+    .feat-table th { padding: 1rem 1.2rem; font-size: .78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; text-align: left; }
+    .feat-table tbody tr { border-bottom: 1px solid var(--gray); transition: background .15s; }
+    .feat-table tbody tr:last-child { border-bottom: none; }
+    .feat-table tbody tr:hover { background: var(--gray); }
+    .feat-table td { padding: .9rem 1.2rem; font-size: .82rem; color: var(--text); vertical-align: middle; }
+    .feat-table td:first-child { font-weight: 600; color: var(--navy); }
+    .feat-check { color: #1a6b2f; font-weight: 700; }
+    .feat-x { color: #aaa; }
+
+    /* ── TWO COL LAYOUT ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .two-col.reverse { direction: rtl; } .two-col.reverse > * { direction: ltr; }
+    .visual-box { border-radius: 16px; overflow: hidden; position: relative; min-height: 360px; display: flex; align-items: center; justify-content: center; }
+    .visual-box-bg { position: absolute; inset: 0; background: linear-gradient(135deg, var(--navy), var(--navy2)); }
+    .visual-box-content { position: relative; z-index: 1; padding: 2.5rem; width: 100%; }
+    .vstat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .vstat { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); border-radius: 10px; padding: 1.2rem; }
+    .vstat-num { font-family: 'Playfair Display', serif; color: var(--gold-light); font-size: 1.6rem; font-weight: 700; }
+    .vstat-label { color: rgba(255,255,255,.55); font-size: .7rem; margin-top: .25rem; }
+
+    /* ── PREMIUM SPECIAL ── */
+    .premium-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 3rem; }
+    .prem-card { border-radius: 16px; padding: 2rem; position: relative; overflow: hidden; }
+    .prem-card.tier-gold { background: linear-gradient(135deg, #1a1440, #0a0860); border: 1px solid rgba(201,168,76,.3); }
+    .prem-card.tier-platinum { background: linear-gradient(135deg, #0d0d1a, #1a1a3e); border: 1px solid rgba(180,200,220,.25); }
+    .prem-card.tier-black { background: linear-gradient(135deg, #080808, #1a0808); border: 1px solid rgba(255,200,80,.2); }
+    .prem-card::after { content: ''; position: absolute; top: -40px; right: -40px; width: 120px; height: 120px; border-radius: 50%; }
+    .prem-card.tier-gold::after { background: radial-gradient(circle, rgba(201,168,76,.2), transparent 70%); }
+    .prem-card.tier-platinum::after { background: radial-gradient(circle, rgba(180,200,220,.15), transparent 70%); }
+    .prem-card.tier-black::after { background: radial-gradient(circle, rgba(255,100,0,.1), transparent 70%); }
+    .prem-tier { font-size: .65rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin-bottom: .8rem; }
+    .tier-gold .prem-tier { color: var(--gold); }
+    .tier-platinum .prem-tier { color: #b4c8dc; }
+    .tier-black .prem-tier { color: #e8c000; }
+    .prem-name { font-family: 'Playfair Display', serif; color: var(--white); font-size: 1.5rem; font-weight: 700; margin-bottom: .4rem; }
+    .prem-min { color: rgba(255,255,255,.45); font-size: .72rem; margin-bottom: 1.4rem; }
+    .prem-perks { display: flex; flex-direction: column; gap: .55rem; margin-bottom: 1.8rem; }
+    .prem-perk { font-size: .78rem; color: rgba(255,255,255,.75); display: flex; gap: .5rem; }
+    .prem-perk::before { content: '✦'; font-size: .55rem; flex-shrink: 0; margin-top: .15rem; }
+    .tier-gold .prem-perk::before { color: var(--gold); }
+    .tier-platinum .prem-perk::before { color: #b4c8dc; }
+    .tier-black .prem-perk::before { color: #e8c000; }
+    .btn-prem { display: block; text-align: center; padding: .7rem; border-radius: 8px; font-size: .78rem; font-weight: 700; text-decoration: none; letter-spacing: .04em; }
+    .tier-gold .btn-prem { background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: var(--navy); }
+    .tier-platinum .btn-prem { background: rgba(180,200,220,.15); color: #b4c8dc; border: 1px solid rgba(180,200,220,.3); }
+    .tier-black .btn-prem { background: rgba(255,200,0,.1); color: #e8c000; border: 1px solid rgba(255,200,0,.25); }
+
+    /* ── CTA STRIP ── */
+    .cta-strip { background: var(--navy); padding: 4rem 0; }
+    .cta-inner { max-width: 1280px; margin: auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap; }
+    .cta-text h3 { font-family: 'Playfair Display', serif; color: var(--white); font-size: 1.8rem; margin-bottom: .5rem; }
+    .cta-text p { color: rgba(255,255,255,.6); font-size: .88rem; }
+    .cta-btns { display: flex; gap: 1rem; }
+    .btn-gold { background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: var(--navy); font-weight: 700; font-size: .88rem; padding: .85rem 2rem; border-radius: 4px; text-decoration: none; }
+    .btn-outline-w { border: 1.5px solid rgba(255,255,255,.3); color: var(--white); font-weight: 600; font-size: .88rem; padding: .85rem 2rem; border-radius: 4px; text-decoration: none; transition: border-color .2s; }
+    .btn-outline-w:hover { border-color: var(--gold); }
+
+    /* ── FOOTER ── */
+    footer { background: #020238; color: rgba(255,255,255,.6); padding-top: 3.5rem; }
+    .footer-grid { max-width: 1280px; margin: auto; padding: 0 2rem 2.5rem; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; }
+    .footer-logo-name { font-family: 'Playfair Display', serif; color: var(--white); font-size: 1.4rem; font-weight: 700; }
+    .footer-logo-sub { color: var(--gold); font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; margin-top: .15rem; }
+    .footer-about { margin-top: .9rem; font-size: .78rem; line-height: 1.7; max-width: 260px; }
+    .footer-col h4 { color: var(--white); font-size: .76rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; margin-bottom: .9rem; padding-bottom: .5rem; border-bottom: 1px solid rgba(255,255,255,.1); }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
+    .footer-col ul li a { color: rgba(255,255,255,.5); font-size: .78rem; text-decoration: none; transition: color .2s; }
+    .footer-col ul li a:hover { color: var(--gold-light); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.08); max-width: 1280px; margin: auto; padding: 1.1rem 2rem; display: flex; justify-content: space-between; font-size: .72rem; }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .55s ease, transform .55s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 1024px) {
+      .two-col { grid-template-columns: 1fr; } .two-col.reverse { direction: ltr; }
+      .premium-cards { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .products-grid { grid-template-columns: 1fr; }
+      .premium-cards { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .seg-banner-content { grid-template-columns: 1fr; }
+      .seg-banner-icon { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-links">
+      <a href="#">Hỗ trợ: 1800 58 68</a>
+      <a href="#">Tỷ giá</a>
+      <a href="#">Lãi suất</a>
+      <a href="#">Chi nhánh</a>
+    </div>
+    <div class="topbar-links">
+      <a href="#">Tiếng Việt</a>
+      <a href="#">English</a>
+      <a href="#">Internet Banking</a>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-inner">
+    <a href="homebank.html" class="logo-wrap">
+      <img src="DOBN/bank.png" alt="DOB Bank" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
+      <div style="display:none">
+        <div class="logo-name">DOB Bank</div>
+        <div class="logo-sub">Ngân hàng TMCP DOB</div>
+      </div>
+    </a>
+    <div class="nav-menu">
+      <div class="nav-item">
+        <a href="services.html" class="nav-link active">Sản phẩm &amp; Dịch vụ ▾</a>
+        <div class="dropdown">
+          <a href="#dinh-che">🏦 Định chế tài chính</a>
+          <a href="#doanh-nghiep">🏢 Doanh nghiệp</a>
+          <a href="#ca-nhan">👤 Cá nhân</a>
+          <a href="#premium">💎 Cá nhân Premium</a>
+        </div>
+      </div>
+      <div class="nav-item"><a href="aboutb.html" class="nav-link">Về chúng tôi</a></div>
+      <div class="nav-item"><a href="shareholderb.html" class="nav-link">Quan hệ nhà đầu tư</a></div>
+      <div class="nav-item"><a href="newsb.html" class="nav-link">Tin tức</a></div>
+      <div class="nav-item"><a href="esgb.html" class="nav-link">Phát triển bền vững</a></div>
+      <div class="nav-item"><a href="#" class="nav-link nav-cta">Internet Banking</a></div>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-lines"></div>
+  <div class="page-hero-inner">
+    <div class="breadcrumb">
+      <a href="homebank.html">Trang chủ</a>
+      <span>›</span>
+      <span>Sản phẩm &amp; Dịch vụ</span>
+    </div>
+    <h1>Giải pháp tài chính <em>toàn diện</em></h1>
+    <p>Từ định chế tài chính đến cá nhân cao cấp, DOB Bank cung cấp hệ sinh thái sản phẩm đa dạng, đáp ứng mọi nhu cầu với chất lượng dịch vụ quốc tế.</p>
+  </div>
+</div>
+
+<!-- SEGMENT TABS -->
+<div class="segment-nav">
+  <div class="segment-tabs">
+    <a class="seg-tab" href="#dinh-che"><span class="tab-icon">🏛️</span> Định chế Tài chính</a>
+    <a class="seg-tab" href="#doanh-nghiep"><span class="tab-icon">🏢</span> Doanh nghiệp</a>
+    <a class="seg-tab" href="#ca-nhan"><span class="tab-icon">👤</span> Cá nhân</a>
+    <a class="seg-tab" href="#premium"><span class="tab-icon">💎</span> Cá nhân Premium</a>
+  </div>
+</div>
+
+<!-- ══════════════════ ĐỊNH CHẾ TÀI CHÍNH ══════════════════ -->
+<section class="seg-section seg-anchor" id="dinh-che">
+  <div class="section-inner">
+    <div class="seg-banner dinh-che reveal">
+      <div class="seg-banner-content">
+        <div>
+          <div class="seg-banner-badge">Dành cho tổ chức</div>
+          <h2>Định chế Tài chính</h2>
+          <p>Giải pháp ngân hàng toàn diện cho các tổ chức tín dụng, bảo hiểm, chứng khoán và quỹ đầu tư. DOB Bank là đối tác chiến lược đáng tin cậy trong hệ thống tài chính Việt Nam và quốc tế.</p>
+        </div>
+        <div class="seg-banner-icon">🏛️</div>
+      </div>
+    </div>
+
+    <div class="two-col reveal" style="margin-bottom:3.5rem">
+      <div class="visual-box">
+        <div class="visual-box-bg"></div>
+        <div class="visual-box-content">
+          <div class="vstat-grid">
+            <div class="vstat"><div class="vstat-num">120+</div><div class="vstat-label">Đối tác định chế</div></div>
+            <div class="vstat"><div class="vstat-num">15+</div><div class="vstat-label">Quốc gia kết nối</div></div>
+            <div class="vstat"><div class="vstat-num">$2.5B</div><div class="vstat-label">Hạn mức liên ngân hàng</div></div>
+            <div class="vstat"><div class="vstat-num">99.9%</div><div class="vstat-label">Uptime hệ thống thanh toán</div></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="section-tag">Năng lực cốt lõi</div>
+        <h2 class="section-title">Hạ tầng tài chính vững chắc</h2>
+        <p class="section-desc" style="margin-bottom:1.5rem">DOB Bank sở hữu hệ thống thanh toán quốc tế SWIFT, kết nối trực tiếp với hơn 120 ngân hàng đại lý trên toàn cầu, đảm bảo xử lý giao dịch nhanh chóng và an toàn.</p>
+        <div class="prod-highlights">
+          <div class="prod-hl">Tham gia hệ thống SWIFT & Nostro/Vostro account toàn cầu</div>
+          <div class="prod-hl">Hợp tác tài trợ thương mại LC, UPAS, BG quốc tế</div>
+          <div class="prod-hl">Quản lý rủi ro theo chuẩn Basel III</div>
+          <div class="prod-hl">API Banking mở cho tích hợp hệ thống đối tác</div>
+          <div class="prod-hl">Giải pháp clearing & settlement tiền tệ nội tệ và ngoại tệ</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-tag reveal">Sản phẩm nổi bật</div>
+    <h2 class="section-title reveal">Danh mục sản phẩm định chế</h2>
+    <div class="products-grid reveal">
+      <div class="prod-card">
+        <div class="prod-card-header"><div class="prod-icon">🔗</div><span class="prod-badge popular">Phổ biến</span></div>
+        <div class="prod-card-body">
+          <div class="prod-title">Tín dụng liên ngân hàng</div>
+          <p class="prod-desc">Cấp hạn mức vay và cho vay trên thị trường liên ngân hàng với lãi suất cạnh tranh, kỳ hạn linh hoạt từ qua đêm đến 12 tháng.</p>
+          <div class="prod-rate"><div><div class="prod-rate-label">Lãi suất tham khảo</div><div class="prod-rate-unit">VNIBOR + spread</div></div><div class="prod-rate-val">VNIBOR<br/>+0.3%</div></div>
+          <a href="#" class="btn-apply">Liên hệ tư vấn</a>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-card-header"><div class="prod-icon">🌐</div><span class="prod-badge hot">Nổi bật</span></div>
+        <div class="prod-card-body">
+          <div class="prod-title">Tài trợ thương mại quốc tế</div>
+          <p class="prod-desc">Phát hành và xác nhận L/C, bảo lãnh ngân hàng quốc tế, tài trợ nhập khẩu UPAS với hạn mức lên đến 50 triệu USD.</p>
+          <div class="prod-highlights">
+            <div class="prod-hl">Phát hành L/C at sight & usance</div>
+            <div class="prod-hl">Bảo lãnh thực hiện hợp đồng, bảo lãnh dự thầu</div>
+            <div class="prod-hl">Chiết khấu bộ chứng từ hàng xuất</div>
+          </div>
+          <a href="#" class="btn-apply">Liên hệ tư vấn</a>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-card-header"><div class="prod-icon">💱</div><span class="prod-badge new">Mới</span></div>
+        <div class="prod-card-body">
+          <div class="prod-title">Giao dịch ngoại hối & phái sinh</div>
+          <p class="prod-desc">Mua bán ngoại tệ giao ngay, kỳ hạn, hoán đổi và quyền chọn tiền tệ. Giải pháp phòng ngừa rủi ro tỷ giá cho tổ chức.</p>
+          <div class="prod-highlights">
+            <div class="prod-hl">Spot & Forward FX với spread cạnh tranh</div>
+            <div class="prod-hl">Cross-currency swap</div>
+            <div class="prod-hl">FX Option tùy chỉnh</div>
+          </div>
+          <a href="#" class="btn-apply">Liên hệ tư vấn</a>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-card-header"><div class="prod-icon">🏗️</div></div>
+        <div class="prod-card-body">
+          <div class="prod-title">Đầu tư & Thị trường vốn</div>
+          <p class="prod-desc">Tư vấn và phân phối trái phiếu chính phủ, trái phiếu doanh nghiệp. Quản lý danh mục đầu tư và dịch vụ Primary Dealer.</p>
+          <div class="prod-highlights">
+            <div class="prod-hl">Primary Dealer trái phiếu chính phủ</div>
+            <div class="prod-hl">Bảo lãnh phát hành trái phiếu doanh nghiệp</div>
+            <div class="prod-hl">Quản lý thanh khoản & repo</div>
+          </div>
+          <a href="#" class="btn-apply">Liên hệ tư vấn</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ DOANH NGHIỆP ══════════════════ -->
+<section class="seg-section seg-anchor" id="doanh-nghiep">
+  <div class="section-inner">
+    <div class="seg-banner doanh-nghiep reveal">
+      <div class="seg-banner-content">
+        <div>
+          <div class="seg-banner-badge">SME & Large Corp</div>
+          <h2>Doanh nghiệp</h2>
+          <p>Đồng hành cùng hành trình tăng trưởng của doanh nghiệp Việt. Từ khởi nghiệp đến tập đoàn lớn, DOB Bank cung cấp gói giải pháp tài chính tích hợp, linh hoạt và chuyên biệt.</p>
+        </div>
+        <div class="seg-banner-icon">🏢</div>
+      </div>
+    </div>
+
+    <div class="products-grid reveal">
+      <div class="prod-card">
+        <div class="prod-card-header"><div class="prod-icon">💼</div><span class="prod-badge popular">Phổ biến</span></div>
+        <div class="prod-card-body">
+          <div class="prod-title">Tín dụng doanh nghiệp</div>
+          <p class="prod-desc">Vay vốn lưu động, đầu tư tài sản cố định và tài trợ dự án với hạn mức linh hoạt. Thẩm định nhanh, giải ngân trong 3 ngày làm việc.</p>
+          <div class="prod-rate"><div><div class="prod-rate-label">Lãi suất từ</div><div class="prod-rate-unit">VNĐ ngắn hạn</div></div><div class="prod-rate-val">7.5%<span class="prod-rate-unit">/năm</span></div></div>
+          <a href="#" class="btn-apply">Đăng ký ngay</a>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-card-header"><div class="prod-icon">📦</div><span class="prod-badge hot">Nổi bật</span></div>
+        <div class="prod-card-body">
+          <div class="prod-title">Tài trợ thương mại trong nước</div>
+          <p class="prod-desc">Chiết khấu hóa đơn, bao thanh toán trong nước (Factoring), bảo lãnh hợp đồng và thư tín dụng nội địa (DCLC).</p>
+          <div class="prod-highlights">
+            <div class="prod-hl">Chiết khấu hóa đơn tức thì</div>
+            <div class="prod-hl">Domestic Factoring không truy đòi</div>
+            <div class="prod-hl">Hạn mức xoay vòng tự động</div>
+          </div>
+          <a href="#" class="btn-apply">Tư vấn ngay</a>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-card-header"><div class="prod-icon">💳</div></div>
+        <div class="prod-card-body">
+          <div class="prod-title">Thẻ &amp; Thanh toán doanh nghiệp</div>
+          <p class="prod-desc">Thẻ doanh nghiệp Visa/Mastercard, quản lý chi tiêu tập trung, thanh toán lương tự động và giải pháp payroll toàn diện.</p>
+          <div class="prod-highlights">
+            <div class="prod-hl">Thẻ doanh nghiệp không giới hạn số lượng</div>
+            <div class="prod-hl">Quản lý hạn mức từng thẻ theo phòng ban</div>
+            <div class="prod-hl">Tích hợp ERP, SAP, MISA</div>
+          </div>
+          <a href="#" class="btn-apply">Tìm hiểu thêm</a>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-card-header"><div class="prod-icon">🏦</div><span class="prod-badge new">Mới</span></div>
+        <div class="prod-card-body">
+          <div class="prod-title">DOB BizBank – Ngân hàng số doanh nghiệp</div>
+          <p class="prod-desc">Nền tảng quản lý tài chính doanh nghiệp toàn diện: thanh toán, vay vốn, đầu tư và báo cáo tài chính tích hợp trên một màn hình.</p>
+          <div class="prod-highlights">
+            <div class="prod-hl">Dashboard dòng tiền thời gian thực</div>
+            <div class="prod-hl">Phê duyệt thanh toán đa cấp</div>
+            <div class="prod-hl">API mở kết nối phần mềm kế toán</div>
+          </div>
+          <a href="#" class="btn-apply">Dùng thử miễn phí</a>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-card-header"><div class="prod-icon">🏗️</div></div>
+        <div class="prod-card-body">
+          <div class="prod-title">Tài trợ dự án &amp; Bất động sản</div>
+          <p class="prod-desc">Tài trợ xây dựng, phát triển bất động sản và hạ tầng. Hạn mức lên đến 500 tỷ đồng với thời hạn 20 năm.</p>
+          <div class="prod-rate"><div><div class="prod-rate-label">Lãi suất ưu đãi</div><div class="prod-rate-unit">năm đầu tiên</div></div><div class="prod-rate-val">8.5%<span class="prod-rate-unit">/năm</span></div></div>
+          <a href="#" class="btn-apply">Tư vấn dự án</a>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-card-header"><div class="prod-icon">🌱</div><span class="prod-badge new">Mới</span></div>
+        <div class="prod-card-body">
+          <div class="prod-title">Tín dụng xanh &amp; ESG</div>
+          <p class="prod-desc">Gói vay ưu đãi dành riêng cho doanh nghiệp có dự án năng lượng tái tạo, tiết kiệm năng lượng và phát triển bền vững.</p>
+          <div class="prod-highlights">
+            <div class="prod-hl">Lãi suất giảm 0.5% so với thông thường</div>
+            <div class="prod-hl">Phí thẩm định ưu đãi</div>
+            <div class="prod-hl">Hỗ trợ chứng nhận tín dụng xanh</div>
+          </div>
+          <a href="#" class="btn-apply">Tìm hiểu thêm</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ CÁ NHÂN ══════════════════ -->
+<section class="seg-section seg-anchor" id="ca-nhan">
+  <div class="section-inner">
+    <div class="seg-banner ca-nhan reveal">
+      <div class="seg-banner-content">
+        <div>
+          <div class="seg-banner-badge">Retail Banking</div>
+          <h2>Cá nhân</h2>
+          <p>Từ tài khoản thanh toán hàng ngày đến kế hoạch tài chính dài hạn, DOB Bank đồng hành cùng bạn ở mỗi bước trên hành trình cuộc sống.</p>
+        </div>
+        <div class="seg-banner-icon">👤</div>
+      </div>
+    </div>
+
+    <div class="products-grid reveal">
+      <div class="prod-card">
+        <div class="prod-card-header"><div class="prod-icon">🏠</div><span class="prod-badge hot">Ưu đãi</span></div>
+        <div class="prod-card-body">
+          <div class="prod-title">Vay mua nhà DOB Home</div>
+          <p class="prod-desc">Lãi suất ưu đãi cố định 24 tháng đầu. Vay tối đa 85% giá trị bất động sản, thời hạn lên đến 25 năm.</p>
+          <div class="prod-rate"><div><div class="prod-rate-label">Lãi suất ưu đãi</div><div class="prod-rate-unit">24 tháng đầu cố định</div></div><div class="prod-rate-val">7.9%<span class="prod-rate-unit">/năm</span></div></div>
+          <a href="#" class="btn-apply">Đăng ký ngay</a>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-card-header"><div class="prod-icon">💰</div><span class="prod-badge popular">Phổ biến</span></div>
+        <div class="prod-card-body">
+          <div class="prod-title">Tiết kiệm DOB SmartSave</div>
+          <p class="prod-desc">Tài khoản tiết kiệm thông minh với lãi suất cạnh tranh, kỳ hạn linh hoạt, có thể rút trước hạn với lãi suất bậc thang.</p>
+          <div class="prod-rate"><div><div class="prod-rate-label">Lãi suất tối đa</div><div class="prod-rate-unit">12 tháng – online</div></div><div class="prod-rate-val">6.2%<span class="prod-rate-unit">/năm</span></div></div>
+          <a href="#" class="btn-apply">Mở tài khoản</a>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-card-header"><div class="prod-icon">💳</div><span class="prod-badge popular">Phổ biến</span></div>
+        <div class="prod-card-body">
+          <div class="prod-title">Thẻ tín dụng DOB Cashback</div>
+          <p class="prod-desc">Hoàn tiền lên đến 5% tại siêu thị, 3% ăn uống & xăng dầu. Miễn phí thường niên năm đầu. Hạn mức đến 200 triệu.</p>
+          <div class="prod-highlights">
+            <div class="prod-hl">Hoàn tiền 5% tại Vinmart, AEON, Lotte</div>
+            <div class="prod-hl">Trả góp 0% lãi suất 12 tháng</div>
+            <div class="prod-hl">Bảo hiểm du lịch quốc tế</div>
+          </div>
+          <a href="#" class="btn-apply">Đăng ký thẻ</a>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-card-header"><div class="prod-icon">🚗</div></div>
+        <div class="prod-card-body">
+          <div class="prod-title">Vay mua ô tô</div>
+          <p class="prod-desc">Tài trợ lên đến 80% giá trị xe, thời hạn 7 năm. Hợp tác với hơn 50 đại lý ủy quyền trên toàn quốc.</p>
+          <div class="prod-rate"><div><div class="prod-rate-label">Lãi suất từ</div><div class="prod-rate-unit">ô tô mới</div></div><div class="prod-rate-val">8.8%<span class="prod-rate-unit">/năm</span></div></div>
+          <a href="#" class="btn-apply">Tính lãi suất</a>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-card-header"><div class="prod-icon">📱</div><span class="prod-badge new">Mới</span></div>
+        <div class="prod-card-body">
+          <div class="prod-title">DOB Digital – Ngân hàng số</div>
+          <p class="prod-desc">Ứng dụng ngân hàng số thế hệ mới: mở tài khoản eKYC 3 phút, chuyển tiền 24/7, thanh toán QR, quản lý chi tiêu thông minh.</p>
+          <div class="prod-highlights">
+            <div class="prod-hl">Mở tài khoản không cần đến chi nhánh</div>
+            <div class="prod-hl">Chuyển tiền miễn phí 5 lần/tháng</div>
+            <div class="prod-hl">AI phân tích chi tiêu cá nhân</div>
+          </div>
+          <a href="#" class="btn-apply gold">Tải ứng dụng</a>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-card-header"><div class="prod-icon">📈</div></div>
+        <div class="prod-card-body">
+          <div class="prod-title">Đầu tư &amp; Bảo hiểm</div>
+          <p class="prod-desc">Phân phối chứng chỉ quỹ mở, trái phiếu lẻ và bảo hiểm nhân thọ liên kết ngân hàng (Bancassurance) từ các đối tác hàng đầu.</p>
+          <div class="prod-highlights">
+            <div class="prod-hl">Chứng chỉ quỹ Dragon Capital, VinaCapital</div>
+            <div class="prod-hl">Trái phiếu doanh nghiệp lãi suất cao</div>
+            <div class="prod-hl">Bảo hiểm nhân thọ Manulife, Prudential</div>
+          </div>
+          <a href="#" class="btn-apply">Khám phá</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ CÁ NHÂN PREMIUM ══════════════════ -->
+<section class="seg-section seg-anchor" id="premium" style="background: linear-gradient(180deg, #f7f5ef 0%, #eeedf7 100%)">
+  <div class="section-inner">
+    <div class="seg-banner premium reveal">
+      <div class="seg-banner-content">
+        <div>
+          <div class="seg-banner-badge">Exclusive · By invitation</div>
+          <h2>DOB Private – Cá nhân Premium</h2>
+          <p>Dịch vụ ngân hàng cao cấp dành cho khách hàng ưu tiên. Trải nghiệm đẳng cấp với đội ngũ Relationship Manager riêng, ưu đãi độc quyền và giải pháp quản lý tài sản cá nhân hóa.</p>
+        </div>
+        <div class="seg-banner-icon">💎</div>
+      </div>
+    </div>
+
+    <div class="premium-cards reveal">
+      <div class="prem-card tier-gold">
+        <div class="prem-tier">DOB Gold</div>
+        <div class="prem-name">Gold</div>
+        <div class="prem-min">Tài sản từ 500 triệu VNĐ</div>
+        <div class="prem-perks">
+          <div class="prem-perk">Lãi suất tiết kiệm +0.2% so với thông thường</div>
+          <div class="prem-perk">Ưu đãi phí chuyển khoản quốc tế</div>
+          <div class="prem-perk">Thẻ tín dụng DOB Gold Mastercard</div>
+          <div class="prem-perk">Hotline riêng phục vụ 8–22h</div>
+          <div class="prem-perk">Miễn phí dịch vụ tài khoản hàng năm</div>
+        </div>
+        <a href="#" class="btn-prem">Đăng ký ngay</a>
+      </div>
+      <div class="prem-card tier-platinum">
+        <div class="prem-tier">DOB Platinum</div>
+        <div class="prem-name">Platinum</div>
+        <div class="prem-min">Tài sản từ 2 tỷ VNĐ</div>
+        <div class="prem-perks">
+          <div class="prem-perk">Lãi suất +0.4% & vay ưu đãi -0.5%</div>
+          <div class="prem-perk">Relationship Manager riêng</div>
+          <div class="prem-perk">Thẻ Visa Platinum không giới hạn</div>
+          <div class="prem-perk">Phòng chờ VIP tại 10 chi nhánh lớn</div>
+          <div class="prem-perk">Tư vấn đầu tư và bảo hiểm cá nhân hóa</div>
+          <div class="prem-perk">Hotline 24/7 độc quyền</div>
+        </div>
+        <a href="#" class="btn-prem">Đăng ký ngay</a>
+      </div>
+      <div class="prem-card tier-black">
+        <div class="prem-tier">DOB Black · Ultra Premium</div>
+        <div class="prem-name">Black</div>
+        <div class="prem-min">Tài sản từ 5 tỷ VNĐ · By invitation</div>
+        <div class="prem-perks">
+          <div class="prem-perk">Lãi suất & phí ưu đãi tối đa theo thỏa thuận</div>
+          <div class="prem-perk">Private Banker chuyên biệt</div>
+          <div class="prem-perk">Thẻ Mastercard World Elite không giới hạn</div>
+          <div class="prem-perk">Phòng chờ sân bay quốc tế toàn cầu</div>
+          <div class="prem-perk">Quản lý danh mục đầu tư, bất động sản, thừa kế</div>
+          <div class="prem-perk">Concierge lifestyle 24/7</div>
+          <div class="prem-perk">Dịch vụ y tế cao cấp & bảo hiểm toàn cầu</div>
+        </div>
+        <a href="#" class="btn-prem">Liên hệ Private Banker</a>
+      </div>
+    </div>
+
+    <div class="two-col reveal">
+      <div>
+        <div class="section-tag">Tại sao chọn DOB Private?</div>
+        <h2 class="section-title">Hơn cả ngân hàng,<br/><em style="font-style:italic;color:var(--gold)">là đối tác cuộc đời</em></h2>
+        <p class="section-desc" style="margin-bottom:1.5rem">DOB Private không chỉ cung cấp dịch vụ tài chính. Chúng tôi thấu hiểu mục tiêu, giá trị và di sản của từng khách hàng để xây dựng chiến lược tài chính trọn vẹn cho cả gia đình.</p>
+        <div class="prod-highlights">
+          <div class="prod-hl">Quản lý tài sản (AUM) toàn diện – cổ phiếu, trái phiếu, BĐS, vàng</div>
+          <div class="prod-hl">Kế hoạch di sản và tín thác (Trust Planning)</div>
+          <div class="prod-hl">Tư vấn thuế và cấu trúc tài chính gia đình</div>
+          <div class="prod-hl">Kết nối đầu tư IPO, pre-IPO độc quyền</div>
+          <div class="prod-hl">Dịch vụ concierge: du lịch, y tế, giáo dục cao cấp</div>
+        </div>
+      </div>
+      <div class="visual-box">
+        <div class="visual-box-bg" style="background: linear-gradient(135deg, #1a0f03, #2a1a05, #04045d)"></div>
+        <div class="visual-box-content">
+          <div class="vstat-grid">
+            <div class="vstat"><div class="vstat-num">15,000+</div><div class="vstat-label">Khách hàng Private</div></div>
+            <div class="vstat"><div class="vstat-num">48B</div><div class="vstat-label">Tỷ VNĐ AUM quản lý</div></div>
+            <div class="vstat"><div class="vstat-num">98.5%</div><div class="vstat-label">Hài lòng khách hàng</div></div>
+            <div class="vstat"><div class="vstat-num">24/7</div><div class="vstat-label">Hỗ trợ không ngừng nghỉ</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-strip">
+  <div class="cta-inner">
+    <div class="cta-text">
+      <h3>Sẵn sàng bắt đầu?</h3>
+      <p>Mở tài khoản trực tuyến chỉ trong 3 phút hoặc ghé thăm chi nhánh gần nhất để được tư vấn.</p>
+    </div>
+    <div class="cta-btns">
+      <a href="#" class="btn-gold">Mở tài khoản ngay</a>
+      <a href="#" class="btn-outline-w">Tìm chi nhánh</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo-name">DOB Bank</div>
+      <div class="footer-logo-sub">Ngân hàng Thương mại Cổ phần DOB</div>
+      <p class="footer-about">Hoạt động theo Giấy phép số 0012/NH-GP do Ngân hàng Nhà nước Việt Nam cấp. Thành viên Bảo hiểm tiền gửi Việt Nam.</p>
+    </div>
+    <div class="footer-col"><h4>Sản phẩm</h4><ul>
+      <li><a href="#dinh-che">Định chế tài chính</a></li>
+      <li><a href="#doanh-nghiep">Doanh nghiệp</a></li>
+      <li><a href="#ca-nhan">Cá nhân</a></li>
+      <li><a href="#premium">Cá nhân Premium</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Liên kết</h4><ul>
+      <li><a href="homebank.html">Trang chủ</a></li>
+      <li><a href="aboutb.html">Về chúng tôi</a></li>
+      <li><a href="shareholderb.html">Quan hệ nhà đầu tư</a></li>
+      <li><a href="newsb.html">Tin tức</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Hỗ trợ</h4><ul>
+      <li><a href="#">Hotline 1800 58 68</a></li>
+      <li><a href="#">cskh@dobbank.com.vn</a></li>
+      <li><a href="#">Chi nhánh & ATM</a></li>
+      <li><a href="#">Câu hỏi thường gặp</a></li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Ngân hàng Thương mại Cổ phần DOB. Bảo lưu mọi quyền.</p>
+    <p>1800 58 68 · cskh@dobbank.com.vn</p>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver(e => e.forEach(x => x.isIntersecting && (x.target.classList.add('visible'), io.unobserve(x.target))), { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Active tab on scroll
+  const tabs = document.querySelectorAll('.seg-tab');
+  const sections = ['dinh-che','doanh-nghiep','ca-nhan','premium'].map(id => document.getElementById(id));
+  window.addEventListener('scroll', () => {
+    let cur = 0;
+    sections.forEach((s, i) => { if (s && window.scrollY >= s.offsetTop - 180) cur = i; });
+    tabs.forEach((t, i) => t.classList.toggle('active', i === cur));
+  });
+</script>
+</body>
+</html>

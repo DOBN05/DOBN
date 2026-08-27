@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tin Tức & Phân Tích – DOBN CAPITAL</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   NEWS PAGE – SCOPED STYLES
+   ============================================================ */
+.news-page *, .news-page *::before, .news-page *::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --n-ink:      #0d1b2a;
+  --n-navy:     #0e2044;
+  --n-gold:     #b8860b;
+  --n-gold-lt:  #f0c040;
+  --n-red:      #c0392b;
+  --n-muted:    #6b7a8d;
+  --n-border:   #dde3ec;
+  --n-bg:       #f7f8fc;
+  --n-white:    #ffffff;
+  --n-tag-bg:   #eef1f8;
+}
+
+.news-page {
+  font-family: 'Outfit', sans-serif;
+  background: var(--n-bg);
+  color: var(--n-ink);
+  width: 100%;
+}
+
+/* ===== MASTHEAD ===== */
+.news-masthead {
+  background: var(--n-navy);
+  padding: 0 56px;
+  display: flex;
+  align-items: stretch;
+  border-bottom: 3px solid var(--n-gold);
+  position: relative;
+  overflow: hidden;
+}
+.news-masthead::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 120px,
+    rgba(255,255,255,0.018) 120px,
+    rgba(255,255,255,0.018) 121px
+  );
+  pointer-events: none;
+}
+
+.masthead-left {
+  padding: 28px 48px 28px 0;
+  border-right: 1px solid rgba(255,255,255,0.12);
+  flex-shrink: 0;
+}
+.masthead-kicker {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--n-gold-lt);
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+.masthead-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 38px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1;
+  white-space: nowrap;
+}
+.masthead-title span { color: var(--n-gold-lt); }
+
+.masthead-right {
+  flex: 1;
+  padding: 28px 0 28px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* Category pills */
+.cat-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.cat-pill {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.18s;
+  color: rgba(255,255,255,0.55);
+  border-color: rgba(255,255,255,0.15);
+  background: transparent;
+  font-family: 'Outfit', sans-serif;
+}
+.cat-pill:hover,
+.cat-pill.active {
+  background: var(--n-gold);
+  border-color: var(--n-gold);
+  color: var(--n-ink);
+}
+
+/* Ticker tape */
+.ticker-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow: hidden;
+}
+.ticker-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--n-gold-lt);
+  white-space: nowrap;
+  font-weight: 600;
+}
+.ticker-track {
+  overflow: hidden;
+  flex: 1;
+  mask-image: linear-gradient(90deg, transparent, black 5%, black 95%, transparent);
+}
+.ticker-inner {
+  display: flex;
+  gap: 32px;
+  white-space: nowrap;
+  animation: tickerScroll 28s linear infinite;
+}
+.ticker-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.75);
+  flex-shrink: 0;
+}
+.ticker-item .t-code { font-weight: 600; color: #fff; }
+.ticker-item .t-up   { color: #4ade80; font-weight: 600; }
+.ticker-item .t-dn   { color: #f87171; font-weight: 600; }
+@keyframes tickerScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ===== PAGE BODY ===== */
+.news-body {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 48px 32px;
+}
+
+/* ===== DATE RULE ===== */
+.date-rule {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 36px;
+}
+.date-rule-line {
+  flex: 1;
+  height: 1px;
+  background: var(--n-border);
+}
+.date-rule-text {
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--n-muted);
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+/* ===== HERO GRID ===== */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.65fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 2px;
+  background: var(--n-border);
+  border: 1px solid var(--n-border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 48px;
+}
+
+/* FEATURE article */
+.article-feature {
+  grid-row: 1 / 3;
+  position: relative;
+  min-height: 480px;
+  background: var(--n-navy);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 36px;
+  cursor: pointer;
+  overflow: hidden;
+}
+.article-feature::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10,20,50,0.97) 0%, rgba(10,20,50,0.55) 55%, rgba(10,20,50,0.1) 100%);
+  z-index: 1;
+}
+.feature-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 70% 30%, rgba(0,150,255,0.12), transparent 60%),
+    linear-gradient(145deg, #071630 0%, #0e3060 100%);
+  z-index: 0;
+}
+/* Decorative chart lines on feature bg */
+.feature-bg-chart {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 55%;
+  z-index: 0;
+  opacity: 0.18;
+}
+.article-feature-body {
+  position: relative;
+  z-index: 2;
+}
+.article-feature:hover .feature-bg { filter: brightness(1.1); }
+
+/* SIDE articles */
+.article-side {
+  background: var(--n-white);
+  padding: 24px 26px;
+  cursor: pointer;
+  transition: background 0.18s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.article-side:hover { background: #f0f3f9; }
+.article-side + .article-side {
+  border-top: 1px solid var(--n-border);
+}
+
+/* SHARED article parts */
+.art-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+.art-tag.market  { background: rgba(0,140,255,0.15); color: #0068c8; }
+.art-tag.macro   { background: rgba(184,134,11,0.15); color: var(--n-gold); }
+.art-tag.esg     { background: rgba(22,163,74,0.15);  color: #16a34a; }
+.art-tag.fund    { background: rgba(124,58,237,0.15); color: #7c3aed; }
+.art-tag.risk    { background: rgba(192,57,43,0.15);  color: var(--n-red); }
+.art-tag.global  { background: rgba(6,182,212,0.15);  color: #0891b2; }
+
+.art-tag.light-market { background: rgba(0,140,255,0.2);  color: #7fd3ff; }
+.art-tag.light-macro  { background: rgba(240,192,64,0.2); color: var(--n-gold-lt); }
+.art-tag.light-esg    { background: rgba(74,222,128,0.2); color: #4ade80; }
+
+.art-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+.art-headline.xl { font-size: 36px; color: #fff; }
+.art-headline.lg { font-size: 22px; color: var(--n-ink); }
+.art-headline.md { font-size: 18px; color: var(--n-ink); }
+
+.art-deck {
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 18px;
+  max-width: 520px;
+}
+.art-deck.dark { color: var(--n-muted); }
+
+.art-byline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+}
+.art-byline .avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 600;
+  flex-shrink: 0;
+}
+.art-byline .av-1 { background: #1a4fa0; color: #fff; }
+.art-byline .av-2 { background: #2d6a4f; color: #fff; }
+.art-byline .av-3 { background: #6d28d9; color: #fff; }
+.art-byline .av-4 { background: #b45309; color: #fff; }
+.art-byline .av-5 { background: #be123c; color: #fff; }
+.art-byline .av-6 { background: #0e7490; color: #fff; }
+.art-byline .av-7 { background: #065f46; color: #fff; }
+
+.byline-name { font-weight: 600; color: rgba(255,255,255,0.9); }
+.byline-meta { color: rgba(255,255,255,0.45); }
+.byline-name.dark { color: var(--n-ink); }
+.byline-meta.dark { color: var(--n-muted); }
+.byline-dot { color: rgba(255,255,255,0.3); }
+.byline-dot.dark { color: var(--n-border); }
+
+/* Read time */
+.read-time {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  margin-top: 6px;
+}
+.read-time.dark { color: var(--n-muted); }
+
+/* ===== SECTION LABEL ===== */
+.section-rule {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.section-rule-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--n-navy);
+  white-space: nowrap;
+  padding-right: 4px;
+  border-bottom: 2px solid var(--n-gold);
+  padding-bottom: 4px;
+}
+.section-rule-line { flex: 1; height: 1px; background: var(--n-border); }
+
+/* ===== MAIN CONTENT LAYOUT ===== */
+.content-layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 48px;
+  align-items: start;
+}
+
+/* ===== CARD LIST ===== */
+.card-list { display: flex; flex-direction: column; gap: 0; }
+
+.news-card {
+  display: grid;
+  grid-template-columns: 1fr 90px;
+  gap: 20px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--n-border);
+  cursor: pointer;
+  transition: background 0.15s;
+  align-items: start;
+}
+.news-card:hover { background: rgba(14,32,68,0.03); }
+.news-card:first-child { padding-top: 0; }
+.news-card:last-child { border-bottom: none; }
+
+.nc-thumb {
+  width: 90px; height: 68px;
+  border-radius: 6px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.nc-thumb-inner {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px;
+}
+.thumb-market { background: linear-gradient(135deg, #0e2044, #1a4fa0); }
+.thumb-macro  { background: linear-gradient(135deg, #3d2e08, #8a6914); }
+.thumb-esg    { background: linear-gradient(135deg, #0b3d2e, #1a6b4a); }
+.thumb-fund   { background: linear-gradient(135deg, #2d1b6e, #5b21b6); }
+.thumb-risk   { background: linear-gradient(135deg, #4c0519, #881337); }
+.thumb-global { background: linear-gradient(135deg, #0c4a6e, #0e7490); }
+
+/* ===== ANALYSIS STRIP ===== */
+.analysis-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--n-border);
+  border: 1px solid var(--n-border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 48px;
+}
+
+.analysis-card {
+  background: var(--n-white);
+  padding: 28px 24px;
+  cursor: pointer;
+  transition: background 0.18s;
+  position: relative;
+}
+.analysis-card:hover { background: #f0f3f9; }
+.analysis-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.ac-blue::before  { background: #1a4fa0; }
+.ac-gold::before  { background: var(--n-gold); }
+.ac-green::before { background: #16a34a; }
+
+.ac-icon {
+  width: 42px; height: 42px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+.ac-icon.blue  { background: rgba(26,79,160,0.1); color: #1a4fa0; }
+.ac-icon.gold  { background: rgba(184,134,11,0.12); color: var(--n-gold); }
+.ac-icon.green { background: rgba(22,163,74,0.1);  color: #16a34a; }
+
+.ac-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px; font-weight: 700;
+  color: var(--n-ink);
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+.ac-desc {
+  font-size: 13px; color: var(--n-muted);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+.ac-link {
+  font-size: 12px; font-weight: 600;
+  color: var(--n-navy);
+  text-decoration: none;
+  display: flex; align-items: center; gap: 5px;
+  letter-spacing: 0.5px;
+}
+.ac-link i { font-size: 12px; transition: transform 0.18s; }
+.analysis-card:hover .ac-link i { transform: translateX(3px); }
+
+/* ===== SIDEBAR ===== */
+.sidebar { display: flex; flex-direction: column; gap: 32px; }
+
+/* Market snapshot */
+.sidebar-box {
+  background: var(--n-white);
+  border: 1px solid var(--n-border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.sb-header {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--n-border);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.sb-title {
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  font-weight: 600; color: var(--n-navy);
+}
+.sb-update { font-size: 11px; color: var(--n-muted); }
+
+.market-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--n-border);
+  transition: background 0.15s;
+}
+.market-row:last-child { border-bottom: none; }
+.market-row:hover { background: #f7f8fc; }
+.mr-name { font-size: 13px; font-weight: 600; color: var(--n-ink); }
+.mr-sub  { font-size: 11px; color: var(--n-muted); margin-top: 1px; }
+.mr-val  { text-align: right; }
+.mr-price { font-size: 14px; font-weight: 600; color: var(--n-ink); }
+.mr-change { font-size: 12px; font-weight: 600; margin-top: 1px; }
+.mr-change.up { color: #16a34a; }
+.mr-change.dn { color: var(--n-red); }
+
+/* Mini spark */
+.spark-bar {
+  display: flex; align-items: flex-end; gap: 2px;
+  height: 24px; margin-right: 12px;
+}
+.spark-b { width: 4px; border-radius: 2px; }
+
+/* Newsletter CTA */
+.newsletter-box {
+  background: var(--n-navy);
+  border-radius: 10px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.newsletter-box::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(240,192,64,0.15), transparent 70%);
+  pointer-events: none;
+}
+.nl-icon { font-size: 28px; margin-bottom: 12px; }
+.nl-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-weight: 700; color: #fff;
+  margin-bottom: 8px; line-height: 1.2;
+}
+.nl-desc { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.6; margin-bottom: 18px; }
+.nl-input-row { display: flex; gap: 8px; flex-direction: column; gap: 10px; }
+.nl-input {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 7px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  font-size: 13px;
+  font-family: 'Outfit', sans-serif;
+  outline: none;
+  transition: border-color 0.18s;
+}
+.nl-input::placeholder { color: rgba(255,255,255,0.35); }
+.nl-input:focus { border-color: var(--n-gold-lt); }
+.nl-btn {
+  width: 100%;
+  padding: 10px;
+  border-radius: 7px;
+  border: none;
+  background: var(--n-gold);
+  color: var(--n-ink);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Outfit', sans-serif;
+  cursor: pointer;
+  transition: background 0.18s;
+  letter-spacing: 0.5px;
+}
+.nl-btn:hover { background: var(--n-gold-lt); }
+
+/* Most read */
+.most-read-item {
+  display: flex; gap: 14px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--n-border);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.most-read-item:last-child { border-bottom: none; }
+.most-read-item:hover { background: #f7f8fc; }
+.mr-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px; font-weight: 700;
+  color: var(--n-border);
+  line-height: 1;
+  flex-shrink: 0;
+  width: 28px;
+  text-align: right;
+}
+.mr-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px; font-weight: 600;
+  color: var(--n-ink); line-height: 1.4;
+}
+.mr-time { font-size: 11px; color: var(--n-muted); margin-top: 4px; }
+
+/* ===== PAGINATION ===== */
+.pagination {
+  display: flex; align-items: center; justify-content: center;
+  gap: 6px; margin-top: 36px;
+}
+.pg-btn {
+  width: 36px; height: 36px;
+  border-radius: 7px;
+  border: 1px solid var(--n-border);
+  background: var(--n-white);
+  color: var(--n-ink);
+  font-size: 13px; font-weight: 500;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-family: 'Outfit', sans-serif;
+  transition: all 0.15s;
+}
+.pg-btn:hover { border-color: var(--n-navy); color: var(--n-navy); }
+.pg-btn.active { background: var(--n-navy); border-color: var(--n-navy); color: #fff; }
+.pg-btn.arrow  { font-size: 16px; color: var(--n-muted); }
+
+/* ===== INFO BAR ===== */
+.news-info-bar {
+  background: var(--n-ink);
+  padding: 16px 56px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.nib-note { font-size: 12px; color: rgba(255,255,255,0.4); }
+.nib-links { display: flex; gap: 20px; }
+.nib-link  { font-size: 12px; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.15s; }
+.nib-link:hover { color: var(--n-gold-lt); }
+</style>
+</head>
+<body>
+
+<!-- ========== HEADER (giữ nguyên từ gốc) ========== -->
+<header>
+  <div class="logo">
+    <img src="DOBN/logo.jpg" alt="DOBN Capital logo">
+  </div>
+  <nav>
+    <a href="index.html"><i class="fas fa-home"></i> Homepage</a>
+    <a href="about.html"><i class="fas fa-building"></i> About Us</a>
+    <a href="products.html"><i class="fas fa-briefcase"></i> Products</a>
+    <a href="customer.html"><i class="fas fa-user-tie"></i> Services</a>
+    <a href="stocks.html"><i class="fas fa-chart-line"></i> Stock</a>
+     <a href="shareholderc.html"><i class="fas fa-handshake"></i> Investor Relations</a>
+    <a href="esg.html"><i class="fas fa-leaf"></i> ESG</a>
+    <a href="news.html" class="active"><i class="fas fa-newspaper"></i> News</a>
+    <a href="support.html"><i class="fas fa-headset"></i> Support</a>
+  </nav>
+  <div class="auth-buttons">
+    <button class="btn-login">Đăng Nhập</button>
+    <button class="btn-register">Mở Tài Khoản</button>
+  </div>
+</header>
+
+<!-- ========== NEWS PAGE ========== -->
+<div class="wrapper" style="border-radius:0;margin:0;width:100%;">
+<div class="news-page">
+
+  <!-- MASTHEAD -->
+  <div class="news-masthead">
+    <div class="masthead-left">
+      <div class="masthead-kicker">DOBN Capital</div>
+      <div class="masthead-title">Tin Tức &amp; <span>Phân Tích</span></div>
+    </div>
+    <div class="masthead-right">
+      <div class="cat-pills">
+        <button class="cat-pill active" onclick="filterCategory('all', this)">Tất Cả</button>
+        <button class="cat-pill" onclick="filterCategory('market', this)">Thị Trường</button>
+        <button class="cat-pill" onclick="filterCategory('macro', this)">Vĩ Mô</button>
+        <button class="cat-pill" onclick="filterCategory('fund', this)">Quỹ Đầu Tư</button>
+        <button class="cat-pill" onclick="filterCategory('esg', this)">ESG</button>
+        <button class="cat-pill" onclick="filterCategory('global', this)">Quốc Tế</button>
+      </div>
+      <div class="ticker-wrap">
+        <div class="ticker-label">Live</div>
+        <div class="ticker-track">
+          <div class="ticker-inner" id="ticker">
+            <div class="ticker-item"><span class="t-code">VN-Index</span><span>1,286.4</span><span class="t-up">+0.82%</span></div>
+            <div class="ticker-item"><span class="t-code">VHM</span><span>42,500</span><span class="t-up">+1.20%</span></div>
+            <div class="ticker-item"><span class="t-code">VCB</span><span>98,200</span><span class="t-dn">−0.31%</span></div>
+            <div class="ticker-item"><span class="t-code">FPT</span><span>134,700</span><span class="t-up">+2.05%</span></div>
+            <div class="ticker-item"><span class="t-code">REE</span><span>58,300</span><span class="t-up">+0.69%</span></div>
+            <div class="ticker-item"><span class="t-code">HPG</span><span>27,450</span><span class="t-dn">−0.54%</span></div>
+            <div class="ticker-item"><span class="t-code">HNX</span><span>234.1</span><span class="t-up">+0.38%</span></div>
+            <div class="ticker-item"><span class="t-code">USD/VND</span><span>25,480</span><span class="t-dn">−0.12%</span></div>
+            <div class="ticker-item"><span class="t-code">Gold</span><span>2,347 USD</span><span class="t-up">+0.44%</span></div>
+            <!-- duplicate for loop -->
+            <div class="ticker-item"><span class="t-code">VN-Index</span><span>1,286.4</span><span class="t-up">+0.82%</span></div>
+            <div class="ticker-item"><span class="t-code">VHM</span><span>42,500</span><span class="t-up">+1.20%</span></div>
+            <div class="ticker-item"><span class="t-code">VCB</span><span>98,200</span><span class="t-dn">−0.31%</span></div>
+            <div class="ticker-item"><span class="t-code">FPT</span><span>134,700</span><span class="t-up">+2.05%</span></div>
+            <div class="ticker-item"><span class="t-code">REE</span><span>58,300</span><span class="t-up">+0.69%</span></div>
+            <div class="ticker-item"><span class="t-code">HPG</span><span>27,450</span><span class="t-dn">−0.54%</span></div>
+            <div class="ticker-item"><span class="t-code">HNX</span><span>234.1</span><span class="t-up">+0.38%</span></div>
+            <div class="ticker-item"><span class="t-code">USD/VND</span><span>25,480</span><span class="t-dn">−0.12%</span></div>
+            <div class="ticker-item"><span class="t-code">Gold</span><span>2,347 USD</span><span class="t-up">+0.44%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /masthead -->
+
+  <!-- PAGE BODY -->
+  <div class="news-body">
+
+    <!-- DATE RULE -->
+    <div class="date-rule">
+      <div class="date-rule-line"></div>
+      <div class="date-rule-text">Chủ nhật, 07 tháng 06 năm 2026</div>
+      <div class="date-rule-line"></div>
+    </div>
+
+    <!-- HERO GRID -->
+    <div class="hero-grid" id="hero-grid">
+
+      <!-- FEATURE -->
+      <article class="article-feature" data-cat="macro">
+        <div class="feature-bg">
+          <!-- Decorative SVG chart -->
+          <svg class="feature-bg-chart" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" aria-hidden="true">
+            <polyline points="0,250 80,220 160,235 240,190 320,160 400,170 480,120 560,100 640,130 720,80 800,60"
+              fill="none" stroke="#ffffff" stroke-width="2.5"/>
+            <polygon points="0,250 80,220 160,235 240,190 320,160 400,170 480,120 560,100 640,130 720,80 800,60 800,300 0,300"
+              fill="rgba(255,255,255,0.06)"/>
+            <line x1="0" y1="150" x2="800" y2="150" stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-dasharray="6 4"/>
+          </svg>
+        </div>
+        <div class="article-feature-body">
+          <span class="art-tag light-macro">Vĩ Mô</span>
+          <h2 class="art-headline xl">Fed giữ nguyên lãi suất: Cơ hội hay thách thức cho thị trường vốn Đông Nam Á?</h2>
+          <p class="art-deck">Quyết định của Cục Dự trữ Liên bang Mỹ tiếp tục duy trì lãi suất ở mức 5.25–5.50% trong kỳ họp tháng 6 tạo ra dòng vốn tái cân bằng quy mô lớn tại các thị trường mới nổi.</p>
+          <div class="art-byline">
+            <div class="avatar av-1">NT</div>
+            <div>
+              <span class="byline-name">Nguyễn Thành</span>
+              <span class="byline-dot"> · </span>
+              <span class="byline-meta">Trưởng phân tích Vĩ mô</span>
+              <span class="byline-dot"> · </span>
+              <span class="byline-meta">2 giờ trước</span>
+            </div>
+          </div>
+          <div class="read-time"><i class="fas fa-clock" style="margin-right:4px;"></i> 7 phút đọc</div>
+        </div>
+      </article>
+
+      <!-- SIDE 1 -->
+      <article class="article-side" data-cat="market">
+        <div>
+          <span class="art-tag market">Thị Trường</span>
+          <h3 class="art-headline lg">VN-Index vượt ngưỡng 1.280 điểm: Dòng tiền khối ngoại quay trở lại</h3>
+          <p class="art-deck dark" style="font-size:13px;margin-bottom:14px;">Phiên giao dịch sáng nay ghi nhận khối ngoại mua ròng 312 tỷ đồng, tập trung ở nhóm ngân hàng và bất động sản.</p>
+        </div>
+        <div class="art-byline">
+          <div class="avatar av-2">ML</div>
+          <div>
+            <span class="byline-name dark">Mai Linh</span>
+            <span class="byline-dot dark"> · </span>
+            <span class="byline-meta dark">30 phút trước</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- SIDE 2 -->
+      <article class="article-side" data-cat="esg">
+        <div>
+          <span class="art-tag esg">ESG</span>
+          <h3 class="art-headline lg">Trái phiếu xanh Việt Nam: Tiềm năng 5 tỷ USD trong 3 năm tới</h3>
+          <p class="art-deck dark" style="font-size:13px;margin-bottom:14px;">Báo cáo mới nhất từ ADB nhận định Việt Nam là thị trường trái phiếu xanh tăng trưởng nhanh nhất ASEAN năm 2026.</p>
+        </div>
+        <div class="art-byline">
+          <div class="avatar av-3">TH</div>
+          <div>
+            <span class="byline-name dark">Trần Hương</span>
+            <span class="byline-dot dark"> · </span>
+            <span class="byline-meta dark">1 giờ trước</span>
+          </div>
+        </div>
+      </article>
+
+    </div><!-- /hero-grid -->
+
+    <!-- ANALYSIS STRIP -->
+    <div class="section-rule" style="margin-bottom:20px;">
+      <div class="section-rule-label">Báo Cáo Phân Tích</div>
+      <div class="section-rule-line"></div>
+    </div>
+    <div class="analysis-strip" style="margin-bottom:48px;">
+      <div class="analysis-card ac-blue">
+        <div class="ac-icon blue"><i class="fas fa-chart-bar"></i></div>
+        <div class="ac-title">Triển Vọng Thị Trường Q3-2026</div>
+        <div class="ac-desc">Phân tích định lượng 32 mã cổ phiếu cốt lõi, kịch bản lãi suất và khuyến nghị phân bổ tài sản quý tới.</div>
+        <a class="ac-link" href="#">Tải báo cáo <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="analysis-card ac-gold">
+        <div class="ac-icon gold"><i class="fas fa-globe-asia"></i></div>
+        <div class="ac-title">Kinh Tế Vĩ Mô Việt Nam 2026</div>
+        <div class="ac-desc">GDP, lạm phát, tỷ giá và tác động chính sách tiền tệ đến danh mục đầu tư trong bối cảnh bầu cử Mỹ.</div>
+        <a class="ac-link" href="#">Tải báo cáo <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="analysis-card ac-green">
+        <div class="ac-icon green"><i class="fas fa-leaf"></i></div>
+        <div class="ac-title">Báo Cáo Tác Động ESG 2025</div>
+        <div class="ac-desc">Kết quả đo lường E, S, G của danh mục DOBN: phát thải CO₂, chỉ số lao động và quản trị doanh nghiệp.</div>
+        <a class="ac-link" href="#">Tải báo cáo <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <!-- MAIN CONTENT LAYOUT -->
+    <div class="content-layout">
+
+      <!-- LEFT: CARD LIST -->
+      <div>
+        <div class="section-rule">
+          <div class="section-rule-label">Tin Mới Nhất</div>
+          <div class="section-rule-line"></div>
+        </div>
+
+        <div class="card-list" id="news-list">
+
+          <article class="news-card" data-cat="market">
+            <div>
+              <span class="art-tag market">Thị Trường</span>
+              <h3 class="art-headline md">HPG và VHM dẫn sóng nhóm vốn hóa lớn sau báo cáo KQKD quý II vượt kỳ vọng</h3>
+              <p class="art-deck dark" style="font-size:13px;margin-top:6px;margin-bottom:12px;">Kết quả kinh doanh tích cực từ hai trụ cột thép và bất động sản kéo dòng tiền tập trung, VN30 tăng 1,4% phiên chiều.</p>
+              <div class="art-byline">
+                <div class="avatar av-4" style="width:24px;height:24px;font-size:10px;">QA</div>
+                <div>
+                  <span class="byline-name dark" style="font-size:12px;">Quốc Anh</span>
+                  <span class="byline-dot dark"> · </span>
+                  <span class="byline-meta dark" style="font-size:11px;">3 giờ trước</span>
+                  <span class="byline-dot dark"> · </span>
+                  <span class="byline-meta dark" style="font-size:11px;">5 phút đọc</span>
+                </div>
+              </div>
+            </div>
+            <div class="nc-thumb">
+              <div class="nc-thumb-inner thumb-market">📈</div>
+            </div>
+          </article>
+
+          <article class="news-card" data-cat="global">
+            <div>
+              <span class="art-tag global">Quốc Tế</span>
+              <h3 class="art-headline md">Trung Quốc tung gói kích thích 500 tỷ USD: Tác động lan toả sang chuỗi cung ứng ASEAN</h3>
+              <p class="art-deck dark" style="font-size:13px;margin-top:6px;margin-bottom:12px;">Các nhà máy xuất khẩu Việt Nam trong lĩnh vực điện tử và dệt may được kỳ vọng hưởng lợi trực tiếp từ nhu cầu trung gian tăng mạnh.</p>
+              <div class="art-byline">
+                <div class="avatar av-5" style="width:24px;height:24px;font-size:10px;">PL</div>
+                <div>
+                  <span class="byline-name dark" style="font-size:12px;">Phương Linh</span>
+                  <span class="byline-dot dark"> · </span>
+                  <span class="byline-meta dark" style="font-size:11px;">5 giờ trước</span>
+                  <span class="byline-dot dark"> · </span>
+                  <span class="byline-meta dark" style="font-size:11px;">6 phút đọc</span>
+                </div>
+              </div>
+            </div>
+            <div class="nc-thumb">
+              <div class="nc-thumb-inner thumb-global">🌏</div>
+            </div>
+          </article>
+
+          <article class="news-card" data-cat="fund">
+            <div>
+              <span class="art-tag fund">Quỹ Đầu Tư</span>
+              <h3 class="art-headline md">DOBN Equity Fund tăng trưởng 18,4% YTD – vượt benchmark VN-Index 8,7 điểm phần trăm</h3>
+              <p class="art-deck dark" style="font-size:13px;margin-top:6px;margin-bottom:12px;">Chiến lược tập trung cổ phiếu chất lượng cao ESG kết hợp quản trị rủi ro chủ động giúp quỹ duy trì alpha ổn định.</p>
+              <div class="art-byline">
+                <div class="avatar av-6" style="width:24px;height:24px;font-size:10px;">BD</div>
+                <div>
+                  <span class="byline-name dark" style="font-size:12px;">Ban Đầu Tư</span>
+                  <span class="byline-dot dark"> · </span>
+                  <span class="byline-meta dark" style="font-size:11px;">8 giờ trước</span>
+                  <span class="byline-dot dark"> · </span>
+                  <span class="byline-meta dark" style="font-size:11px;">4 phút đọc</span>
+                </div>
+              </div>
+            </div>
+            <div class="nc-thumb">
+              <div class="nc-thumb-inner thumb-fund">💼</div>
+            </div>
+          </article>
+
+          <article class="news-card" data-cat="macro">
+            <div>
+              <span class="art-tag macro">Vĩ Mô</span>
+              <h3 class="art-headline md">Lạm phát tháng 5/2026 hạ nhiệt xuống 3,1%: NHNN có dư địa nới lỏng tiền tệ?</h3>
+              <p class="art-deck dark" style="font-size:13px;margin-top:6px;margin-bottom:12px;">Giá năng lượng và lương thực giảm là hai động lực chính kéo CPI đi xuống, mở ra kịch bản hạ lãi suất điều hành quý III.</p>
+              <div class="art-byline">
+                <div class="avatar av-7" style="width:24px;height:24px;font-size:10px;">NT</div>
+                <div>
+                  <span class="byline-name dark" style="font-size:12px;">Nguyễn Thành</span>
+                  <span class="byline-dot dark"> · </span>
+                  <span class="byline-meta dark" style="font-size:11px;">10 giờ trước</span>
+                  <span class="byline-dot dark"> · </span>
+                  <span class="byline-meta dark" style="font-size:11px;">5 phút đọc</span>
+                </div>
+              </div>
+            </div>
+            <div class="nc-thumb">
+              <div class="nc-thumb-inner thumb-macro">📊</div>
+            </div>
+          </article>
+
+          <article class="news-card" data-cat="risk">
+            <div>
+              <span class="art-tag risk">Rủi Ro</span>
+              <h3 class="art-headline md">Căng thẳng địa chính trị Biển Đông: Đánh giá tác động đến chuỗi cung ứng và danh mục xuất khẩu</h3>
+              <p class="art-deck dark" style="font-size:13px;margin-top:6px;margin-bottom:12px;">Phân tích kịch bản rủi ro và các nhóm ngành có độ nhạy cảm cao, kèm khuyến nghị phòng thủ danh mục trong ngắn hạn.</p>
+              <div class="art-byline">
+                <div class="avatar av-5" style="width:24px;height:24px;font-size:10px;">RM</div>
+                <div>
+                  <span class="byline-name dark" style="font-size:12px;">Phòng Quản Lý Rủi Ro</span>
+                  <span class="byline-dot dark"> · </span>
+                  <span class="byline-meta dark" style="font-size:11px;">Hôm qua</span>
+                </div>
+              </div>
+            </div>
+            <div class="nc-thumb">
+              <div class="nc-thumb-inner thumb-risk">⚠️</div>
+            </div>
+          </article>
+
+          <article class="news-card" data-cat="esg">
+            <div>
+              <span class="art-tag esg">ESG</span>
+              <h3 class="art-headline md">REE Corporation dẫn đầu phát triển năng lượng mặt trời mái nhà công nghiệp: Khuyến nghị MUA</h3>
+              <p class="art-deck dark" style="font-size:13px;margin-top:6px;margin-bottom:12px;">Công suất lắp đặt mới đạt 180 MWp trong Q2, đưa tổng danh mục tái tạo vượt ngưỡng 1 GW, hỗ trợ mạnh cho định giá ESG.</p>
+              <div class="art-byline">
+                <div class="avatar av-2" style="width:24px;height:24px;font-size:10px;">TH</div>
+                <div>
+                  <span class="byline-name dark" style="font-size:12px;">Trần Hương</span>
+                  <span class="byline-dot dark"> · </span>
+                  <span class="byline-meta dark" style="font-size:11px;">Hôm qua</span>
+                  <span class="byline-dot dark"> · </span>
+                  <span class="byline-meta dark" style="font-size:11px;">8 phút đọc</span>
+                </div>
+              </div>
+            </div>
+            <div class="nc-thumb">
+              <div class="nc-thumb-inner thumb-esg">☀️</div>
+            </div>
+          </article>
+
+        </div><!-- /card-list -->
+
+        <!-- PAGINATION -->
+        <div class="pagination">
+          <button class="pg-btn arrow">&#8249;</button>
+          <button class="pg-btn active">1</button>
+          <button class="pg-btn">2</button>
+          <button class="pg-btn">3</button>
+          <button class="pg-btn">4</button>
+          <span style="color:var(--n-muted);font-size:13px;padding:0 4px;">…</span>
+          <button class="pg-btn">12</button>
+          <button class="pg-btn arrow">&#8250;</button>
+        </div>
+      </div><!-- /left -->
+
+      <!-- RIGHT: SIDEBAR -->
+      <aside class="sidebar">
+
+        <!-- MARKET SNAPSHOT -->
+        <div class="sidebar-box">
+          <div class="sb-header">
+            <div class="sb-title">Thị Trường</div>
+            <div class="sb-update" id="clock-display">Đang tải...</div>
+          </div>
+          <div class="market-row">
+            <div>
+              <div class="mr-name">VN-Index</div>
+              <div class="mr-sub">HOSE · Chứng khoán</div>
+            </div>
+            <div style="display:flex;align-items:center;">
+              <div class="spark-bar">
+                <div class="spark-b" style="height:10px;background:#dde3ec;"></div>
+                <div class="spark-b" style="height:14px;background:#dde3ec;"></div>
+                <div class="spark-b" style="height:8px;background:#dde3ec;"></div>
+                <div class="spark-b" style="height:18px;background:#dde3ec;"></div>
+                <div class="spark-b" style="height:12px;background:#16a34a;"></div>
+                <div class="spark-b" style="height:20px;background:#16a34a;"></div>
+                <div class="spark-b" style="height:22px;background:#16a34a;"></div>
+              </div>
+              <div class="mr-val">
+                <div class="mr-price">1,286.4</div>
+                <div class="mr-change up">+10.5 (+0.82%)</div>
+              </div>
+            </div>
+          </div>
+          <div class="market-row">
+            <div>
+              <div class="mr-name">HNX-Index</div>
+              <div class="mr-sub">HNX · Chứng khoán</div>
+            </div>
+            <div style="display:flex;align-items:center;">
+              <div class="spark-bar">
+                <div class="spark-b" style="height:14px;background:#dde3ec;"></div>
+                <div class="spark-b" style="height:10px;background:#dde3ec;"></div>
+                <div class="spark-b" style="height:16px;background:#dde3ec;"></div>
+                <div class="spark-b" style="height:12px;background:#dde3ec;"></div>
+                <div class="spark-b" style="height:18px;background:#16a34a;"></div>
+                <div class="spark-b" style="height:16px;background:#16a34a;"></div>
+                <div class="spark-b" style="height:20px;background:#16a34a;"></div>
+              </div>
+              <div class="mr-val">
+                <div class="mr-price">234.1</div>
+                <div class="mr-change up">+0.9 (+0.38%)</div>
+              </div>
+            </div>
+          </div>
+          <div class="market-row">
+            <div>
+              <div class="mr-name">USD/VND</div>
+              <div class="mr-sub">Tỷ giá</div>
+            </div>
+            <div style="display:flex;align-items:center;">
+              <div class="spark-bar">
+                <div class="spark-b" style="height:20px;background:#dde3ec;"></div>
+                <div class="spark-b" style="height:18px;background:#dde3ec;"></div>
+                <div class="spark-b" style="height:22px;background:#dde3ec;"></div>
+                <div class="spark-b" style="height:16px;background:#c0392b;"></div>
+                <div class="spark-b" style="height:14px;background:#c0392b;"></div>
+                <div class="spark-b" style="height:12px;background:#c0392b;"></div>
+                <div class="spark-b" style="height:10px;background:#c0392b;"></div>
+              </div>
+              <div class="mr-val">
+                <div class="mr-price">25,480</div>
+                <div class="mr-change dn">−30 (−0.12%)</div>
+              </div>
+            </div>
+          </div>
+          <div class="market-row">
+            <div>
+              <div class="mr-name">Gold Spot</div>
+              <div class="mr-sub">USD / troy oz</div>
+            </div>
+            <div style="display:flex;align-items:center;">
+              <div class="spark-bar">
+                <div class="spark-b" style="height:8px;background:#dde3ec;"></div>
+                <div class="spark-b" style="height:14px;background:#dde3ec;"></div>
+                <div class="spark-b" style="height:12px;background:#dde3ec;"></div>
+                <div class="spark-b" style="height:16px;background:#16a34a;"></div>
+                <div class="spark-b" style="height:18px;background:#16a34a;"></div>
+                <div class="spark-b" style="height:20px;background:#16a34a;"></div>
+                <div class="spark-b" style="height:22px;background:#16a34a;"></div>
+              </div>
+              <div class="mr-val">
+                <div class="mr-price">2,347</div>
+                <div class="mr-change up">+10.3 (+0.44%)</div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /market snapshot -->
+
+        <!-- NEWSLETTER -->
+        <div class="newsletter-box">
+          <div class="nl-icon">📨</div>
+          <div class="nl-title">Bản Tin Đầu Tư Tuần</div>
+          <div class="nl-desc">Nhận phân tích thị trường, khuyến nghị cổ phiếu và báo cáo ESG trực tiếp vào hộp thư mỗi thứ Hai.</div>
+          <div class="nl-input-row">
+            <input class="nl-input" type="email" placeholder="Email của bạn">
+            <button class="nl-btn">Đăng Ký Miễn Phí</button>
+          </div>
+        </div>
+
+        <!-- MOST READ -->
+        <div class="sidebar-box">
+          <div class="sb-header">
+            <div class="sb-title">Đọc Nhiều Nhất</div>
+          </div>
+          <div class="most-read-item">
+            <div class="mr-num">1</div>
+            <div>
+              <div class="mr-headline">FPT – Mục tiêu giá 160,000 đồng: Câu chuyện AI và xuất khẩu phần mềm</div>
+              <div class="mr-time">12,400 lượt đọc</div>
+            </div>
+          </div>
+          <div class="most-read-item">
+            <div class="mr-num">2</div>
+            <div>
+              <div class="mr-headline">Danh mục ESG DOBN tăng trưởng vượt trội 8,7% so với benchmark</div>
+              <div class="mr-time">9,850 lượt đọc</div>
+            </div>
+          </div>
+          <div class="most-read-item">
+            <div class="mr-num">3</div>
+            <div>
+              <div class="mr-headline">Trái phiếu doanh nghiệp: Mức lãi suất nào hấp dẫn trong môi trường hiện tại?</div>
+              <div class="mr-time">7,210 lượt đọc</div>
+            </div>
+          </div>
+          <div class="most-read-item">
+            <div class="mr-num">4</div>
+            <div>
+              <div class="mr-headline">VNM – Chiến lược mở rộng Đông Nam Á và định giá lại thương hiệu</div>
+              <div class="mr-time">6,340 lượt đọc</div>
+            </div>
+          </div>
+          <div class="most-read-item">
+            <div class="mr-num">5</div>
+            <div>
+              <div class="mr-headline">Hướng dẫn đọc báo cáo tài chính cho nhà đầu tư cá nhân</div>
+              <div class="mr-time">5,900 lượt đọc</div>
+            </div>
+          </div>
+        </div><!-- /most read -->
+
+      </aside><!-- /sidebar -->
+
+    </div><!-- /content-layout -->
+
+  </div><!-- /news-body -->
+
+  <!-- INFO BAR -->
+  <div class="news-info-bar">
+    <div class="nib-note">© 2026 DOBN Capital — Nội dung mang tính tham khảo, không phải khuyến nghị đầu tư.</div>
+    <div class="nib-links">
+      <a class="nib-link" href="#">Chính sách bảo mật</a>
+      <a class="nib-link" href="#">Miễn trừ trách nhiệm</a>
+      <a class="nib-link" href="#">RSS Feed</a>
+      <a class="nib-link" href="#">Liên hệ ban biên tập</a>
+    </div>
+  </div>
+
+</div><!-- /news-page -->
+</div><!-- /wrapper -->
+
+<!-- ========== FOOTER (giữ nguyên từ gốc) ========== -->
+<footer>
+  <p>© 2026 DOBN CAPITAL - Demo Website</p>
+</footer>
+
+<script>
+/* ---- Live clock ---- */
+function updateClock() {
+  var now = new Date();
+  var h = now.getHours().toString().padStart(2,'0');
+  var m = now.getMinutes().toString().padStart(2,'0');
+  var s = now.getSeconds().toString().padStart(2,'0');
+  var el = document.getElementById('clock-display');
+  if (el) el.textContent = 'Cập nhật ' + h + ':' + m + ':' + s;
+}
+updateClock();
+setInterval(updateClock, 1000);
+
+/* ---- Category filter ---- */
+function filterCategory(cat, btn) {
+  /* update pills */
+  document.querySelectorAll('.cat-pill').forEach(function(p){ p.classList.remove('active'); });
+  btn.classList.add('active');
+
+  /* filter news cards */
+  document.querySelectorAll('#news-list .news-card').forEach(function(card){
+    if (cat === 'all' || card.dataset.cat === cat) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+
+  /* filter hero grid side articles */
+  document.querySelectorAll('#hero-grid .article-side').forEach(function(card){
+    if (cat === 'all' || card.dataset.cat === cat) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+/* ---- Pagination (visual only) ---- */
+document.querySelectorAll('.pg-btn:not(.arrow)').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('.pg-btn').forEach(function(b){ b.classList.remove('active'); });
+    this.classList.add('active');
+  });
+});
+</script>
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VVRTLD2GMN"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-VVRTLD2GMN');
+</script>
+
+</body>
+</html>

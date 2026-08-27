@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Về chúng tôi – DOB Bank</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy:   #04045d;
+      --navy2:  #07078a;
+      --gold:   #c9a84c;
+      --gold-light: #e8c96e;
+      --cream:  #f7f5ef;
+      --white:  #ffffff;
+      --gray:   #f0eff9;
+      --text:   #1a1a3e;
+      --muted:  #6b6b9a;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Be Vietnam Pro', sans-serif; background: var(--white); color: var(--text); overflow-x: hidden; }
+
+    /* TOPBAR */
+    .topbar { background: var(--navy); color: rgba(255,255,255,.6); font-size: .72rem; letter-spacing: .04em; padding: .45rem 0; }
+    .topbar-inner { max-width: 1280px; margin: auto; padding: 0 2rem; display: flex; justify-content: space-between; }
+    .topbar a { color: inherit; text-decoration: none; } .topbar a:hover { color: var(--gold-light); }
+    .topbar-links { display: flex; gap: 1.4rem; }
+
+    /* NAVBAR */
+    nav { position: sticky; top: 0; z-index: 100; background: var(--white); box-shadow: 0 2px 20px rgba(4,4,93,.1); border-bottom: 3px solid var(--gold); }
+    .nav-inner { max-width: 1280px; margin: auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 72px; }
+    .logo-wrap { display: flex; align-items: center; gap: .9rem; text-decoration: none; }
+    .logo-wrap img { height: 46px; width: auto; object-fit: contain; }
+    .logo-name { font-family: 'Playfair Display', serif; font-size: 1.55rem; font-weight: 700; color: var(--navy); }
+    .logo-sub { font-size: .62rem; color: var(--gold); letter-spacing: .14em; text-transform: uppercase; font-weight: 600; }
+    .nav-menu { display: flex; align-items: center; gap: .15rem; }
+    .nav-item { position: relative; }
+    .nav-link { display: block; padding: .55rem 1rem; font-size: .82rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--navy); text-decoration: none; border-radius: 4px; transition: background .2s, color .2s; }
+    .nav-link:hover { background: var(--gray); } .nav-link.active { color: var(--gold); }
+    .dropdown { position: absolute; top: calc(100% + 8px); left: 0; background: var(--white); border-top: 3px solid var(--gold); box-shadow: 0 12px 40px rgba(4,4,93,.15); min-width: 220px; border-radius: 0 0 8px 8px; opacity: 0; pointer-events: none; transform: translateY(-8px); transition: all .22s ease; z-index: 200; }
+    .nav-item:hover .dropdown { opacity: 1; pointer-events: auto; transform: none; }
+    .dropdown a { display: block; padding: .7rem 1.2rem; font-size: .8rem; color: var(--text); text-decoration: none; font-weight: 500; border-bottom: 1px solid var(--gray); transition: background .15s, padding-left .15s; }
+    .dropdown a:last-child { border-bottom: none; } .dropdown a:hover { background: var(--gray); padding-left: 1.6rem; }
+    .nav-cta { background: var(--navy); color: var(--white) !important; border-radius: 4px; padding: .55rem 1.3rem !important; }
+    .nav-cta:hover { background: var(--navy2) !important; }
+
+    /* PAGE HERO */
+    .page-hero { background: var(--navy); position: relative; overflow: hidden; }
+    .page-hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 50% 100% at 100% 0%, rgba(201,168,76,.12) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 0% 100%, rgba(12,12,168,.4) 0%, transparent 60%),
+        linear-gradient(160deg, #04045d 0%, #06067a 60%, #04045d 100%);
+    }
+    .hero-decor { position: absolute; right: 0; top: 0; width: 50%; height: 100%; overflow: hidden; opacity: .035; }
+    .hero-decor svg { width: 100%; height: 100%; }
+    .page-hero-inner { position: relative; z-index: 1; max-width: 1280px; margin: auto; padding: 7rem 2rem 6rem; }
+    .breadcrumb { display: flex; align-items: center; gap: .5rem; font-size: .75rem; color: rgba(255,255,255,.5); margin-bottom: 1.5rem; }
+    .breadcrumb a { color: var(--gold); text-decoration: none; } .breadcrumb span { color: rgba(255,255,255,.3); }
+    .hero-label { font-size: .68rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin-bottom: .9rem; }
+    .page-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 4.5vw, 3.8rem); font-weight: 700; color: var(--white); line-height: 1.15; margin-bottom: 1.2rem; }
+    .page-hero h1 em { color: var(--gold-light); font-style: italic; }
+    .page-hero p { color: rgba(255,255,255,.7); font-size: 1rem; line-height: 1.8; max-width: 580px; margin-bottom: 2.5rem; }
+    .hero-stats { display: flex; gap: 3rem; flex-wrap: wrap; padding-top: 2.5rem; border-top: 1px solid rgba(255,255,255,.12); }
+    .hstat { }
+    .hstat-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: var(--gold-light); line-height: 1; }
+    .hstat-label { color: rgba(255,255,255,.5); font-size: .75rem; margin-top: .3rem; }
+
+    /* INNER NAV */
+    .about-nav { background: var(--white); border-bottom: 1px solid rgba(4,4,93,.1); position: sticky; top: 72px; z-index: 90; }
+    .about-tabs { max-width: 1280px; margin: auto; padding: 0 2rem; display: flex; gap: 0; overflow-x: auto; }
+    .about-tab { padding: 1rem 1.5rem; font-size: .8rem; font-weight: 600; color: var(--muted); text-decoration: none; border-bottom: 3px solid transparent; transition: all .2s; white-space: nowrap; }
+    .about-tab:hover { color: var(--navy); border-color: rgba(4,4,93,.2); }
+    .about-tab.active { color: var(--navy); border-color: var(--gold); }
+
+    /* SECTION COMMONS */
+    section { padding: 5.5rem 0; }
+    .section-inner { max-width: 1280px; margin: auto; padding: 0 2rem; }
+    .section-tag { font-size: .7rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); margin-bottom: .7rem; display: flex; align-items: center; gap: .5rem; }
+    .section-tag::before { content: ''; width: 22px; height: 2px; background: var(--gold); }
+    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.7rem, 2.8vw, 2.4rem); font-weight: 700; color: var(--navy); line-height: 1.25; margin-bottom: 1rem; }
+    .section-desc { color: var(--muted); font-size: .93rem; line-height: 1.78; }
+    .sec-anchor { scroll-margin-top: 145px; }
+
+    /* MISSION / VISION / VALUES */
+    .mvv { background: var(--cream); }
+    .mvv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+    .mvv-card { background: var(--white); border-radius: 16px; padding: 2.4rem 2rem; position: relative; overflow: hidden; border: 1px solid rgba(4,4,93,.07); box-shadow: 0 2px 20px rgba(4,4,93,.05); transition: transform .25s, box-shadow .25s; }
+    .mvv-card:hover { transform: translateY(-6px); box-shadow: 0 16px 44px rgba(4,4,93,.1); }
+    .mvv-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--gold), var(--gold-light)); }
+    .mvv-icon { font-size: 2.2rem; margin-bottom: 1.2rem; }
+    .mvv-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--navy); margin-bottom: .8rem; }
+    .mvv-body { font-size: .84rem; color: var(--muted); line-height: 1.75; }
+
+    /* STORY */
+    .story { background: var(--white); }
+    .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .story-visual { border-radius: 16px; overflow: hidden; position: relative; min-height: 480px; }
+    .story-visual-bg { position: absolute; inset: 0; background: linear-gradient(135deg, var(--navy) 0%, #0c0c80 100%); }
+    .story-visual-content { position: relative; z-index: 1; padding: 3rem; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
+    .story-year { font-family: 'Playfair Display', serif; font-size: 6rem; font-weight: 700; color: rgba(201,168,76,.15); line-height: 1; }
+    .story-quotes { display: flex; flex-direction: column; gap: 1.2rem; }
+    .story-quote { background: rgba(255,255,255,.06); border-left: 3px solid var(--gold); padding: 1rem 1.2rem; border-radius: 0 8px 8px 0; }
+    .story-quote p { color: rgba(255,255,255,.75); font-size: .82rem; line-height: 1.6; font-style: italic; }
+    .story-quote cite { color: var(--gold); font-size: .7rem; font-weight: 700; font-style: normal; margin-top: .4rem; display: block; }
+    .story-text .para { font-size: .92rem; color: var(--text); line-height: 1.82; margin-bottom: 1.3rem; }
+    .story-text .para:last-child { margin-bottom: 0; }
+
+    /* TIMELINE */
+    .timeline-bg { background: var(--navy); }
+    .timeline-title-area { text-align: center; margin-bottom: 4rem; }
+    .timeline-title-area .section-tag { justify-content: center; }
+    .timeline-title-area .section-title { color: var(--white); }
+    .timeline { position: relative; }
+    .timeline::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: linear-gradient(180deg, var(--gold) 0%, rgba(201,168,76,.2) 100%); transform: translateX(-50%); }
+    .tl-item { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-bottom: 3.5rem; align-items: center; position: relative; }
+    .tl-item:last-child { margin-bottom: 0; }
+    .tl-item.right .tl-content { order: 2; text-align: left; padding-left: 3rem; }
+    .tl-item.right .tl-year-wrap { order: 1; text-align: right; padding-right: 3rem; }
+    .tl-item.left .tl-content { order: 1; text-align: right; padding-right: 3rem; }
+    .tl-item.left .tl-year-wrap { order: 2; text-align: left; padding-left: 3rem; }
+    .tl-dot { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 16px; height: 16px; background: var(--gold); border-radius: 50%; border: 3px solid var(--navy); box-shadow: 0 0 0 4px rgba(201,168,76,.3); z-index: 1; }
+    .tl-year { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; color: var(--gold-light); }
+    .tl-tag { font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(201,168,76,.6); margin-top: .2rem; }
+    .tl-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 600; color: var(--white); margin-bottom: .5rem; }
+    .tl-body { font-size: .8rem; color: rgba(255,255,255,.55); line-height: 1.7; }
+
+    /* LEADERSHIP */
+    .leadership { background: var(--white); }
+    .board-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 2rem; margin-top: 3rem; }
+    .board-card { border-radius: 14px; overflow: hidden; border: 1px solid rgba(4,4,93,.08); transition: transform .25s, box-shadow .25s; }
+    .board-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(4,4,93,.1); }
+    .board-photo { aspect-ratio: 3/3.5; background: linear-gradient(135deg, var(--navy), var(--navy2)); display: flex; align-items: center; justify-content: center; font-size: 4rem; color: rgba(255,255,255,.15); position: relative; overflow: hidden; }
+    .board-photo::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 40%; background: linear-gradient(to top, rgba(4,4,93,.6), transparent); }
+    .board-info { padding: 1.3rem 1.5rem; background: var(--white); }
+    .board-name { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: .25rem; }
+    .board-title { font-size: .75rem; color: var(--gold); font-weight: 600; margin-bottom: .5rem; }
+    .board-bio { font-size: .75rem; color: var(--muted); line-height: 1.6; }
+    .board-photo-init { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 700; color: rgba(201,168,76,.4); }
+
+    /* VALUES */
+    .values-bg { background: var(--cream); }
+    .values-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 3rem; }
+    .val-card { background: var(--white); border-radius: 12px; padding: 2rem 1.6rem; text-align: center; border: 1px solid rgba(4,4,93,.07); transition: transform .2s, box-shadow .2s; }
+    .val-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(4,4,93,.1); }
+    .val-icon { font-size: 2.2rem; margin-bottom: 1rem; }
+    .val-name { font-family: 'Playfair Display', serif; font-size: .95rem; font-weight: 700; color: var(--navy); margin-bottom: .5rem; }
+    .val-desc { font-size: .78rem; color: var(--muted); line-height: 1.65; }
+    .val-num { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 700; color: rgba(4,4,93,.06); line-height: 1; margin-bottom: .3rem; }
+
+    /* AWARDS */
+    .awards { background: var(--white); }
+    .awards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.2rem; margin-top: 2.5rem; }
+    .award-item { border: 1px solid rgba(4,4,93,.08); border-radius: 12px; padding: 1.5rem 1.2rem; text-align: center; transition: border-color .2s, transform .2s; }
+    .award-item:hover { border-color: var(--gold); transform: translateY(-3px); }
+    .award-icon { font-size: 2rem; margin-bottom: .8rem; }
+    .award-name { font-size: .8rem; font-weight: 700; color: var(--navy); margin-bottom: .4rem; line-height: 1.4; }
+    .award-org { font-size: .7rem; color: var(--muted); }
+    .award-year { display: inline-block; margin-top: .6rem; font-size: .65rem; font-weight: 700; color: var(--gold); background: rgba(201,168,76,.1); padding: .2rem .6rem; border-radius: 100px; }
+
+    /* CSR */
+    .csr { background: var(--cream); }
+    .csr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-top: 2.5rem; }
+    .csr-items { display: flex; flex-direction: column; gap: 1.2rem; }
+    .csr-item { display: flex; gap: 1.2rem; align-items: flex-start; padding: 1.2rem; background: var(--white); border-radius: 10px; border-left: 4px solid var(--gold); }
+    .csr-icon { font-size: 1.5rem; flex-shrink: 0; }
+    .csr-title { font-weight: 700; font-size: .88rem; color: var(--navy); margin-bottom: .3rem; }
+    .csr-body { font-size: .78rem; color: var(--muted); line-height: 1.6; }
+    .csr-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .csr-stat { background: var(--white); border-radius: 12px; padding: 1.8rem; text-align: center; border: 1px solid rgba(4,4,93,.07); }
+    .csr-stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--navy); font-weight: 700; }
+    .csr-stat-label { font-size: .75rem; color: var(--muted); margin-top: .3rem; }
+
+    /* CTA */
+    .cta-strip { background: var(--navy); padding: 4rem 0; }
+    .cta-inner { max-width: 1280px; margin: auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap; }
+    .cta-text h3 { font-family: 'Playfair Display', serif; color: var(--white); font-size: 1.8rem; margin-bottom: .5rem; }
+    .cta-text p { color: rgba(255,255,255,.6); font-size: .88rem; }
+    .cta-btns { display: flex; gap: 1rem; }
+    .btn-gold { background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: var(--navy); font-weight: 700; font-size: .88rem; padding: .85rem 2rem; border-radius: 4px; text-decoration: none; }
+    .btn-outline-w { border: 1.5px solid rgba(255,255,255,.3); color: var(--white); font-weight: 600; font-size: .88rem; padding: .85rem 2rem; border-radius: 4px; text-decoration: none; transition: border-color .2s; }
+    .btn-outline-w:hover { border-color: var(--gold); }
+
+    /* FOOTER */
+    footer { background: #020238; color: rgba(255,255,255,.6); padding-top: 3.5rem; }
+    .footer-grid { max-width: 1280px; margin: auto; padding: 0 2rem 2.5rem; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; }
+    .footer-logo-name { font-family: 'Playfair Display', serif; color: var(--white); font-size: 1.4rem; font-weight: 700; }
+    .footer-logo-sub { color: var(--gold); font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; margin-top: .15rem; }
+    .footer-about { margin-top: .9rem; font-size: .78rem; line-height: 1.7; max-width: 260px; }
+    .footer-col h4 { color: var(--white); font-size: .76rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; margin-bottom: .9rem; padding-bottom: .5rem; border-bottom: 1px solid rgba(255,255,255,.1); }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
+    .footer-col ul li a { color: rgba(255,255,255,.5); font-size: .78rem; text-decoration: none; transition: color .2s; }
+    .footer-col ul li a:hover { color: var(--gold-light); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.08); max-width: 1280px; margin: auto; padding: 1.1rem 2rem; display: flex; justify-content: space-between; font-size: .72rem; }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .55s ease, transform .55s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-l { opacity: 0; transform: translateX(-22px); transition: opacity .55s ease, transform .55s ease; }
+    .reveal-l.visible { opacity: 1; transform: none; }
+    .reveal-r { opacity: 0; transform: translateX(22px); transition: opacity .55s ease, transform .55s ease; }
+    .reveal-r.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 1024px) {
+      .mvv-grid { grid-template-columns: 1fr 1fr; }
+      .values-grid { grid-template-columns: 1fr 1fr; }
+      .story-grid, .csr-grid { grid-template-columns: 1fr; }
+      .timeline::before { left: 20px; }
+      .tl-item { grid-template-columns: 1fr; }
+      .tl-item.right .tl-content, .tl-item.left .tl-content { order: 2; text-align: left; padding-left: 3.5rem; padding-right: 0; }
+      .tl-item.right .tl-year-wrap, .tl-item.left .tl-year-wrap { order: 1; text-align: left; padding-left: 3.5rem; padding-right: 0; }
+      .tl-dot { left: 20px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .mvv-grid { grid-template-columns: 1fr; }
+      .values-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-links">
+      <a href="#">Hỗ trợ: 1800 58 68</a>
+      <a href="#">Tỷ giá</a>
+      <a href="#">Lãi suất</a>
+      <a href="#">Chi nhánh</a>
+    </div>
+    <div class="topbar-links">
+      <a href="#">Tiếng Việt</a>
+      <a href="#">English</a>
+      <a href="#">Internet Banking</a>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-inner">
+    <a href="homebank.html" class="logo-wrap">
+      <img src="DOBN/bank.png" alt="DOB Bank" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
+      <div style="display:none">
+        <div class="logo-name">DOB Bank</div>
+        <div class="logo-sub">Ngân hàng TMCP DOB</div>
+      </div>
+    </a>
+    <div class="nav-menu">
+      <div class="nav-item">
+        <a href="services.html" class="nav-link">Sản phẩm &amp; Dịch vụ ▾</a>
+        <div class="dropdown">
+          <a href="services.html#dinh-che">🏦 Định chế tài chính</a>
+          <a href="services.html#doanh-nghiep">🏢 Doanh nghiệp</a>
+          <a href="services.html#ca-nhan">👤 Cá nhân</a>
+          <a href="services.html#premium">💎 Cá nhân Premium</a>
+        </div>
+      </div>
+      <div class="nav-item"><a href="aboutb.html" class="nav-link active">Về chúng tôi</a></div>
+      <div class="nav-item"><a href="shareholderb.html" class="nav-link">Quan hệ nhà đầu tư</a></div>
+      <div class="nav-item"><a href="newsb.html" class="nav-link">Tin tức</a></div>
+      <div class="nav-item"><a href="esgb.html" class="nav-link">Phát triển bền vững</a></div>
+      <div class="nav-item"><a href="#" class="nav-link nav-cta">Internet Banking</a></div>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="hero-decor">
+    <svg viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="600" cy="200" r="300" stroke="white" stroke-width="1" fill="none"/>
+      <circle cx="600" cy="200" r="200" stroke="white" stroke-width="1" fill="none"/>
+      <circle cx="600" cy="200" r="100" stroke="white" stroke-width="1" fill="none"/>
+      <line x1="300" y1="0" x2="700" y2="600" stroke="white" stroke-width="1"/>
+      <line x1="200" y1="0" x2="800" y2="500" stroke="white" stroke-width="1"/>
+    </svg>
+  </div>
+  <div class="page-hero-inner">
+    <div class="breadcrumb"><a href="homebank.html">Trang chủ</a><span>›</span><span>Về chúng tôi</span></div>
+    <div class="hero-label">DOB Bank · Est. 1993</div>
+    <h1>Hơn 30 năm kiến tạo<br/><em>niềm tin tài chính</em></h1>
+    <p>Ngân hàng Thương mại Cổ phần DOB – được xây dựng trên nền tảng chính trực, đổi mới và phục vụ cộng đồng. Chúng tôi không chỉ là ngân hàng; chúng tôi là người đồng hành trên mọi hành trình của bạn.</p>
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-num">1993</div><div class="hstat-label">Năm thành lập</div></div>
+      <div class="hstat"><div class="hstat-num">285K tỷ</div><div class="hstat-label">Tổng tài sản (VNĐ)</div></div>
+      <div class="hstat"><div class="hstat-num">4.5M+</div><div class="hstat-label">Khách hàng tin tưởng</div></div>
+      <div class="hstat"><div class="hstat-num">230+</div><div class="hstat-label">Chi nhánh toàn quốc</div></div>
+      <div class="hstat"><div class="hstat-num">6,500+</div><div class="hstat-label">Cán bộ nhân viên</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- INNER NAV -->
+<div class="about-nav">
+  <div class="about-tabs">
+    <a class="about-tab" href="#su-menh">Sứ mệnh & Tầm nhìn</a>
+    <a class="about-tab" href="#lich-su">Lịch sử hình thành</a>
+    <a class="about-tab" href="#chặng-đường">Các mốc phát triển</a>
+    <a class="about-tab" href="#ban-lanh-dao">Ban lãnh đạo</a>
+    <a class="about-tab" href="#gia-tri">Giá trị cốt lõi</a>
+    <a class="about-tab" href="#giai-thuong">Giải thưởng</a>
+    <a class="about-tab" href="#csr">Trách nhiệm xã hội</a>
+  </div>
+</div>
+
+<!-- SỨ MỆNH & TẦM NHÌN -->
+<section class="mvv sec-anchor" id="su-menh">
+  <div class="section-inner">
+    <div style="text-align:center; margin-bottom:.5rem" class="reveal">
+      <div class="section-tag" style="justify-content:center">Định hướng chiến lược</div>
+      <h2 class="section-title">Sứ mệnh – Tầm nhìn – Giá trị</h2>
+    </div>
+    <div class="mvv-grid reveal">
+      <div class="mvv-card">
+        <div class="mvv-icon">🎯</div>
+        <div class="mvv-title">Sứ mệnh</div>
+        <p class="mvv-body">Cung cấp các giải pháp tài chính sáng tạo, đáng tin cậy và có trách nhiệm, góp phần nâng cao chất lượng cuộc sống của khách hàng, thúc đẩy sự phát triển bền vững của doanh nghiệp và đóng góp tích cực cho sự thịnh vượng của nền kinh tế Việt Nam.</p>
+      </div>
+      <div class="mvv-card">
+        <div class="mvv-icon">🔭</div>
+        <div class="mvv-title">Tầm nhìn 2030</div>
+        <p class="mvv-body">Trở thành ngân hàng thương mại cổ phần hàng đầu Việt Nam về hiệu quả hoạt động, đổi mới sáng tạo và trải nghiệm khách hàng. Mở rộng hiện diện tại các thị trường ASEAN với định vị là ngân hàng số tiên phong, phát triển bền vững theo chuẩn ESG quốc tế.</p>
+      </div>
+      <div class="mvv-card">
+        <div class="mvv-icon">⭐</div>
+        <div class="mvv-title">Cam kết cốt lõi</div>
+        <p class="mvv-body">Minh bạch trong quản trị. Chính trực trong từng giao dịch. Sáng tạo để dẫn đầu. Trách nhiệm với cộng đồng. Bốn cam kết này là nền tảng bất biến định hướng mọi quyết định và hành động của DOB Bank trong hơn ba thập kỷ qua và mãi về sau.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LỊCH SỬ -->
+<section class="story sec-anchor" id="lich-su">
+  <div class="section-inner">
+    <div class="story-grid">
+      <div class="story-visual reveal-l">
+        <div class="story-visual-bg"></div>
+        <div class="story-visual-content">
+          <div class="story-year">1993</div>
+          <div class="story-quotes">
+            <div class="story-quote">
+              <p>"Chúng tôi thành lập DOB Bank với niềm tin rằng một ngân hàng vì con người, đặt khách hàng làm trung tâm, sẽ luôn tìm được con đường phát triển dù bất kỳ hoàn cảnh nào."</p>
+              <cite>— Ông Nguyễn Đức Bình, Chủ tịch HĐQT sáng lập</cite>
+            </div>
+            <div class="story-quote">
+              <p>"DOB không chỉ là tên gọi. Đó là triết lý: Dám – Ổn định – Bứt phá. Ba chữ đó đã dẫn dắt chúng tôi qua mọi thăng trầm."</p>
+              <cite>— Tổng Giám đốc Trần Phương Linh</cite>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="story-text reveal-r">
+        <div class="section-tag">Hành trình của chúng tôi</div>
+        <h2 class="section-title">Từ một văn phòng nhỏ<br/>đến ngân hàng hàng đầu</h2>
+        <p class="para">Năm 1993, trong bối cảnh Việt Nam bắt đầu Đổi mới và mở cửa nền kinh tế, Ngân hàng TMCP DOB được thành lập tại TP. Hồ Chí Minh với vốn điều lệ ban đầu chỉ 20 tỷ đồng và đội ngũ 45 nhân viên. Những người sáng lập mang theo một khát vọng: xây dựng một tổ chức tài chính Việt Nam đủ sức cạnh tranh với các ngân hàng nước ngoài.</p>
+        <p class="para">Qua ba thập kỷ, DOB Bank đã vượt qua cuộc khủng hoảng tài chính châu Á 1997, biến động kinh tế 2008–2012, và đại dịch COVID-19, không chỉ sống sót mà còn phát triển mạnh mẽ hơn. Mỗi thách thức là một lần DOB Bank tôi luyện bản lĩnh và củng cố niềm tin của khách hàng.</p>
+        <p class="para">Ngày nay, với tổng tài sản 285.000 tỷ đồng, hơn 4,5 triệu khách hàng và 230 chi nhánh trải dài từ Lạng Sơn đến Cà Mau, DOB Bank tự hào là một trong những ngân hàng thương mại cổ phần lớn nhất Việt Nam – và hành trình vẫn còn tiếp tục.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="timeline-bg sec-anchor" id="chặng-đường" style="padding: 5.5rem 0">
+  <div class="section-inner">
+    <div class="timeline-title-area reveal">
+      <div class="section-tag">Hành trình phát triển</div>
+      <h2 class="section-title">Những mốc son lịch sử</h2>
+    </div>
+    <div class="timeline reveal">
+      <div class="tl-item left">
+        <div class="tl-content">
+          <div class="tl-title">Thành lập DOB Bank</div>
+          <p class="tl-body">Ngân hàng TMCP DOB chính thức khai trương tại TP. HCM với vốn điều lệ 20 tỷ đồng, 45 nhân viên và 1 chi nhánh đầu tiên trên đường Nguyễn Huệ.</p>
+        </div>
+        <div class="tl-year-wrap"><div class="tl-year">1993</div><div class="tl-tag">Thành lập</div></div>
+        <div class="tl-dot"></div>
+      </div>
+      <div class="tl-item right">
+        <div class="tl-year-wrap"><div class="tl-year">1999</div><div class="tl-tag">Mở rộng</div></div>
+        <div class="tl-content">
+          <div class="tl-title">Mở rộng ra Hà Nội & miền Bắc</div>
+          <p class="tl-body">Khai trương chi nhánh Hà Nội, nâng số chi nhánh lên 15, vốn điều lệ tăng lên 200 tỷ đồng. Bắt đầu triển khai hệ thống ngân hàng lõi (core banking) T24 của Temenos.</p>
+        </div>
+        <div class="tl-dot"></div>
+      </div>
+      <div class="tl-item left">
+        <div class="tl-content">
+          <div class="tl-title">Niêm yết trên sàn HoSE</div>
+          <p class="tl-body">Cổ phiếu DOB chính thức giao dịch tại Sở Giao dịch Chứng khoán TP. HCM, đánh dấu bước ngoặt minh bạch hóa hoạt động và thu hút nhà đầu tư chiến lược nước ngoài.</p>
+        </div>
+        <div class="tl-year-wrap"><div class="tl-year">2006</div><div class="tl-tag">Niêm yết</div></div>
+        <div class="tl-dot"></div>
+      </div>
+      <div class="tl-item right">
+        <div class="tl-year-wrap"><div class="tl-year">2012</div><div class="tl-tag">Tái cơ cấu</div></div>
+        <div class="tl-content">
+          <div class="tl-title">Tái cơ cấu toàn diện</div>
+          <p class="tl-body">Thực hiện đề án tái cơ cấu theo định hướng NHNN, nâng cao quản trị rủi ro, xử lý nợ xấu và đầu tư mạnh vào công nghệ. Vốn điều lệ đạt 5.000 tỷ đồng.</p>
+        </div>
+        <div class="tl-dot"></div>
+      </div>
+      <div class="tl-item left">
+        <div class="tl-content">
+          <div class="tl-title">Ra mắt DOB Digital Banking</div>
+          <p class="tl-body">Ứng dụng ngân hàng số DOB Mobile chính thức ra mắt với hơn 500.000 lượt tải trong tháng đầu. Đây là nền tảng cho chiến lược số hóa toàn diện của ngân hàng.</p>
+        </div>
+        <div class="tl-year-wrap"><div class="tl-year">2018</div><div class="tl-tag">Số hóa</div></div>
+        <div class="tl-dot"></div>
+      </div>
+      <div class="tl-item right">
+        <div class="tl-year-wrap"><div class="tl-year">2021</div><div class="tl-tag">ESG</div></div>
+        <div class="tl-content">
+          <div class="tl-title">Cam kết ESG & Tín dụng xanh</div>
+          <p class="tl-body">DOB Bank công bố khung tín dụng xanh đầu tiên, phát hành 2.000 tỷ đồng trái phiếu xanh và cam kết đạt Net Zero Carbon vào năm 2040.</p>
+        </div>
+        <div class="tl-dot"></div>
+      </div>
+      <div class="tl-item left">
+        <div class="tl-content">
+          <div class="tl-title">Tổng tài sản vượt 285.000 tỷ đồng</div>
+          <p class="tl-body">DOB Bank kỷ niệm 30 năm thành lập với tổng tài sản 285.000 tỷ đồng, 4,5 triệu khách hàng, được xếp hạng AA+ bởi FiinRatings và giành 12 giải thưởng quốc tế.</p>
+        </div>
+        <div class="tl-year-wrap"><div class="tl-year">2023</div><div class="tl-tag">Kỷ niệm 30 năm</div></div>
+        <div class="tl-dot"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BAN LÃNH ĐẠO -->
+<section class="leadership sec-anchor" id="ban-lanh-dao">
+  <div class="section-inner">
+    <div class="section-tag reveal">Đội ngũ</div>
+    <h2 class="section-title reveal">Ban lãnh đạo</h2>
+    <p class="section-desc reveal">Đội ngũ lãnh đạo DOB Bank là những chuyên gia tài chính – ngân hàng hàng đầu với hàng thập kỷ kinh nghiệm trong nước và quốc tế.</p>
+    <div class="board-grid reveal">
+      <div class="board-card">
+        <div class="board-photo"><div class="board-photo-init">NB</div></div>
+        <div class="board-info">
+          <div class="board-name">Ông Nguyễn Đức Bình</div>
+          <div class="board-title">Chủ tịch Hội đồng Quản trị</div>
+          <p class="board-bio">Hơn 35 năm kinh nghiệm tài chính – ngân hàng. Cử nhân Kinh tế Đại học Kinh tế TP.HCM, MBA tại Đại học Quốc gia Singapore.</p>
+        </div>
+      </div>
+      <div class="board-card">
+        <div class="board-photo"><div class="board-photo-init">PL</div></div>
+        <div class="board-info">
+          <div class="board-name">Bà Trần Phương Linh</div>
+          <div class="board-title">Tổng Giám đốc (CEO)</div>
+          <p class="board-bio">20 năm kinh nghiệm, từng làm việc tại HSBC và Citibank. Thạc sĩ Tài chính tại London School of Economics.</p>
+        </div>
+      </div>
+      <div class="board-card">
+        <div class="board-photo"><div class="board-photo-init">MH</div></div>
+        <div class="board-info">
+          <div class="board-name">Ông Lê Minh Hoàng</div>
+          <div class="board-title">Phó TGĐ phụ trách Tài chính (CFO)</div>
+          <p class="board-bio">CFA charterholder, hơn 18 năm kinh nghiệm tài chính doanh nghiệp, từng công tác tại PwC và Deutsche Bank.</p>
+        </div>
+      </div>
+      <div class="board-card">
+        <div class="board-photo"><div class="board-photo-init">AT</div></div>
+        <div class="board-info">
+          <div class="board-name">Bà Phạm Anh Thư</div>
+          <div class="board-title">Phó TGĐ phụ trách Công nghệ (CTO)</div>
+          <p class="board-bio">Tiến sĩ Khoa học Máy tính tại ĐH KAIST Hàn Quốc, chuyên gia số hóa ngân hàng và AI trong tài chính.</p>
+        </div>
+      </div>
+      <div class="board-card">
+        <div class="board-photo"><div class="board-photo-init">QD</div></div>
+        <div class="board-info">
+          <div class="board-name">Ông Vũ Quốc Đạt</div>
+          <div class="board-title">Phó TGĐ phụ trách Rủi ro (CRO)</div>
+          <p class="board-bio">20 năm kinh nghiệm quản trị rủi ro, Basel II/III, từng làm việc tại Standard Chartered và Vietcombank.</p>
+        </div>
+      </div>
+      <div class="board-card">
+        <div class="board-photo"><div class="board-photo-init">HN</div></div>
+        <div class="board-info">
+          <div class="board-name">Bà Ngô Hải Nhi</div>
+          <div class="board-title">Thành viên HĐQT độc lập</div>
+          <p class="board-bio">Chuyên gia quản trị doanh nghiệp, cố vấn cao cấp của IFC/World Bank về quản trị ngân hàng tại khu vực Đông Nam Á.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GIÁ TRỊ CỐT LÕI -->
+<section class="values-bg sec-anchor" id="gia-tri">
+  <div class="section-inner">
+    <div style="text-align:center" class="reveal">
+      <div class="section-tag" style="justify-content:center">Văn hóa DOB</div>
+      <h2 class="section-title">Giá trị cốt lõi</h2>
+      <p class="section-desc" style="margin: auto; margin-bottom: 0">Năm giá trị cốt lõi định hình văn hóa, quyết định hành vi và dẫn dắt mọi hoạt động của toàn bộ 6.500 cán bộ nhân viên DOB Bank.</p>
+    </div>
+    <div class="values-grid reveal">
+      <div class="val-card">
+        <div class="val-num">01</div>
+        <div class="val-icon">🛡️</div>
+        <div class="val-name">Chính trực</div>
+        <p class="val-desc">Trung thực và minh bạch trong mọi giao dịch. Nói đúng, làm đúng cam kết với khách hàng, đối tác và cổ đông.</p>
+      </div>
+      <div class="val-card">
+        <div class="val-num">02</div>
+        <div class="val-icon">💡</div>
+        <div class="val-name">Đổi mới</div>
+        <p class="val-desc">Không ngừng sáng tạo, tìm kiếm giải pháp tốt hơn. Đón nhận công nghệ và tư duy mới để mang lại trải nghiệm vượt trội.</p>
+      </div>
+      <div class="val-card">
+        <div class="val-num">03</div>
+        <div class="val-icon">🤝</div>
+        <div class="val-name">Đồng hành</div>
+        <p class="val-desc">Đặt lợi ích của khách hàng lên hàng đầu. Lắng nghe, thấu hiểu và xây dựng quan hệ lâu bền dựa trên sự tin tưởng lẫn nhau.</p>
+      </div>
+      <div class="val-card">
+        <div class="val-num">04</div>
+        <div class="val-icon">🌱</div>
+        <div class="val-name">Bền vững</div>
+        <p class="val-desc">Cân bằng giữa lợi ích kinh tế, xã hội và môi trường. Xây dựng ngân hàng để lại di sản tích cực cho các thế hệ tương lai.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GIẢI THƯỞNG -->
+<section class="awards sec-anchor" id="giai-thuong">
+  <div class="section-inner">
+    <div class="section-tag reveal">Vinh danh</div>
+    <h2 class="section-title reveal">Giải thưởng &amp; Công nhận</h2>
+    <p class="section-desc reveal">Những ghi nhận quý báu từ các tổ chức tài chính và truyền thông uy tín trong nước và quốc tế, phản ánh nỗ lực không ngừng của DOB Bank.</p>
+    <div class="awards-grid reveal">
+      <div class="award-item">
+        <div class="award-icon">🏆</div>
+        <div class="award-name">Ngân hàng số xuất sắc nhất Việt Nam</div>
+        <div class="award-org">Asian Banking & Finance Awards</div>
+        <div class="award-year">2026</div>
+      </div>
+      <div class="award-item">
+        <div class="award-icon">⭐</div>
+        <div class="award-name">Top 10 Thương hiệu Ngân hàng Mạnh nhất</div>
+        <div class="award-org">Brand Finance Vietnam</div>
+        <div class="award-year">2025</div>
+      </div>
+      <div class="award-item">
+        <div class="award-icon">🌿</div>
+        <div class="award-name">Ngân hàng Xanh tiêu biểu</div>
+        <div class="award-org">Ngân hàng Nhà nước Việt Nam</div>
+        <div class="award-year">2025</div>
+      </div>
+      <div class="award-item">
+        <div class="award-icon">🔒</div>
+        <div class="award-name">Best Cybersecurity Bank</div>
+        <div class="award-org">Global Finance Magazine</div>
+        <div class="award-year">2024</div>
+      </div>
+      <div class="award-item">
+        <div class="award-icon">💎</div>
+        <div class="award-name">Ngân hàng có dịch vụ Khách hàng xuất sắc</div>
+        <div class="award-org">Vietnam Service Awards</div>
+        <div class="award-year">2024</div>
+      </div>
+      <div class="award-item">
+        <div class="award-icon">📊</div>
+        <div class="award-name">AA+ Rating – Xếp hạng tín nhiệm</div>
+        <div class="award-org">FiinRatings Vietnam</div>
+        <div class="award-year">2024</div>
+      </div>
+      <div class="award-item">
+        <div class="award-icon">🌏</div>
+        <div class="award-name">Best Trade Finance Bank Vietnam</div>
+        <div class="award-org">Euromoney Awards</div>
+        <div class="award-year">2023</div>
+      </div>
+      <div class="award-item">
+        <div class="award-icon">🏅</div>
+        <div class="award-name">Doanh nghiệp Bền vững Việt Nam</div>
+        <div class="award-org">VCCI – Phòng Thương mại & Công nghiệp VN</div>
+        <div class="award-year">2023</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CSR -->
+<section class="csr sec-anchor" id="csr">
+  <div class="section-inner">
+    <div class="section-tag reveal">ESG & CSR</div>
+    <h2 class="section-title reveal">Trách nhiệm xã hội &amp; Phát triển bền vững</h2>
+    <div class="csr-grid">
+      <div class="csr-items reveal-l">
+        <div class="csr-item">
+          <div class="csr-icon">📚</div>
+          <div>
+            <div class="csr-title">Quỹ học bổng DOB Futures</div>
+            <p class="csr-body">Hơn 5.000 suất học bổng trao tặng cho học sinh, sinh viên nghèo vượt khó trên toàn quốc. Cam kết duy trì và mở rộng chương trình đến năm 2030.</p>
+          </div>
+        </div>
+        <div class="csr-item">
+          <div class="csr-icon">🌱</div>
+          <div>
+            <div class="csr-title">Tài chính xanh & Net Zero 2040</div>
+            <p class="csr-body">Phân bổ 15% tổng dư nợ cho các dự án năng lượng tái tạo, nông nghiệp bền vững và kinh tế tuần hoàn. Giảm 40% carbon nội bộ so với 2020.</p>
+          </div>
+        </div>
+        <div class="csr-item">
+          <div class="csr-icon">🏥</div>
+          <div>
+            <div class="csr-title">Tài chính toàn diện (Financial Inclusion)</div>
+            <p class="csr-body">Mở rộng dịch vụ ngân hàng tới vùng sâu, vùng xa qua mạng lưới đại lý và ứng dụng di động. Hỗ trợ tiếp cận vốn cho 200.000 hộ nông dân và tiểu thương.</p>
+          </div>
+        </div>
+        <div class="csr-item">
+          <div class="csr-icon">👩‍💼</div>
+          <div>
+            <div class="csr-title">Bình đẳng giới & Phát triển nhân tài</div>
+            <p class="csr-body">52% nhân viên và 40% cấp quản lý cấp cao là phụ nữ. Chương trình đào tạo lãnh đạo trẻ DOB Next Generation với 300 học viên mỗi năm.</p>
+          </div>
+        </div>
+      </div>
+      <div class="csr-stats reveal-r">
+        <div class="csr-stat"><div class="csr-stat-num">5,000+</div><div class="csr-stat-label">Suất học bổng đã trao</div></div>
+        <div class="csr-stat"><div class="csr-stat-num">200B</div><div class="csr-stat-label">Tỷ VNĐ tín dụng xanh</div></div>
+        <div class="csr-stat"><div class="csr-stat-num">200K</div><div class="csr-stat-label">Hộ gia đình được hỗ trợ</div></div>
+        <div class="csr-stat"><div class="csr-stat-num">-40%</div><div class="csr-stat-label">Phát thải carbon từ 2020</div></div>
+        <div class="csr-stat" style="grid-column: 1/-1"><div class="csr-stat-num">Top 3</div><div class="csr-stat-label">Doanh nghiệp ESG hàng đầu ngành ngân hàng Việt Nam 2025</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-strip">
+  <div class="cta-inner">
+    <div class="cta-text">
+      <h3>Trở thành một phần của DOB</h3>
+      <p>Khách hàng, đối tác hay ứng viên – chúng tôi luôn chào đón bạn.</p>
+    </div>
+    <div class="cta-btns">
+      <a href="services.html" class="btn-gold">Xem sản phẩm dịch vụ</a>
+      <a href="#" class="btn-outline-w">Tuyển dụng</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo-name">DOB Bank</div>
+      <div class="footer-logo-sub">Ngân hàng Thương mại Cổ phần DOB</div>
+      <p class="footer-about">Hoạt động theo Giấy phép số 0012/NH-GP do Ngân hàng Nhà nước Việt Nam cấp. Thành viên Bảo hiểm tiền gửi Việt Nam.</p>
+    </div>
+    <div class="footer-col"><h4>Về DOB Bank</h4><ul>
+      <li><a href="#su-menh">Sứ mệnh & Tầm nhìn</a></li>
+      <li><a href="#lich-su">Lịch sử hình thành</a></li>
+      <li><a href="#ban-lanh-dao">Ban lãnh đạo</a></li>
+      <li><a href="#gia-tri">Giá trị cốt lõi</a></li>
+      <li><a href="#giai-thuong">Giải thưởng</a></li>
+      <li><a href="#csr">Trách nhiệm xã hội</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Liên kết</h4><ul>
+      <li><a href="homebank.html">Trang chủ</a></li>
+      <li><a href="services.html">Sản phẩm & Dịch vụ</a></li>
+      <li><a href="shareholderb.html">Quan hệ nhà đầu tư</a></li>
+      <li><a href="newsb.html">Tin tức</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Liên hệ</h4><ul>
+      <li><a href="#">📞 1800 58 68</a></li>
+      <li><a href="#">✉️ cskh@dobbank.com.vn</a></li>
+      <li><a href="#">📍 15 Lê Duẩn, Q.1, TP.HCM</a></li>
+      <li><a href="#">Tuyển dụng</a></li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Ngân hàng Thương mại Cổ phần DOB. Bảo lưu mọi quyền.</p>
+    <p>1800 58 68 · cskh@dobbank.com.vn</p>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const allReveal = document.querySelectorAll('.reveal, .reveal-l, .reveal-r');
+  const io = new IntersectionObserver(e => e.forEach(x => x.isIntersecting && (x.target.classList.add('visible'), io.unobserve(x.target))), { threshold: 0.1 });
+  allReveal.forEach(el => io.observe(el));
+
+  // Active tab
+  const tabs = document.querySelectorAll('.about-tab');
+  const sections = ['su-menh','lich-su','chặng-đường','ban-lanh-dao','gia-tri','giai-thuong','csr'];
+  const sectionEls = sections.map(id => document.getElementById(id));
+  window.addEventListener('scroll', () => {
+    let cur = 0;
+    sectionEls.forEach((s, i) => { if (s && window.scrollY >= s.offsetTop - 200) cur = i; });
+    tabs.forEach((t, i) => t.classList.toggle('active', i === cur));
+  });
+</script>
+</body>
+</html>

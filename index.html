@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DOBN CAPITAL — Quản Lý Quỹ Đầu Tư</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Sora:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ════════════════════════════════════
+   ROOT TOKENS
+════════════════════════════════════ */
+:root {
+  --ink:    #09131e;
+  --ink2:   #152234;
+  --gold:   #c4922a;
+  --gold2:  #e0b55a;
+  --goldlt: #f5dfa0;
+  --cream:  #f7f3ec;
+  --cream2: #ede8df;
+  --mist:   #8596a8;
+  --white:  #ffffff;
+  --ff-d:   'Cormorant Garamond', Georgia, serif;
+  --ff-b:   'Sora', sans-serif;
+  --ease:   cubic-bezier(.22,1,.36,1);
+  --r:      14px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--ff-b);background:var(--cream);color:var(--ink);overflow-x:hidden;font-weight:300}
+
+/* ════════════════════════════════════
+   HERO — CINEMATIC FULL SCREEN
+════════════════════════════════════ */
+.hp-hero{
+  height:100vh;min-height:680px;
+  background:var(--ink);
+  position:relative;overflow:hidden;
+  display:flex;align-items:center;
+}
+
+/* animated gold mesh bg */
+.hero-mesh{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 70% 90% at 80% 40%, rgba(196,146,42,.12) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 10% 70%, rgba(196,146,42,.07) 0%, transparent 55%),
+    radial-gradient(ellipse 30% 40% at 60% 10%, rgba(224,181,90,.06) 0%, transparent 50%);
+  animation: meshPulse 8s ease-in-out infinite alternate;
+}
+@keyframes meshPulse{
+  0%{opacity:.7;transform:scale(1)}
+  100%{opacity:1;transform:scale(1.04)}
+}
+
+/* fine dot grid overlay */
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:radial-gradient(rgba(196,146,42,.15) 1px, transparent 1px);
+  background-size:36px 36px;
+  opacity:.5;
+}
+
+/* diagonal gold accent line */
+.hero-accent{
+  position:absolute;
+  top:-10%;right:28%;
+  width:1px;height:120%;
+  background:linear-gradient(to bottom, transparent 0%, rgba(196,146,42,.25) 30%, rgba(224,181,90,.4) 55%, rgba(196,146,42,.15) 80%, transparent 100%);
+  transform:rotate(-12deg);transform-origin:top center;
+}
+.hero-accent2{
+  position:absolute;
+  top:-10%;right:24%;
+  width:1px;height:120%;
+  background:linear-gradient(to bottom, transparent 10%, rgba(196,146,42,.10) 40%, rgba(196,146,42,.18) 60%, transparent 90%);
+  transform:rotate(-12deg);transform-origin:top center;
+}
+
+.hero-content{
+  position:relative;z-index:3;
+  padding:0 80px;
+  max-width:820px;
+}
+
+.hero-eyebrow{
+  font-family:var(--ff-b);
+  font-size:10.5px;letter-spacing:4px;text-transform:uppercase;
+  color:var(--gold);font-weight:500;
+  display:flex;align-items:center;gap:14px;
+  margin-bottom:32px;
+  opacity:0;animation:slideUp .9s var(--ease) .1s forwards;
+}
+.hero-eyebrow span{display:inline-block;width:36px;height:1px;background:var(--gold);}
+
+.hero-h1{
+  font-family:var(--ff-d);
+  font-size:clamp(3.2rem,6vw,6.4rem);
+  font-weight:300;
+  color:var(--white);
+  line-height:1.05;
+  letter-spacing:-.01em;
+  margin-bottom:16px;
+  opacity:0;animation:slideUp .9s var(--ease) .25s forwards;
+}
+.hero-h1 em{
+  display:block;
+  font-style:italic;
+  background:linear-gradient(100deg,var(--gold) 0%,var(--goldlt) 50%,var(--gold2) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+
+.hero-tagline{
+  font-family:var(--ff-d);
+  font-size:clamp(1rem,1.6vw,1.3rem);
+  font-weight:300;font-style:italic;
+  color:rgba(255,255,255,.45);
+  letter-spacing:.06em;
+  margin-bottom:44px;
+  opacity:0;animation:slideUp .9s var(--ease) .4s forwards;
+}
+.hero-tagline .dot{color:var(--gold);margin:0 8px;font-style:normal;}
+
+.hero-desc{
+  font-size:.95rem;font-weight:300;
+  color:rgba(255,255,255,.52);
+  line-height:1.8;
+  max-width:480px;
+  margin-bottom:52px;
+  opacity:0;animation:slideUp .9s var(--ease) .55s forwards;
+}
+
+.hero-actions{
+  display:flex;gap:16px;align-items:center;flex-wrap:wrap;
+  opacity:0;animation:slideUp .9s var(--ease) .7s forwards;
+}
+.btn-hero-primary{
+  display:inline-flex;align-items:center;gap:10px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:var(--ink);
+  padding:15px 32px;border-radius:50px;
+  font-family:var(--ff-b);font-size:.85rem;font-weight:600;
+  text-decoration:none;border:none;cursor:pointer;
+  letter-spacing:.5px;
+  box-shadow:0 8px 28px rgba(196,146,42,.35);
+  transition:transform .25s,box-shadow .25s;
+}
+.btn-hero-primary:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(196,146,42,.45);}
+.btn-hero-ghost{
+  display:inline-flex;align-items:center;gap:10px;
+  background:transparent;color:rgba(255,255,255,.7);
+  padding:15px 28px;border-radius:50px;
+  font-family:var(--ff-b);font-size:.85rem;font-weight:400;
+  text-decoration:none;border:1px solid rgba(255,255,255,.18);
+  cursor:pointer;letter-spacing:.4px;
+  transition:border-color .25s,color .25s,background .25s;
+}
+.btn-hero-ghost:hover{border-color:var(--gold);color:var(--gold);background:rgba(196,146,42,.06);}
+
+/* floating stats panel — right side */
+.hero-stats-panel{
+  position:absolute;
+  right:80px;top:50%;
+  transform:translateY(-50%);
+  z-index:3;
+  display:flex;flex-direction:column;gap:0;
+  opacity:0;animation:fadeIn .9s var(--ease) .9s forwards;
+}
+.hsp-item{
+  padding:20px 28px;
+  border-top:1px solid rgba(196,146,42,.15);
+  text-align:right;
+  transition:background .3s;
+}
+.hsp-item:last-child{border-bottom:1px solid rgba(196,146,42,.15);}
+.hsp-item:hover{background:rgba(196,146,42,.05);}
+.hsp-val{
+  font-family:var(--ff-d);
+  font-size:2.6rem;font-weight:300;
+  color:var(--white);line-height:1;
+}
+.hsp-val sup{font-size:1rem;color:var(--gold);vertical-align:super;}
+.hsp-label{font-size:.68rem;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-top:4px;font-weight:400;}
+
+/* scroll indicator */
+.hero-scroll{
+  position:absolute;bottom:36px;left:80px;
+  display:flex;align-items:center;gap:12px;
+  color:rgba(255,255,255,.25);font-size:.72rem;letter-spacing:2.5px;text-transform:uppercase;
+  z-index:3;
+}
+.scroll-line{
+  width:1px;height:48px;
+  background:linear-gradient(to bottom,rgba(196,146,42,.6),transparent);
+  animation:scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse{0%,100%{opacity:.6;transform:scaleY(1)}50%{opacity:1;transform:scaleY(.6)}}
+
+/* video strip behind right panel */
+.hero-video-bg{
+  position:absolute;
+  right:0;top:0;bottom:0;
+  width:40%;
+  overflow:hidden;
+  z-index:1;
+}
+.hero-video-bg video{
+  width:100%;height:100%;object-fit:cover;opacity:.18;
+}
+.hero-video-bg::before{
+  content:'';position:absolute;inset:0;z-index:1;
+  background:linear-gradient(to right,var(--ink) 0%,transparent 40%);
+}
+
+/* ════════════════════════════════════
+   TICKER BAND
+════════════════════════════════════ */
+.ticker-band{
+  background:var(--gold);
+  padding:10px 0;overflow:hidden;
+  position:relative;
+}
+.ticker-inner{
+  display:flex;gap:0;
+  animation:ticker 28s linear infinite;
+  white-space:nowrap;
+}
+.ticker-item{
+  display:inline-flex;align-items:center;gap:20px;
+  padding:0 40px;
+  font-size:.75rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;
+  color:var(--ink);flex-shrink:0;
+}
+.ticker-item .t-sep{color:rgba(9,19,30,.3);font-size:.9em;}
+.ticker-item .t-up{color:#0a5c2e;}
+.ticker-item .t-dn{color:#7b1a1a;}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ════════════════════════════════════
+   DOBN LETTERS — SLOGAN SECTION
+════════════════════════════════════ */
+.dobn-section{
+  background:
+    linear-gradient(135deg, rgba(9,19,30,.88) 0%, rgba(21,34,52,.82) 50%, rgba(9,19,30,.90) 100%),
+    url('DOBN/1.png') center/cover no-repeat;
+  padding:96px 60px;
+  position:relative;overflow:hidden;
+}
+.dobn-watermark{
+  position:absolute;
+  font-family:var(--ff-d);font-size:clamp(140px,18vw,240px);
+  font-weight:700;
+  color:rgba(196,146,42,.04);
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  white-space:nowrap;letter-spacing:.1em;
+  pointer-events:none;user-select:none;
+  animation:waterFloat 10s ease-in-out infinite alternate;
+}
+@keyframes waterFloat{0%{transform:translate(-50%,-50%) scale(1)}100%{transform:translate(-50%,-50%) scale(1.04)}}
+
+.dobn-header{text-align:center;margin-bottom:72px;position:relative;z-index:1;}
+.dobn-header .etag{
+  font-size:10px;letter-spacing:4px;text-transform:uppercase;
+  color:var(--gold);font-weight:500;
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  margin-bottom:20px;
+}
+.dobn-header .etag::before,.dobn-header .etag::after{content:'';display:inline-block;width:28px;height:1px;background:var(--gold);}
+.dobn-header h2{
+  font-family:var(--ff-d);font-size:clamp(2rem,3.5vw,3.2rem);
+  font-weight:300;color:var(--white);line-height:1.2;
+}
+.dobn-header h2 em{font-style:italic;color:var(--gold2);}
+
+.dobn-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:0;max-width:1200px;margin:0 auto;
+  position:relative;z-index:1;
+  border:1px solid rgba(196,146,42,.12);border-radius:var(--r);overflow:hidden;
+}
+.dobn-card{
+  padding:52px 36px 44px;
+  border-right:1px solid rgba(196,146,42,.12);
+  position:relative;overflow:hidden;
+  transition:background .4s;
+  cursor:default;
+}
+.dobn-card:last-child{border-right:none;}
+.dobn-card:hover{background:rgba(196,146,42,.05);}
+
+/* watermark letter behind each card */
+.dobn-card::before{
+  content:attr(data-l);
+  font-family:var(--ff-d);font-size:180px;font-weight:700;
+  color:rgba(196,146,42,.05);
+  position:absolute;bottom:-30px;right:-12px;line-height:1;
+  pointer-events:none;
+  transition:color .4s,transform .45s var(--ease);
+}
+.dobn-card:hover::before{color:rgba(196,146,42,.11);transform:scale(1.07) rotate(-4deg);}
+
+/* top accent bar */
+.dobn-card::after{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(to right,var(--gold),var(--gold2));
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .4s var(--ease);
+}
+.dobn-card:hover::after{transform:scaleX(1);}
+
+.dc-big{
+  font-family:var(--ff-d);font-size:5rem;font-weight:600;
+  line-height:1;margin-bottom:6px;
+  background:linear-gradient(135deg,var(--gold),var(--goldlt));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  display:inline-block;
+  transition:transform .3s var(--ease);
+}
+.dobn-card:hover .dc-big{transform:translateY(-5px);}
+
+.dc-word{
+  font-size:.68rem;letter-spacing:3.5px;text-transform:uppercase;
+  color:var(--gold);font-weight:500;margin-bottom:22px;opacity:.85;
+}
+.dc-divider{
+  width:28px;height:1px;background:rgba(196,146,42,.3);
+  margin-bottom:18px;
+  transition:width .4s var(--ease),background .3s;
+}
+.dobn-card:hover .dc-divider{width:52px;background:var(--gold);}
+
+.dc-title{font-size:.95rem;font-weight:500;color:var(--white);margin-bottom:10px;line-height:1.35;}
+.dc-body{font-size:.82rem;color:rgba(255,255,255,.4);line-height:1.72;font-weight:300;}
+
+.dc-icon{
+  position:absolute;top:44px;right:32px;
+  font-size:17px;color:rgba(196,146,42,.22);
+  transition:color .3s,transform .3s;
+}
+.dobn-card:hover .dc-icon{color:var(--gold);transform:scale(1.2) rotate(-5deg);}
+
+/* ════════════════════════════════════
+   SECTION UTILITY
+════════════════════════════════════ */
+.hp-section{padding:96px 60px;}
+.hp-section.alt{background:var(--cream2);}
+.hp-section.dark{background:var(--ink);}
+.hp-inner{max-width:1200px;margin:0 auto;}
+.sec-tag{
+  font-size:10px;letter-spacing:3.5px;text-transform:uppercase;
+  color:var(--gold);font-weight:500;
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:14px;
+}
+.sec-tag::before{content:'';width:22px;height:1px;background:var(--gold);}
+.sec-tag.light{color:rgba(224,181,90,.75);}
+.sec-tag.light::before{background:rgba(224,181,90,.4);}
+h2.sec-h2{
+  font-family:var(--ff-d);font-size:clamp(2rem,3.5vw,3rem);
+  font-weight:300;line-height:1.15;color:var(--ink);margin-bottom:12px;
+}
+h2.sec-h2 em{font-style:italic;color:var(--gold);}
+h2.sec-h2.light{color:var(--white);}
+.sec-sub{font-size:.88rem;color:var(--mist);margin-bottom:48px;font-weight:300;}
+
+/* ════════════════════════════════════
+   SERVICES GRID
+════════════════════════════════════ */
+.services-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+}
+.svc-card{
+  background:var(--white);
+  border:1px solid rgba(9,19,30,.08);border-radius:var(--r);
+  padding:36px 28px;
+  box-shadow:0 2px 16px rgba(9,19,30,.05);
+  transition:transform .3s var(--ease),box-shadow .3s,border-color .3s;
+  position:relative;overflow:hidden;
+  text-decoration:none;color:var(--ink);display:block;
+}
+.svc-card::before{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:linear-gradient(to right,var(--gold),var(--gold2));
+  transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease);
+}
+.svc-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(9,19,30,.11);border-color:rgba(196,146,42,.3);}
+.svc-card:hover::before{transform:scaleX(1);}
+.svc-icon{
+  width:52px;height:52px;border-radius:12px;
+  background:var(--cream);display:flex;align-items:center;justify-content:center;
+  font-size:22px;color:var(--gold);margin-bottom:20px;
+  transition:background .25s,color .25s;
+}
+.svc-card:hover .svc-icon{background:var(--gold);color:var(--white);}
+.svc-num{
+  font-family:var(--ff-d);font-size:3.2rem;font-weight:300;
+  color:rgba(196,146,42,.1);position:absolute;top:20px;right:22px;line-height:1;
+}
+.svc-title{font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:8px;}
+.svc-body{font-size:.83rem;color:var(--mist);line-height:1.65;font-weight:300;}
+.svc-link{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:.75rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;
+  color:var(--gold);margin-top:18px;
+  transition:gap .25s;
+}
+.svc-card:hover .svc-link{gap:12px;}
+
+/* ════════════════════════════════════
+   PERFORMANCE STRIP
+════════════════════════════════════ */
+.perf-strip{
+  background:linear-gradient(135deg,var(--ink) 0%,var(--ink2) 100%);
+  padding:72px 60px;position:relative;overflow:hidden;
+}
+.perf-strip::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 120% at 50% -10%,rgba(196,146,42,.09),transparent);
+}
+.perf-grid{
+  max-width:1100px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  position:relative;z-index:1;
+}
+.perf-item{
+  text-align:center;padding:24px 20px;
+  border-right:1px solid rgba(196,146,42,.13);
+}
+.perf-item:last-child{border-right:none;}
+.perf-val{
+  font-family:var(--ff-d);font-size:clamp(2.4rem,3.5vw,3.8rem);font-weight:300;
+  color:var(--white);line-height:1;margin-bottom:10px;
+  display:flex;align-items:baseline;justify-content:center;gap:3px;
+}
+.pv-pre{font-size:1.1rem;color:var(--gold);}
+.pv-suf{font-size:1.1rem;color:var(--gold);}
+.perf-label{font-size:.72rem;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,.38);font-weight:400;line-height:1.5;}
+
+/* ════════════════════════════════════
+   GALLERY + VIDEO BLOCK
+════════════════════════════════════ */
+.media-layout{
+  display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start;
+}
+.gallery-mosaic{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  grid-template-rows:repeat(2,160px);
+  gap:10px;
+}
+.gm-img{
+  border-radius:10px;overflow:hidden;
+  position:relative;
+}
+.gm-img img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .5s var(--ease),filter .4s;
+  filter:brightness(.92) saturate(.9);
+}
+.gm-img:hover img{transform:scale(1.06);filter:brightness(1) saturate(1.05);}
+.gm-img:first-child{grid-column:1/3;grid-row:1/2;}
+.gm-img:nth-child(2){grid-column:3;grid-row:1/3;}
+
+.gm-img::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(9,19,30,.15),transparent);
+  pointer-events:none;
+}
+
+.video-block{
+  position:relative;border-radius:var(--r);overflow:hidden;
+  height:100%;min-height:330px;
+}
+.video-block video{width:100%;height:100%;object-fit:cover;display:block;}
+.video-block .vb-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(9,19,30,.7) 0%,rgba(9,19,30,.15) 55%,transparent 100%);
+  display:flex;flex-direction:column;justify-content:flex-end;padding:28px;
+}
+.vb-label{font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+.vb-title{font-family:var(--ff-d);font-size:1.5rem;font-weight:300;color:var(--white);line-height:1.3;}
+
+/* ════════════════════════════════════
+   PROJECT INFO + MEMBERS
+════════════════════════════════════ */
+.info-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:28px;
+}
+.info-card{
+  background:var(--white);border:1px solid rgba(9,19,30,.08);
+  border-radius:var(--r);padding:36px 32px;
+  box-shadow:0 2px 16px rgba(9,19,30,.05);
+  transition:box-shadow .3s;
+}
+.info-card:hover{box-shadow:0 8px 32px rgba(9,19,30,.09);}
+.info-card .ic-head{
+  display:flex;align-items:center;gap:14px;
+  margin-bottom:24px;padding-bottom:20px;
+  border-bottom:1px solid rgba(9,19,30,.07);
+}
+.ic-icon-wrap{
+  width:44px;height:44px;border-radius:10px;
+  background:linear-gradient(135deg,rgba(196,146,42,.12),rgba(224,181,90,.08));
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;color:var(--gold);flex-shrink:0;
+}
+.ic-head-text .ic-label{font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:var(--mist);font-weight:400;}
+.ic-head-text .ic-title{font-size:.97rem;font-weight:600;color:var(--ink);margin-top:2px;}
+
+.gen-info-row{
+  display:flex;flex-direction:column;gap:14px;
+}
+.gir-item{display:flex;flex-direction:column;gap:4px;}
+.gir-label{font-size:.7rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--mist);font-weight:400;}
+.gir-value{font-size:.92rem;color:var(--ink);font-weight:500;line-height:1.4;}
+.gir-value a{color:var(--gold);text-decoration:none;}
+
+/* member table — override global table{min-width:1200px} từ style.css */
+.member-table{width:100% !important;min-width:0 !important;border-collapse:collapse;table-layout:fixed;}
+.member-table colgroup .col-name{width:55%;}
+.member-table colgroup .col-id{width:45%;}
+.member-table thead tr{border-bottom:2px solid rgba(196,146,42,.2);}
+.member-table th{
+  font-size:.66rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--mist) !important;font-weight:500;padding:0 8px 12px 0;text-align:left !important;
+  background:transparent !important;
+}
+.member-table th:last-child{text-align:right !important;padding-right:0;}
+.member-table tbody tr{
+  border-bottom:1px solid rgba(9,19,30,.05);
+  transition:background .2s;
+}
+.member-table tbody tr:last-child{border-bottom:none;}
+.member-table tbody tr:hover{background:rgba(196,146,42,.03);}
+.member-table td{
+  padding:10px 8px 10px 0;font-size:.84rem;color:var(--ink) !important;
+  font-weight:400;vertical-align:middle;word-break:break-word;
+  text-align:left !important;border-bottom:none;
+}
+.member-table td:last-child{text-align:right !important;padding-right:0;}
+.id-tag{
+  display:inline-block;
+  background:rgba(196,146,42,.08);border:1px solid rgba(196,146,42,.2);
+  color:var(--gold);border-radius:6px;
+  padding:4px 9px;font-size:.7rem;font-weight:700;
+  letter-spacing:.8px;font-family:monospace;
+  white-space:nowrap;
+}
+.member-num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:20px;height:20px;border-radius:50%;
+  background:rgba(196,146,42,.1);color:var(--gold);
+  font-size:.7rem;font-weight:600;margin-right:8px;flex-shrink:0;
+}
+/* ensure info-grid always 2 cols on desktop */
+.info-grid{
+  display:grid;grid-template-columns:1fr 1.6fr;gap:24px;
+}
+@media(max-width:860px){.info-grid{grid-template-columns:1fr;}}
+
+/* ════════════════════════════════════
+   WHY US  
+════════════════════════════════════ */
+.why-grid{
+  display:grid;grid-template-columns:5fr 4fr;gap:72px;align-items:center;
+}
+.why-points{display:flex;flex-direction:column;gap:24px;margin-top:40px;}
+.why-point{
+  display:flex;gap:18px;align-items:flex-start;
+  padding:20px;border-radius:10px;
+  transition:background .25s;cursor:default;
+}
+.why-point:hover{background:rgba(196,146,42,.06);}
+.wp-icon{
+  width:40px;height:40px;border-radius:8px;flex-shrink:0;
+  background:rgba(196,146,42,.1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;color:var(--gold);
+  transition:background .25s;
+}
+.why-point:hover .wp-icon{background:var(--gold);color:var(--white);}
+.wp-text h4{font-size:.92rem;font-weight:600;color:var(--ink);margin-bottom:4px;}
+.wp-text p{font-size:.82rem;color:var(--mist);line-height:1.6;font-weight:300;}
+
+.why-visual{
+  position:relative;
+}
+.why-big-stat{
+  background:var(--ink);border-radius:var(--r);padding:44px 36px;
+  position:relative;overflow:hidden;
+}
+.why-big-stat::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 80% at 80% 20%,rgba(196,146,42,.14),transparent);
+}
+.wbs-label{font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;position:relative;z-index:1;}
+.wbs-val{
+  font-family:var(--ff-d);font-size:5rem;font-weight:300;
+  color:var(--white);line-height:1;position:relative;z-index:1;
+}
+.wbs-val sup{font-size:1.8rem;color:var(--gold);vertical-align:super;}
+.wbs-sub{font-size:.82rem;color:rgba(255,255,255,.4);margin-top:10px;line-height:1.5;position:relative;z-index:1;font-weight:300;}
+.wbs-mini-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:20px;
+}
+.wbs-mini{
+  background:rgba(255,255,255,.04);border-radius:6px;padding:14px 16px;
+}
+.wbs-mini .mn-val{font-family:var(--ff-d);font-size:1.6rem;font-weight:300;color:var(--white);}
+.wbs-mini .mn-val span{font-size:.9rem;color:var(--gold);}
+.wbs-mini .mn-label{font-size:.68rem;color:rgba(255,255,255,.35);letter-spacing:.8px;text-transform:uppercase;margin-top:2px;}
+
+/* ════════════════════════════════════
+   CTA BAND
+════════════════════════════════════ */
+.cta-wrap{
+  background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 55%,#b8891e 100%);
+  padding:80px 60px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.cta-wrap::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='1' cy='1' r='1' fill='rgba(9,19,30,.07)'/%3E%3C/svg%3E");
+  background-size:16px 16px;
+}
+.cta-wrap h2{
+  font-family:var(--ff-d);font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:400;color:var(--ink);margin-bottom:14px;position:relative;
+}
+.cta-wrap p{font-size:.95rem;color:rgba(9,19,30,.6);margin-bottom:36px;position:relative;font-weight:300;}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;}
+.btn-cta-dark{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--ink);color:var(--white);
+  padding:14px 30px;border-radius:50px;
+  font-family:var(--ff-b);font-size:.85rem;font-weight:600;
+  text-decoration:none;transition:background .2s,transform .2s;letter-spacing:.4px;
+}
+.btn-cta-dark:hover{background:var(--ink2);transform:translateY(-2px);}
+.btn-cta-outline{
+  display:inline-flex;align-items:center;gap:8px;
+  background:transparent;color:var(--ink);
+  padding:14px 28px;border-radius:50px;
+  font-family:var(--ff-b);font-size:.85rem;font-weight:500;
+  text-decoration:none;border:2px solid rgba(9,19,30,.25);
+  transition:border-color .2s,transform .2s;letter-spacing:.4px;
+}
+.btn-cta-outline:hover{border-color:var(--ink);transform:translateY(-2px);}
+
+/* ════════════════════════════════════
+   ANIMATIONS
+════════════════════════════════════ */
+@keyframes slideUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .75s var(--ease),transform .75s var(--ease);}
+.reveal.on{opacity:1;transform:translateY(0);}
+.rv1{transition-delay:.1s}.rv2{transition-delay:.2s}.rv3{transition-delay:.3s}.rv4{transition-delay:.4s}
+
+/* ════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════ */
+@media(max-width:1024px){
+  .hero-stats-panel{display:none;}
+  .hero-video-bg{display:none;}
+  .hero-content{padding:0 40px;max-width:100%;}
+  .dobn-grid{grid-template-columns:repeat(2,1fr);}
+  .dobn-card:nth-child(2){border-right:none;}
+  .dobn-card:nth-child(3){border-right:1px solid rgba(196,146,42,.12);border-top:1px solid rgba(196,146,42,.12);}
+  .dobn-card:nth-child(4){border-top:1px solid rgba(196,146,42,.12);}
+  .services-grid{grid-template-columns:repeat(2,1fr);}
+  .perf-grid{grid-template-columns:repeat(2,1fr);}
+  .perf-item:nth-child(2){border-right:none;}
+  .perf-item:nth-child(3){border-top:1px solid rgba(196,146,42,.13);}
+  .perf-item:nth-child(4){border-top:1px solid rgba(196,146,42,.13);}
+  .media-layout{grid-template-columns:1fr;}
+  .why-grid{grid-template-columns:1fr;}
+  .why-visual{display:none;}
+}
+@media(max-width:680px){
+  .hp-section,.dobn-section,.perf-strip,.cta-wrap{padding:64px 20px;}
+  .hero-content{padding:0 24px;}
+  .services-grid{grid-template-columns:1fr;}
+  .dobn-grid{grid-template-columns:1fr;}
+  .dobn-card{border-right:none !important;border-top:1px solid rgba(196,146,42,.12);}
+  .dobn-card:first-child{border-top:none;}
+  .gallery-mosaic{grid-template-columns:1fr 1fr;grid-template-rows:auto;}
+  .gm-img:first-child{grid-column:1/3;}
+  .gm-img:nth-child(2){grid-column:auto;grid-row:auto;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header>
+  <div class="logo"><img src="DOBN/logo.jpg"></div>
+  <nav>
+    <a href="index.html" class="active"><i class="fas fa-home"></i> Homepage</a>
+    <a href="about.html"><i class="fas fa-building"></i> About Us</a>
+    <a href="products.html"><i class="fas fa-briefcase"></i> Products</a>
+    <a href="customer.html" class="highlight-nav"><i class="fas fa-user-tie"></i> Services</a>
+    <a href="stocks.html"><i class="fas fa-chart-line"></i> Stock</a>
+     <a href="shareholderc.html"><i class="fas fa-handshake"></i> Investor Relations</a>
+    <a href="esg.html"><i class="fas fa-leaf"></i> ESG</a>
+    <a href="news.html"><i class="fas fa-newspaper"></i> News</a>
+    <a href="support.html"><i class="fas fa-headset"></i> Support</a>
+  </nav>
+  <div class="auth-buttons">
+    <button class="btn-login">Đăng Nhập</button>
+    <button class="btn-register">Mở Tài Khoản</button>
+  </div>
+</header>
+
+<!-- Google tag -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VVRTLD2GMN"></script>
+<script>
+  window.dataLayer=window.dataLayer||[];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-VVRTLD2GMN');
+</script>
+
+<!-- ══════════════════════════════════
+     HERO
+══════════════════════════════════ -->
+<section class="hp-hero">
+  <div class="hero-mesh"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-accent"></div>
+  <div class="hero-accent2"></div>
+
+  <!-- bg video -->
+  <div class="hero-video-bg">
+    <video autoplay muted loop playsinline>
+      <source src="intro.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow"><span></span>DOBN Capital &nbsp;—&nbsp; Quản Lý Quỹ Đầu Tư</div>
+    <h1 class="hero-h1">
+      Kiến Tạo<br>
+      <em>Tài Sản Vượt Trội.</em>
+    </h1>
+    <p class="hero-tagline">
+      Dedication <span class="dot">·</span> Opportunity <span class="dot">·</span> Beyond <span class="dot">·</span> Network
+    </p>
+    <p class="hero-desc">
+      Công ty quản lý quỹ độc lập, kết hợp phân tích định lượng chuyên sâu với triết lý đầu tư có trách nhiệm — kiến tạo giá trị bền vững cho nhà đầu tư Việt Nam.
+    </p>
+    <div class="hero-actions">
+      <a href="products.html" class="btn-hero-primary"><i class="fas fa-briefcase"></i> Khám Phá Sản Phẩm</a>
+      <a href="about.html" class="btn-hero-ghost"><i class="fas fa-play-circle"></i> Về Chúng Tôi</a>
+    </div>
+  </div>
+
+  <!-- right stats panel -->
+  <div class="hero-stats-panel">
+    <div class="hsp-item">
+      <div class="hsp-val">12<sup>T+</sup></div>
+      <div class="hsp-label">Tài sản quản lý (AUM)</div>
+    </div>
+    <div class="hsp-item">
+      <div class="hsp-val">3.2<sup>k</sup></div>
+      <div class="hsp-label">Nhà đầu tư tin tưởng</div>
+    </div>
+    <div class="hsp-item">
+      <div class="hsp-val">18<sup>%</sup></div>
+      <div class="hsp-label">CAGR 5 năm qua</div>
+    </div>
+    <div class="hsp-item">
+      <div class="hsp-val">8<sup>+</sup></div>
+      <div class="hsp-label">Năm kinh nghiệm</div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Cuộn xuống
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     TICKER
+══════════════════════════════════ -->
+<div class="ticker-band" aria-hidden="true">
+  <div class="ticker-inner">
+    <!-- set 1 -->
+    <div class="ticker-item">VN-Index <span class="t-sep">|</span> 1.287,45 <span class="t-up">▲ +0.82%</span></div>
+    <div class="ticker-item">HNX-Index <span class="t-sep">|</span> 228,12 <span class="t-dn">▼ -0.31%</span></div>
+    <div class="ticker-item">UPCOM-Index <span class="t-sep">|</span> 93,67 <span class="t-up">▲ +0.15%</span></div>
+    <div class="ticker-item">USD/VND <span class="t-sep">|</span> 25.340 <span class="t-up">▲ +0.05%</span></div>
+    <div class="ticker-item">Vàng SJC <span class="t-sep">|</span> 82,5 triệu/lượng <span class="t-up">▲ +1,2%</span></div>
+    <div class="ticker-item">Lãi suất 12T <span class="t-sep">|</span> 5,8%/năm <span class="t-sep">|</span> Kỳ hạn ON: 4,1%</div>
+    <div class="ticker-item">DOBN Growth Fund <span class="t-sep">|</span> +24.3% YTD <span class="t-up">▲</span></div>
+    <div class="ticker-item">DOBN Bond Fund <span class="t-sep">|</span> +9.8% YTD <span class="t-up">▲</span></div>
+    <!-- set 2 (duplicate for seamless loop) -->
+    <div class="ticker-item">VN-Index <span class="t-sep">|</span> 1.287,45 <span class="t-up">▲ +0.82%</span></div>
+    <div class="ticker-item">HNX-Index <span class="t-sep">|</span> 228,12 <span class="t-dn">▼ -0.31%</span></div>
+    <div class="ticker-item">UPCOM-Index <span class="t-sep">|</span> 93,67 <span class="t-up">▲ +0.15%</span></div>
+    <div class="ticker-item">USD/VND <span class="t-sep">|</span> 25.340 <span class="t-up">▲ +0.05%</span></div>
+    <div class="ticker-item">Vàng SJC <span class="t-sep">|</span> 82,5 triệu/lượng <span class="t-up">▲ +1,2%</span></div>
+    <div class="ticker-item">Lãi suất 12T <span class="t-sep">|</span> 5,8%/năm <span class="t-sep">|</span> Kỳ hạn ON: 4,1%</div>
+    <div class="ticker-item">DOBN Growth Fund <span class="t-sep">|</span> +24.3% YTD <span class="t-up">▲</span></div>
+    <div class="ticker-item">DOBN Bond Fund <span class="t-sep">|</span> +9.8% YTD <span class="t-up">▲</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     D·O·B·N SLOGAN
+══════════════════════════════════ -->
+<section class="dobn-section">
+  <div class="dobn-watermark">DOBN</div>
+  <div class="dobn-header reveal">
+    <div class="etag">Triết Lý Cốt Lõi</div>
+    <h2>Bốn giá trị <em>định hình</em> chúng tôi</h2>
+  </div>
+  <div class="dobn-grid">
+    <div class="dobn-card reveal" data-l="D">
+      <i class="dc-icon fas fa-heart"></i>
+      <div class="dc-big">D</div>
+      <div class="dc-word">Dedication</div>
+      <div class="dc-divider"></div>
+      <div class="dc-title">Tận Tâm & Cam Kết</div>
+      <div class="dc-body">Mỗi quyết định đầu tư đều được thực hiện với sự tận tâm tuyệt đối. Chúng tôi đặt lợi ích của nhà đầu tư lên trên hết, cam kết minh bạch và bảo vệ vốn trong mọi điều kiện thị trường.</div>
+    </div>
+    <div class="dobn-card reveal rv1" data-l="O">
+      <i class="dc-icon fas fa-binoculars"></i>
+      <div class="dc-big">O</div>
+      <div class="dc-word">Opportunity</div>
+      <div class="dc-divider"></div>
+      <div class="dc-title">Nắm Bắt Cơ Hội</div>
+      <div class="dc-body">Thị trường luôn ẩn chứa cơ hội cho người có đủ kiến thức và kỷ luật. Đội ngũ phân tích của chúng tôi liên tục tìm kiếm, đánh giá và khai thác những cơ hội sinh lời bền vững trước thị trường.</div>
+    </div>
+    <div class="dobn-card reveal rv2" data-l="B">
+      <i class="dc-icon fas fa-rocket"></i>
+      <div class="dc-big">B</div>
+      <div class="dc-word">Beyond</div>
+      <div class="dc-divider"></div>
+      <div class="dc-title">Vượt Ra Ngoài Giới Hạn</div>
+      <div class="dc-body">Chúng tôi không dừng lại ở mức trung bình. Từ hiệu suất đầu tư, dịch vụ khách hàng đến ứng dụng công nghệ — DOBN Capital luôn hướng đến tiêu chuẩn cao hơn thị trường và cao hơn kỳ vọng.</div>
+    </div>
+    <div class="dobn-card reveal rv3" data-l="N">
+      <i class="dc-icon fas fa-network-wired"></i>
+      <div class="dc-big">N</div>
+      <div class="dc-word">Network</div>
+      <div class="dc-divider"></div>
+      <div class="dc-title">Mạng Lưới Chiến Lược</div>
+      <div class="dc-body">Sức mạnh của DOBN Capital đến từ hệ sinh thái đối tác chiến lược rộng lớn — từ ngân hàng lưu ký, công ty kiểm toán quốc tế đến các tổ chức tài chính toàn cầu — tạo nền tảng vững chắc cho mọi danh mục.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     PERFORMANCE NUMBERS
+══════════════════════════════════ -->
+<div class="perf-strip">
+  <div class="perf-grid">
+    <div class="perf-item reveal">
+      <div class="perf-val"><span class="pv-pre">₫</span><span class="counter" data-t="12">0</span><span class="pv-suf">T+</span></div>
+      <div class="perf-label">Tài sản quản lý<br>(AUM)</div>
+    </div>
+    <div class="perf-item reveal rv1">
+      <div class="perf-val"><span class="counter" data-t="3200">0</span><span class="pv-suf">+</span></div>
+      <div class="perf-label">Nhà đầu tư<br>tin tưởng</div>
+    </div>
+    <div class="perf-item reveal rv2">
+      <div class="perf-val"><span class="counter" data-t="18">0</span><span class="pv-suf">%</span></div>
+      <div class="perf-label">CAGR trung bình<br>5 năm qua</div>
+    </div>
+    <div class="perf-item reveal rv3">
+      <div class="perf-val"><span class="counter" data-t="45">0</span><span class="pv-suf">+</span></div>
+      <div class="perf-label">Chuyên gia<br>đầu tư</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     SERVICES
+══════════════════════════════════ -->
+<section class="hp-section">
+  <div class="hp-inner">
+    <div class="reveal">
+      <div class="sec-tag">Dịch Vụ Của Chúng Tôi</div>
+      <h2 class="sec-h2">Giải pháp đầu tư <em>toàn diện</em><br>cho mọi nhu cầu</h2>
+      <p class="sec-sub">Từ quản lý danh mục cá nhân đến quỹ tổ chức — DOBN Capital đồng hành cùng bạn ở mỗi giai đoạn.</p>
+    </div>
+    <div class="services-grid">
+      <a href="products.html" class="svc-card reveal">
+        <div class="svc-num">01</div>
+        <div class="svc-icon"><i class="fas fa-chart-line"></i></div>
+        <div class="svc-title">Quản Lý Danh Mục</div>
+        <div class="svc-body">Xây dựng và quản lý danh mục cổ phiếu, trái phiếu tùy chỉnh theo IPS riêng cho từng nhà đầu tư với tỷ lệ Sharpe tối ưu.</div>
+        <div class="svc-link">Xem thêm <i class="fas fa-arrow-right"></i></div>
+      </a>
+      <a href="products.html" class="svc-card reveal rv1">
+        <div class="svc-num">02</div>
+        <div class="svc-icon"><i class="fas fa-layer-group"></i></div>
+        <div class="svc-title">Quỹ Đầu Tư</div>
+        <div class="svc-body">DOBN Growth Fund, Bond Fund và ESG Fund — các quỹ được quản lý chuyên nghiệp với hiệu suất vượt trội so với chỉ số benchmark.</div>
+        <div class="svc-link">Xem thêm <i class="fas fa-arrow-right"></i></div>
+      </a>
+      <a href="customer.html" class="svc-card reveal rv2">
+        <div class="svc-num">03</div>
+        <div class="svc-icon"><i class="fas fa-user-tie"></i></div>
+        <div class="svc-title">Tư Vấn Đầu Tư</div>
+        <div class="svc-body">Đội ngũ chuyên gia tư vấn 1:1, xây dựng kế hoạch tài chính dài hạn và chiến lược phân bổ tài sản phù hợp với từng mục tiêu.</div>
+        <div class="svc-link">Xem thêm <i class="fas fa-arrow-right"></i></div>
+      </a>
+      <a href="products.html" class="svc-card reveal">
+        <div class="svc-num">04</div>
+        <div class="svc-icon"><i class="fas fa-globe-asia"></i></div>
+        <div class="svc-title">Đầu Tư Quốc Tế</div>
+        <div class="svc-body">Tiếp cận thị trường toàn cầu thông qua quỹ ETF nước ngoài và chiến lược đa dạng hoá địa lý, giảm thiểu rủi ro thị trường đơn lẻ.</div>
+        <div class="svc-link">Xem thêm <i class="fas fa-arrow-right"></i></div>
+      </a>
+      <a href="esg.html" class="svc-card reveal rv1">
+        <div class="svc-num">05</div>
+        <div class="svc-icon"><i class="fas fa-leaf"></i></div>
+        <div class="svc-title">Đầu Tư ESG</div>
+        <div class="svc-body">Chiến lược đầu tư tích hợp tiêu chí Môi trường, Xã hội và Quản trị — sinh lời bền vững, có trách nhiệm với cộng đồng và hành tinh.</div>
+        <div class="svc-link">Xem thêm <i class="fas fa-arrow-right"></i></div>
+      </a>
+      <a href="support.html" class="svc-card reveal rv2">
+        <div class="svc-num">06</div>
+        <div class="svc-icon"><i class="fas fa-shield-alt"></i></div>
+        <div class="svc-title">Quản Trị Rủi Ro</div>
+        <div class="svc-body">Hệ thống giám sát rủi ro 24/7, stress-test kịch bản và kiểm soát drawdown — bảo vệ vốn trong mọi điều kiện thị trường biến động.</div>
+        <div class="svc-link">Xem thêm <i class="fas fa-arrow-right"></i></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     GALLERY + VIDEO
+══════════════════════════════════ -->
+<section class="hp-section alt">
+  <div class="hp-inner">
+    <div class="reveal" style="margin-bottom:40px">
+      <div class="sec-tag">Our Business</div>
+      <h2 class="sec-h2">Hoạt động <em>thực tế</em><br>của DOBN Capital</h2>
+    </div>
+    <div class="media-layout reveal">
+      <div class="gallery-mosaic">
+        <div class="gm-img"><img src="DOBN/7.jpg" alt="DOBN Business"></div>
+        <div class="gm-img"><img src="DOBN/2.jpg" alt="DOBN Business"></div>
+        <div class="gm-img"><img src="DOBN/3.jpg" alt="DOBN Business"></div>
+        <div class="gm-img"><img src="DOBN/4.jpg" alt="DOBN Business"></div>
+        <div class="gm-img"><img src="DOBN/5.jpg" alt="DOBN Business"></div>
+        <div class="gm-img"><img src="DOBN/6.jpg" alt="DOBN Business"></div>
+      </div>
+      <div class="video-block">
+        <video autoplay muted loop playsinline>
+          <source src="intro.mp4" type="video/mp4">
+        </video>
+        <div class="vb-overlay">
+          <div class="vb-label">Giới thiệu</div>
+          <div class="vb-title">DOBN Capital —<br>Đối tác đầu tư tin cậy</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     WHY DOBN
+══════════════════════════════════ -->
+<section class="hp-section">
+  <div class="hp-inner">
+    <div class="why-grid">
+      <div>
+        <div class="reveal">
+          <div class="sec-tag">Tại Sao Chọn DOBN</div>
+          <h2 class="sec-h2">Lợi thế <em>vượt trội</em> khiến chúng tôi<br>khác biệt</h2>
+        </div>
+        <div class="why-points">
+          <div class="why-point reveal rv1">
+            <div class="wp-icon"><i class="fas fa-lock"></i></div>
+            <div class="wp-text">
+              <h4>Độc lập hoàn toàn — không xung đột lợi ích</h4>
+              <p>Không thuộc sở hữu ngân hàng hay tập đoàn. Mọi quyết định đầu tư chỉ phục vụ lợi ích của nhà đầu tư, không chịu áp lực phân phối sản phẩm nội bộ.</p>
+            </div>
+          </div>
+          <div class="why-point reveal rv2">
+            <div class="wp-icon"><i class="fas fa-robot"></i></div>
+            <div class="wp-text">
+              <h4>Công nghệ AI & Phân tích định lượng</h4>
+              <p>Mô hình machine learning xử lý hàng triệu điểm dữ liệu mỗi ngày, phát hiện tín hiệu đầu tư mà phân tích truyền thống bỏ sót.</p>
+            </div>
+          </div>
+          <div class="why-point reveal rv3">
+            <div class="wp-icon"><i class="fas fa-certificate"></i></div>
+            <div class="wp-text">
+              <h4>Được cấp phép & giám sát bởi UBCKNN</h4>
+              <p>Hoạt động minh bạch dưới sự giám sát của Ủy ban Chứng khoán Nhà nước. Kiểm toán hàng năm bởi KPMG. Tài sản được lưu ký độc lập tại Vietcombank.</p>
+            </div>
+          </div>
+          <div class="why-point reveal rv4">
+            <div class="wp-icon"><i class="fas fa-file-alt"></i></div>
+            <div class="wp-text">
+              <h4>IPS cá nhân hoá cho từng nhà đầu tư</h4>
+              <p>Mỗi khách hàng có một Tuyên Bố Chính Sách Đầu Tư riêng, đảm bảo danh mục luôn phù hợp với mục tiêu và khẩu vị rủi ro thực sự của họ.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="why-visual reveal">
+        <div class="why-big-stat">
+          <div class="wbs-label">Hiệu suất trung bình</div>
+          <div class="wbs-val">18<sup>%</sup></div>
+          <div class="wbs-sub">CAGR 5 năm (2020–2025)<br>so với VN-Index: +8.4 điểm %</div>
+          <div class="wbs-mini-grid">
+            <div class="wbs-mini">
+              <div class="mn-val">24<span>%</span></div>
+              <div class="mn-label">Growth Fund YTD</div>
+            </div>
+            <div class="wbs-mini">
+              <div class="mn-val">9.8<span>%</span></div>
+              <div class="mn-label">Bond Fund YTD</div>
+            </div>
+            <div class="wbs-mini">
+              <div class="mn-val">1.8<span>x</span></div>
+              <div class="mn-label">Sharpe Ratio</div>
+            </div>
+            <div class="wbs-mini">
+              <div class="mn-val">-12<span>%</span></div>
+              <div class="mn-label">Max Drawdown</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     PROJECT INFO + MEMBERS
+══════════════════════════════════ -->
+<section class="hp-section alt">
+  <div class="hp-inner">
+    <div class="reveal" style="margin-bottom:40px">
+      <div class="sec-tag">Thông Tin Dự Án</div>
+      <h2 class="sec-h2">Nhóm <em>thực hiện</em><br>DOBN Capital</h2>
+    </div>
+    <div class="info-grid">
+      <!-- General Info -->
+      <div class="info-card reveal">
+        <div class="ic-head">
+          <div class="ic-icon-wrap"><i class="fas fa-university"></i></div>
+          <div class="ic-head-text">
+            <div class="ic-label">Academic Information</div>
+            <div class="ic-title">General Information</div>
+          </div>
+        </div>
+        <div class="gen-info-row">
+          <div class="gir-item">
+            <div class="gir-label">Trường</div>
+            <div class="gir-value">Trường Đại Học Ngân Hàng TP. Hồ Chí Minh</div>
+          </div>
+          <div class="gir-item">
+            <div class="gir-label">Môn học</div>
+            <div class="gir-value">Nghiệp vụ ngân hàng đầu tư — L16</div>
+          </div>
+          <div class="gir-item">
+            <div class="gir-label">Giảng viên hướng dẫn</div>
+            <div class="gir-value">TS. Vũ Thị Anh Thư</div>
+          </div>
+          <div class="gir-item">
+            <div class="gir-label">Năm học</div>
+            <div class="gir-value">2025 — 2026</div>
+          </div>
+          <div class="gir-item">
+            <div class="gir-label">Tính chất</div>
+            <div class="gir-value">Demo Website — Dự án học thuật Fintech</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Members -->
+      <div class="info-card reveal rv1">
+        <div class="ic-head">
+          <div class="ic-icon-wrap"><i class="fas fa-users"></i></div>
+          <div class="ic-head-text">
+            <div class="ic-label">Team</div>
+            <div class="ic-title">Group Member 03</div>
+          </div>
+        </div>
+        <table class="member-table">
+          <colgroup><col class="col-name"><col class="col-id"></colgroup>
+          <thead>
+            <tr>
+              <th>Họ và Tên</th>
+              <th>Mã Sinh Viên</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="member-num">1</span>Ngô Quốc Bảo</td>
+              <td><span class="id-tag">050611230112</span></td>
+            </tr>
+            <tr>
+              <td><span class="member-num">2</span>Trần Tuấn Giang</td>
+              <td><span class="id-tag">050611230256</span></td>
+            </tr>
+            <tr>
+              <td><span class="member-num">3</span>Nguyễn Thị Minh Khuê</td>
+              <td><span class="id-tag">050611230514</span></td>
+            </tr>
+            <tr>
+              <td><span class="member-num">4</span>Phạm Đăng Trí</td>
+              <td><span class="id-tag">050611231412</span></td>
+            </tr>
+            <tr>
+              <td><span class="member-num">5</span>Đinh Mai Thảo</td>
+              <td><span class="id-tag">050611231138</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     CTA
+══════════════════════════════════ -->
+<div class="cta-wrap reveal">
+  <h2>Sẵn sàng bắt đầu hành trình đầu tư?</h2>
+  <p>Đội ngũ chuyên gia DOBN Capital luôn sẵn sàng tư vấn và xây dựng danh mục phù hợp với mục tiêu của bạn.</p>
+  <div class="cta-btns">
+    <a href="customer.html" class="btn-cta-dark"><i class="fas fa-user-tie"></i> Gặp Chuyên Gia Tư Vấn</a>
+    <a href="products.html" class="btn-cta-outline"><i class="fas fa-briefcase"></i> Xem Sản Phẩm Đầu Tư</a>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <p>© 2026 DOBN CAPITAL - Demo Website</p>
+</footer>
+
+<script>
+/* ── Scroll Reveal ── */
+const rv = new IntersectionObserver(e => {
+  e.forEach(x => { if(x.isIntersecting) x.target.classList.add('on'); });
+},{threshold:0.11});
+document.querySelectorAll('.reveal').forEach(el => rv.observe(el));
+
+/* ── Counter ── */
+function runCounter(el){
+  const t = +el.dataset.t;
+  const dur = 1800, step = t/(dur/16);
+  let c = 0;
+  const iv = setInterval(()=>{
+    c += step;
+    if(c >= t){ c = t; clearInterval(iv); }
+    el.textContent = t >= 100
+      ? Math.floor(c).toLocaleString('vi-VN')
+      : Math.floor(c);
+  },16);
+}
+const cObs = new IntersectionObserver(e=>{
+  e.forEach(x=>{
+    if(x.isIntersecting){ runCounter(x.target); cObs.unobserve(x.target); }
+  });
+},{threshold:0.5});
+document.querySelectorAll('.counter').forEach(el => cObs.observe(el));
+</script>
+</body>
+</html>

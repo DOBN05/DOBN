@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ESG – DOBN CAPITAL</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   ESG PAGE – SCOPED STYLES (không ảnh hưởng các trang khác)
+   ============================================================ */
+
+/* Reset cục bộ cho vùng ESG */
+.esg-page * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --esg-dark:   #0a1628;
+  --esg-navy:   #0e2044;
+  --esg-blue:   #1a3a6b;
+  --esg-accent: #00c5a1;
+  --esg-gold:   #c9a84c;
+  --esg-light:  #f4f7fc;
+  --esg-muted:  #8896b0;
+  --esg-white:  #ffffff;
+}
+
+.esg-page {
+  font-family: 'DM Sans', Arial, sans-serif;
+  background: var(--esg-dark);
+  color: var(--esg-white);
+  width: 100%;
+}
+
+/* ---------- HERO ---------- */
+.esg-hero {
+  background: linear-gradient(135deg, #071022 0%, #0e2044 50%, #0a1e3d 100%);
+  padding: 64px 48px 0;
+  position: relative;
+  overflow: hidden;
+}
+.esg-hero::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 420px; height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,197,161,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.esg-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -30px; left: 100px;
+  width: 280px; height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  color: var(--esg-accent);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.hero-eyebrow::before {
+  content: '';
+  width: 32px; height: 2px;
+  background: var(--esg-accent);
+  flex-shrink: 0;
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 52px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--esg-white);
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 2;
+}
+.hero-title span { color: var(--esg-accent); }
+
+.hero-subtitle {
+  font-size: 16px;
+  color: var(--esg-muted);
+  max-width: 560px;
+  line-height: 1.7;
+  margin-bottom: 28px;
+  position: relative;
+  z-index: 2;
+}
+
+.rating-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0,197,161,0.12);
+  border: 1px solid rgba(0,197,161,0.3);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  color: var(--esg-accent);
+  margin-bottom: 28px;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  padding: 28px 0;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  position: relative;
+  z-index: 2;
+}
+.h-stat-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--esg-white);
+}
+.h-stat-val span {
+  color: var(--esg-accent);
+  font-size: 20px;
+}
+.h-stat-lbl {
+  font-size: 12px;
+  color: var(--esg-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-top: 4px;
+}
+
+.hero-bottom-bar {
+  display: flex;
+  gap: 0;
+  margin-top: 32px;
+  border-radius: 16px 16px 0 0;
+  overflow: hidden;
+}
+.hb-pill {
+  flex: 1;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: default;
+}
+.hb-pill.e { background: rgba(16,185,129,0.15); border-top: 2px solid #10b981; color: #4ade80; }
+.hb-pill.s { background: rgba(59,130,246,0.15);  border-top: 2px solid #3b82f6; color: #93c5fd; }
+.hb-pill.g { background: rgba(201,168,76,0.15);  border-top: 2px solid var(--esg-gold); color: #fcd34d; }
+.hb-pill i { font-size: 18px; }
+.hb-pill .hb-sub { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+
+/* ---------- SECTIONS ---------- */
+.esg-section {
+  padding: 56px 48px;
+  position: relative;
+}
+.esg-section.alt  { background: #0c1d38; }
+.esg-section.dark { background: #071022; }
+
+.section-label {
+  font-size: 11px;
+  letter-spacing: 3px;
+  font-weight: 600;
+  color: var(--esg-accent);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--esg-white);
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+.section-desc {
+  font-size: 15px;
+  color: var(--esg-muted);
+  max-width: 580px;
+  line-height: 1.7;
+  margin-bottom: 40px;
+}
+
+.accent-divider {
+  height: 1px;
+  background: linear-gradient(90deg, var(--esg-accent), transparent);
+  margin: 0 48px;
+}
+
+/* ---------- SCORE CARDS ---------- */
+.score-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+@media (max-width: 900px) {
+  .score-grid { grid-template-columns: 1fr; }
+}
+
+.score-card {
+  border-radius: 16px;
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s;
+}
+.score-card:hover { transform: translateY(-4px); }
+.score-card.e { background: linear-gradient(145deg,#0b3d2e,#0f5c40); border: 1px solid rgba(16,185,129,0.25); }
+.score-card.s { background: linear-gradient(145deg,#0c2d5e,#1140a0); border: 1px solid rgba(59,130,246,0.25); }
+.score-card.g { background: linear-gradient(145deg,#3d2e08,#5c4410); border: 1px solid rgba(201,168,76,0.25); }
+
+.sc-icon { font-size: 28px; margin-bottom: 16px; display: block; }
+.score-card.e .sc-icon { color: #4ade80; }
+.score-card.s .sc-icon { color: #93c5fd; }
+.score-card.g .sc-icon { color: #fcd34d; }
+
+.sc-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.score-card.e .sc-label { color: #4ade80; }
+.score-card.s .sc-label { color: #93c5fd; }
+.score-card.g .sc-label { color: #fcd34d; }
+
+.sc-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.sc-score-row { display: flex; align-items: baseline; gap: 8px; margin: 18px 0 10px; }
+.sc-score {
+  font-size: 52px;
+  font-weight: 700;
+  font-family: 'Playfair Display', serif;
+  line-height: 1;
+}
+.score-card.e .sc-score { color: #4ade80; }
+.score-card.s .sc-score { color: #93c5fd; }
+.score-card.g .sc-score { color: #fcd34d; }
+.sc-max { font-size: 18px; color: rgba(255,255,255,0.4); }
+
+.sc-bar-track {
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.1);
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+.sc-bar-fill { height: 100%; border-radius: 3px; transition: width 1.2s cubic-bezier(0.4,0,0.2,1); }
+.score-card.e .sc-bar-fill { background: #4ade80; width: 87%; }
+.score-card.s .sc-bar-fill { background: #93c5fd; width: 74%; }
+.score-card.g .sc-bar-fill { background: #fcd34d; width: 91%; }
+
+.sc-items { list-style: none; }
+.sc-items li {
+  font-size: 13px;
+  color: rgba(255,255,255,0.65);
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.sc-items li:last-child { border-bottom: none; }
+
+.sc-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.score-card.e .sc-badge { background: rgba(74,222,128,0.2); color: #4ade80; }
+.score-card.s .sc-badge { background: rgba(147,197,253,0.2); color: #93c5fd; }
+.score-card.g .sc-badge { background: rgba(252,211,77,0.2); color: #fcd34d; }
+
+/* ---------- METRICS STRIP ---------- */
+.metrics-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: #0e2044;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 48px;
+}
+@media (max-width: 900px) {
+  .metrics-strip { grid-template-columns: repeat(2, 1fr); }
+}
+
+.metric-cell {
+  padding: 28px 24px;
+  border-right: 1px solid rgba(255,255,255,0.08);
+}
+.metric-cell:last-child { border-right: none; }
+
+.metric-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+.metric-val em { font-size: 18px; color: var(--esg-accent); font-style: normal; }
+.metric-lbl { font-size: 12px; color: var(--esg-muted); margin-top: 8px; line-height: 1.5; }
+.metric-delta { font-size: 12px; font-weight: 600; margin-top: 6px; }
+.metric-delta.up { color: #4ade80; }
+
+/* ---------- CHART ROW ---------- */
+.chart-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+@media (max-width: 900px) {
+  .chart-row { grid-template-columns: 1fr; }
+}
+
+.chart-box {
+  background: #0e2044;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 16px;
+  padding: 24px;
+}
+.chart-box-title { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+.chart-box-sub   { font-size: 12px; color: var(--esg-muted); margin-bottom: 20px; }
+
+/* ---------- PORTFOLIO TABLE ---------- */
+.portfolio-wrap { overflow-x: auto; }
+
+.portfolio-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 760px;
+}
+/* override global th style */
+.esg-page .portfolio-table th {
+  text-align: left;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--esg-muted);
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  background: transparent;
+  font-weight: 500;
+}
+.esg-page .portfolio-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  font-size: 14px;
+  color: rgba(255,255,255,0.85);
+  text-align: left;
+}
+.esg-page .portfolio-table tr:hover td { background: rgba(255,255,255,0.03); }
+
+.ptag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 4px;
+}
+.ptag.green { background: rgba(74,222,128,0.15);  color: #4ade80; }
+.ptag.blue  { background: rgba(147,197,253,0.15); color: #93c5fd; }
+.ptag.gold  { background: rgba(252,211,77,0.15);  color: #fcd34d; }
+.ptag.gray  { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.5); }
+
+.score-pill { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 600; }
+.score-pill .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+/* ---------- COMMITMENTS ---------- */
+.commit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+@media (max-width: 700px) {
+  .commit-grid { grid-template-columns: 1fr; }
+}
+
+.commit-card {
+  background: #0c1d38;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px;
+  padding: 24px;
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  transition: border-color 0.2s;
+}
+.commit-card:hover { border-color: rgba(0,197,161,0.3); }
+
+.commit-icon {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.commit-icon.g { background: rgba(74,222,128,0.12); color: #4ade80; }
+.commit-icon.b { background: rgba(147,197,253,0.12); color: #93c5fd; }
+.commit-icon.y { background: rgba(252,211,77,0.12);  color: #fcd34d; }
+.commit-icon.t { background: rgba(0,197,161,0.12);   color: var(--esg-accent); }
+
+.commit-title { font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 6px; }
+.commit-text  { font-size: 13px; color: var(--esg-muted); line-height: 1.6; }
+
+/* ---------- ESG FOOTER BAR ---------- */
+.esg-footer-bar {
+  background: #071022;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 24px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.esg-footer-bar .note { font-size: 12px; color: var(--esg-muted); }
+.esg-footer-bar .certs { display: flex; gap: 16px; flex-wrap: wrap; }
+.esg-footer-bar .cert-item {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--esg-muted);
+}
+.esg-footer-bar .cert-item i { color: var(--esg-accent); }
+
+/* ---- donut legend ---- */
+.donut-legend { display: flex; flex-direction: column; gap: 8px; font-size: 12px; }
+.dl-row { display: flex; justify-content: space-between; align-items: center; color: rgba(255,255,255,0.7); gap: 8px; }
+.dl-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+.dl-val { font-weight: 600; color: #fff; }
+</style>
+</head>
+<body>
+
+<!-- ========== HEADER (giữ nguyên từ gốc) ========== -->
+<header>
+  <div class="logo">
+    <img src="DOBN/logo.jpg" alt="DOBN Capital logo">
+  </div>
+  <nav>
+    <a href="index.html"><i class="fas fa-home"></i> Homepage</a>
+    <a href="about.html"><i class="fas fa-building"></i> About Us</a>
+    <a href="products.html"><i class="fas fa-briefcase"></i> Products</a>
+    <a href="customer.html"><i class="fas fa-user-tie"></i> Services</a>
+    <a href="stocks.html"><i class="fas fa-chart-line"></i> Stock</a>
+     <a href="shareholderc.html"><i class="fas fa-handshake"></i> Investor Relations</a>
+    <a href="esg.html" class="active"><i class="fas fa-leaf"></i> ESG</a>
+    <a href="news.html"><i class="fas fa-newspaper"></i> News</a>
+    <a href="support.html"><i class="fas fa-headset"></i> Support</a>
+  </nav>
+  <div class="auth-buttons">
+    <button class="btn-login">Đăng Nhập</button>
+    <button class="btn-register">Mở Tài Khoản</button>
+  </div>
+</header>
+
+<!-- ========== ESG MAIN CONTENT ========== -->
+<div class="wrapper" style="border-radius:0; margin:0; width:100%;">
+<div class="esg-page">
+
+  <!-- HERO -->
+  <div class="esg-hero">
+    <div class="hero-eyebrow">ESG Investment Framework</div>
+    <h1 class="hero-title">Đầu tư <span>bền vững</span><br>tạo giá trị lâu dài</h1>
+    <p class="hero-subtitle">DOBN Capital tích hợp toàn diện các tiêu chí Môi trường, Xã hội và Quản trị vào mọi quyết định phân bổ danh mục đầu tư.</p>
+    <div class="rating-badge">
+      <i class="fas fa-shield-alt"></i>
+      Xếp hạng MSCI ESG: AA — Tiên Phong Ngành
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="h-stat-val"><span id="aum-count">0</span><span>T</span></div>
+        <div class="h-stat-lbl">AUM theo chuẩn ESG</div>
+      </div>
+      <div>
+        <div class="h-stat-val"><span id="co2-count">0</span><span>%</span></div>
+        <div class="h-stat-lbl">Giảm phát thải CO₂</div>
+      </div>
+      <div>
+        <div class="h-stat-val"><span id="ticker-count">0</span></div>
+        <div class="h-stat-lbl">Mã CK được đánh giá</div>
+      </div>
+      <div>
+        <div class="h-stat-val"><span id="yr-count">0</span><span>+</span></div>
+        <div class="h-stat-lbl">Năm kinh nghiệm ESG</div>
+      </div>
+    </div>
+    <div class="hero-bottom-bar">
+      <div class="hb-pill e">
+        <i class="fas fa-leaf"></i>
+        <div>
+          <strong>Môi Trường (E)</strong>
+          <div class="hb-sub">Năng lượng · Khí thải · Nước</div>
+        </div>
+      </div>
+      <div class="hb-pill s">
+        <i class="fas fa-users"></i>
+        <div>
+          <strong>Xã Hội (S)</strong>
+          <div class="hb-sub">Lao động · Cộng đồng · Đa dạng</div>
+        </div>
+      </div>
+      <div class="hb-pill g">
+        <i class="fas fa-shield-alt"></i>
+        <div>
+          <strong>Quản Trị (G)</strong>
+          <div class="hb-sub">Minh bạch · Hội đồng · Tuân thủ</div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /hero -->
+
+  <!-- SCORE CARDS -->
+  <div class="esg-section alt">
+    <div class="section-label">Chấm điểm ESG 2025</div>
+    <h2 class="section-title">Kết quả đánh giá danh mục</h2>
+    <p class="section-desc">Điểm ESG tổng hợp từ 32 mã cốt lõi, rà soát định kỳ hàng quý theo phương pháp luận độc lập.</p>
+    <div class="score-grid">
+
+      <!-- E -->
+      <div class="score-card e">
+        <i class="fas fa-leaf sc-icon"></i>
+        <div class="sc-label">Môi Trường</div>
+        <div class="sc-title">Environmental Score</div>
+        <div class="sc-score-row">
+          <div class="sc-score">87</div>
+          <div class="sc-max">/ 100</div>
+        </div>
+        <div class="sc-bar-track"><div class="sc-bar-fill"></div></div>
+        <ul class="sc-items">
+          <li>Cường độ carbon        <span class="sc-badge">↓ 34%</span></li>
+          <li>Năng lượng tái tạo     <span class="sc-badge">62%</span></li>
+          <li>Quản lý nước           <span class="sc-badge">AA</span></li>
+          <li>Chất thải &amp; tái chế<span class="sc-badge">Tốt</span></li>
+        </ul>
+      </div>
+
+      <!-- S -->
+      <div class="score-card s">
+        <i class="fas fa-hands-helping sc-icon"></i>
+        <div class="sc-label">Xã Hội</div>
+        <div class="sc-title">Social Score</div>
+        <div class="sc-score-row">
+          <div class="sc-score">74</div>
+          <div class="sc-max">/ 100</div>
+        </div>
+        <div class="sc-bar-track"><div class="sc-bar-fill"></div></div>
+        <ul class="sc-items">
+          <li>An toàn lao động       <span class="sc-badge">93/100</span></li>
+          <li>Bình đẳng giới         <span class="sc-badge">B+</span></li>
+          <li>Đào tạo &amp; phát triển<span class="sc-badge">Khá</span></li>
+          <li>Tác động cộng đồng     <span class="sc-badge">78/100</span></li>
+        </ul>
+      </div>
+
+      <!-- G -->
+      <div class="score-card g">
+        <i class="fas fa-shield-alt sc-icon"></i>
+        <div class="sc-label">Quản Trị</div>
+        <div class="sc-title">Governance Score</div>
+        <div class="sc-score-row">
+          <div class="sc-score">91</div>
+          <div class="sc-max">/ 100</div>
+        </div>
+        <div class="sc-bar-track"><div class="sc-bar-fill"></div></div>
+        <ul class="sc-items">
+          <li>Minh bạch tài chính    <span class="sc-badge">A+</span></li>
+          <li>Độc lập HĐQT          <span class="sc-badge">85%</span></li>
+          <li>Bảo vệ cổ đông nhỏ    <span class="sc-badge">Xuất sắc</span></li>
+          <li>Quản lý rủi ro         <span class="sc-badge">AAA</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </div><!-- /score cards -->
+
+  <div class="accent-divider"></div>
+
+  <!-- KEY METRICS + CHARTS -->
+  <div class="esg-section dark">
+    <div class="section-label">Chỉ số hiệu suất</div>
+    <h2 class="section-title">Dữ liệu đo lường tác động</h2>
+    <p class="section-desc">Theo dõi và báo cáo định kỳ các chỉ số tác động môi trường và xã hội theo khung TCFD.</p>
+
+    <div class="metrics-strip">
+      <div class="metric-cell">
+        <div class="metric-val">38<em>K</em></div>
+        <div class="metric-lbl">Tấn CO₂ tương đương tiết kiệm / năm</div>
+        <div class="metric-delta up">▲ 12% so 2024</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-val">62<em>%</em></div>
+        <div class="metric-lbl">Danh mục sử dụng năng lượng tái tạo</div>
+        <div class="metric-delta up">▲ 8% so 2024</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-val">4.2<em>K</em></div>
+        <div class="metric-lbl">Việc làm xanh được tạo ra</div>
+        <div class="metric-delta up">▲ 23% so 2024</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-val">0<em>%</em></div>
+        <div class="metric-lbl">Vũ khí · Than đá · Thuốc lá trong danh mục</div>
+        <div class="metric-delta up">✓ Loại trừ toàn bộ</div>
+      </div>
+    </div>
+
+    <div class="chart-row">
+      <!-- Line chart -->
+      <div class="chart-box">
+        <div class="chart-box-title">Xu hướng điểm ESG tổng hợp</div>
+        <div class="chart-box-sub">2020 – 2025, so sánh với VN-Index</div>
+        <div style="display:flex;gap:16px;margin-bottom:12px;font-size:12px;">
+          <span style="display:flex;align-items:center;gap:5px;color:rgba(255,255,255,0.6);">
+            <span style="width:20px;height:2px;background:#00c5a1;display:inline-block;border-radius:2px;"></span>DOBN ESG
+          </span>
+          <span style="display:flex;align-items:center;gap:5px;color:rgba(255,255,255,0.6);">
+            <span style="width:20px;height:2px;background:#8896b0;display:inline-block;border-radius:2px;border-top:2px dashed #8896b0;"></span>VN-Index avg
+          </span>
+        </div>
+        <div style="position:relative;width:100%;height:200px;">
+          <canvas id="trendChart" role="img" aria-label="Biểu đồ xu hướng điểm ESG DOBN từ 2020-2025 tăng từ 58 lên 84, cao hơn VN-Index trung bình">
+            Điểm ESG DOBN: 2020=58, 2021=64, 2022=70, 2023=75, 2024=80, 2025=84
+          </canvas>
+        </div>
+      </div>
+
+      <!-- Donut chart -->
+      <div class="chart-box">
+        <div class="chart-box-title">Phân bổ danh mục theo ngành ESG</div>
+        <div class="chart-box-sub">Tỷ trọng 32 mã cốt lõi, Q4-2025</div>
+        <div style="display:flex;gap:24px;align-items:center;margin-top:8px;">
+          <div style="position:relative;width:140px;height:140px;flex-shrink:0;">
+            <canvas id="donutChart" role="img" aria-label="Phân bổ danh mục: Ngân hàng xanh 28%, Năng lượng tái tạo 22%, Công nghệ 20%, BĐS xanh 15%, Khác 15%">
+              Ngân hàng xanh 28%, Năng lượng tái tạo 22%, Công nghệ 20%, BĐS xanh 15%, Khác 15%
+            </canvas>
+          </div>
+          <div class="donut-legend" style="flex:1;">
+            <div class="dl-row"><span style="display:flex;align-items:center;gap:6px;"><span class="dl-dot" style="background:#00c5a1;"></span>Ngân hàng xanh</span><span class="dl-val">28%</span></div>
+            <div class="dl-row"><span style="display:flex;align-items:center;gap:6px;"><span class="dl-dot" style="background:#4ade80;"></span>Năng lượng tái tạo</span><span class="dl-val">22%</span></div>
+            <div class="dl-row"><span style="display:flex;align-items:center;gap:6px;"><span class="dl-dot" style="background:#93c5fd;"></span>Công nghệ</span><span class="dl-val">20%</span></div>
+            <div class="dl-row"><span style="display:flex;align-items:center;gap:6px;"><span class="dl-dot" style="background:#fcd34d;"></span>BĐS xanh</span><span class="dl-val">15%</span></div>
+            <div class="dl-row"><span style="display:flex;align-items:center;gap:6px;"><span class="dl-dot" style="background:#c084fc;"></span>Khác</span><span class="dl-val">15%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /metrics + charts -->
+
+  <!-- PORTFOLIO TABLE -->
+  <div class="esg-section alt">
+    <div class="section-label">Danh mục đầu tư</div>
+    <h2 class="section-title">Top 8 cổ phiếu ESG cốt lõi</h2>
+    <p class="section-desc">Xếp hạng theo điểm ESG tổng hợp, cập nhật Q4-2025.</p>
+    <div class="portfolio-wrap">
+      <table class="portfolio-table">
+        <thead>
+          <tr>
+            <th>Mã CK</th>
+            <th>Doanh nghiệp</th>
+            <th>Ngành</th>
+            <th>Điểm E</th>
+            <th>Điểm S</th>
+            <th>Điểm G</th>
+            <th>Tổng ESG</th>
+            <th>Xếp hạng</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:700;color:#00c5a1;">VHM</td>
+            <td>Vinhomes JSC</td>
+            <td><span class="ptag gold">BĐS Xanh</span></td>
+            <td><span class="score-pill"><span class="dot" style="background:#4ade80;"></span>85</span></td>
+            <td><span class="score-pill"><span class="dot" style="background:#93c5fd;"></span>78</span></td>
+            <td><span class="score-pill"><span class="dot" style="background:#fcd34d;"></span>92</span></td>
+            <td style="font-weight:700;font-size:16px;">85.0</td>
+            <td><span class="ptag green">AA</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;color:#00c5a1;">VCB</td>
+            <td>Vietcombank</td>
+            <td><span class="ptag green">NH Xanh</span></td>
+            <td><span class="score-pill"><span class="dot" style="background:#4ade80;"></span>82</span></td>
+            <td><span class="score-pill"><span class="dot" style="background:#93c5fd;"></span>76</span></td>
+            <td><span class="score-pill"><span class="dot" style="background:#fcd34d;"></span>94</span></td>
+            <td style="font-weight:700;">84.0</td>
+            <td><span class="ptag green">AA</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;color:#00c5a1;">REE</td>
+            <td>REE Corporation</td>
+            <td><span class="ptag green">Năng lượng</span></td>
+            <td><span class="score-pill"><span class="dot" style="background:#4ade80;"></span>91</span></td>
+            <td><span class="score-pill"><span class="dot" style="background:#93c5fd;"></span>70</span></td>
+            <td><span class="score-pill"><span class="dot" style="background:#fcd34d;"></span>88</span></td>
+            <td style="font-weight:700;">83.0</td>
+            <td><span class="ptag green">AA</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;color:#00c5a1;">FPT</td>
+            <td>FPT Corporation</td>
+            <td><span class="ptag blue">Công nghệ</span></td>
+            <td><span class="score-pill"><span class="dot" style="background:#4ade80;"></span>76</span></td>
+            <td><span class="score-pill"><span class="dot" style="background:#93c5fd;"></span>82</span></td>
+            <td><span class="score-pill"><span class="dot" style="background:#fcd34d;"></span>90</span></td>
+            <td style="font-weight:700;">82.7</td>
+            <td><span class="ptag green">A+</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;color:#00c5a1;">MWG</td>
+            <td>Mobile World</td>
+            <td><span class="ptag blue">Bán lẻ</span></td>
+            <td><span class="score-pill"><span class="dot" style="background:#4ade80;"></span>72</span></td>
+            <td><span class="score-pill"><span class="dot" style="background:#93c5fd;"></span>85</span></td>
+            <td><span class="score-pill"><span class="dot" style="background:#fcd34d;"></span>86</span></td>
+            <td style="font-weight:700;">81.0</td>
+            <td><span class="ptag green">A+</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;color:#00c5a1;">VNM</td>
+            <td>Vinamilk</td>
+            <td><span class="ptag gray">FMCG</span></td>
+            <td><span class="score-pill"><span class="dot" style="background:#4ade80;"></span>80</span></td>
+            <td><span class="score-pill"><span class="dot" style="background:#93c5fd;"></span>77</span></td>
+            <td><span class="score-pill"><span class="dot" style="background:#fcd34d;"></span>82</span></td>
+            <td style="font-weight:700;">79.7</td>
+            <td><span class="ptag blue">A</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;color:#00c5a1;">HPG</td>
+            <td>Hòa Phát Group</td>
+            <td><span class="ptag gray">Vật liệu</span></td>
+            <td><span class="score-pill"><span class="dot" style="background:#4ade80;"></span>68</span></td>
+            <td><span class="score-pill"><span class="dot" style="background:#93c5fd;"></span>73</span></td>
+            <td><span class="score-pill"><span class="dot" style="background:#fcd34d;"></span>88</span></td>
+            <td style="font-weight:700;">76.3</td>
+            <td><span class="ptag blue">A</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;color:#00c5a1;">ACB</td>
+            <td>Asia Commercial Bank</td>
+            <td><span class="ptag green">NH Xanh</span></td>
+            <td><span class="score-pill"><span class="dot" style="background:#4ade80;"></span>74</span></td>
+            <td><span class="score-pill"><span class="dot" style="background:#93c5fd;"></span>75</span></td>
+            <td><span class="score-pill"><span class="dot" style="background:#fcd34d;"></span>81</span></td>
+            <td style="font-weight:700;">76.7</td>
+            <td><span class="ptag blue">A</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:14px;font-size:12px;color:var(--esg-muted);">
+      * Dữ liệu tổng hợp từ MSCI ESG, VSD, HOSE và báo cáo thường niên doanh nghiệp. Cập nhật 31/12/2025.
+    </p>
+  </div><!-- /portfolio table -->
+
+  <!-- COMMITMENTS -->
+  <div class="esg-section dark">
+    <div class="section-label">Cam kết chiến lược</div>
+    <h2 class="section-title">Lộ trình ESG 2030</h2>
+    <p class="section-desc">Bốn trụ cột chiến lược định hướng toàn bộ hoạt động đầu tư và quản lý danh mục.</p>
+    <div class="commit-grid">
+      <div class="commit-card">
+        <div class="commit-icon g"><i class="fas fa-seedling"></i></div>
+        <div>
+          <div class="commit-title">Net-Zero Carbon 2045</div>
+          <div class="commit-text">Cam kết đạt phát thải ròng bằng 0 trên toàn danh mục vào năm 2045, với mục tiêu giảm 50% cường độ carbon so với 2020 trước năm 2030.</div>
+        </div>
+      </div>
+      <div class="commit-card">
+        <div class="commit-icon b"><i class="fas fa-chart-line"></i></div>
+        <div>
+          <div class="commit-title">Báo Cáo Minh Bạch Toàn Phần</div>
+          <div class="commit-text">Công bố báo cáo tác động ESG theo chuẩn TCFD và GRI hàng năm, bao gồm các chỉ số bất lợi tiêu biểu (PAI) theo quy định SFDR.</div>
+        </div>
+      </div>
+      <div class="commit-card">
+        <div class="commit-icon y"><i class="fas fa-vote-yea"></i></div>
+        <div>
+          <div class="commit-title">Chủ Động Bỏ Phiếu Cổ Đông</div>
+          <div class="commit-text">Thực thi quyền biểu quyết tại 100% ĐHCĐ, ưu tiên các nghị quyết về khí hậu và đa dạng hội đồng quản trị.</div>
+        </div>
+      </div>
+      <div class="commit-card">
+        <div class="commit-icon t"><i class="fas fa-ban"></i></div>
+        <div>
+          <div class="commit-title">Loại Trừ Ngành Có Hại</div>
+          <div class="commit-text">Chính sách loại trừ tuyệt đối với 9 nhóm ngành: than nhiệt điện, vũ khí, thuốc lá, cờ bạc, phá rừng, đánh bắt tận diệt, và tài chính đen.</div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /commitments -->
+
+  <!-- ESG INFO BAR -->
+  <div class="esg-footer-bar">
+    <div class="note">© 2026 DOBN Capital — Báo cáo ESG 2025. Mọi dữ liệu mang tính minh họa.</div>
+    <div class="certs">
+      <span class="cert-item"><i class="fas fa-certificate"></i> MSCI ESG Rated</span>
+      <span class="cert-item"><i class="fas fa-file-alt"></i> TCFD Aligned</span>
+      <span class="cert-item"><i class="fas fa-globe"></i> UN PRI Signatory</span>
+    </div>
+  </div>
+
+</div><!-- /esg-page -->
+</div><!-- /wrapper -->
+
+<!-- ========== FOOTER (giữ nguyên từ gốc) ========== -->
+<footer>
+  <p>© 2026 DOBN CAPITAL - Demo Website</p>
+</footer>
+
+<!-- Chart.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+
+<script>
+  /* ---- Animated counters ---- */
+  function animateCount(id, target, duration) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var start = 0;
+    var step  = target / (duration / 16);
+    var timer = setInterval(function () {
+      start = Math.min(start + step, target);
+      el.textContent = target % 1 !== 0
+        ? parseFloat(start.toFixed(1))
+        : Math.round(start);
+      if (start >= target) clearInterval(timer);
+    }, 16);
+  }
+
+  setTimeout(function () {
+    animateCount('aum-count',    12, 1400);
+    animateCount('co2-count',    38, 1200);
+    animateCount('ticker-count', 32, 1000);
+    animateCount('yr-count',      8,  900);
+  }, 400);
+
+  /* ---- Line chart ---- */
+  new Chart(document.getElementById('trendChart').getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: ['2020','2021','2022','2023','2024','2025'],
+      datasets: [
+        {
+          label: 'DOBN ESG',
+          data: [58, 64, 70, 75, 80, 84],
+          borderColor: '#00c5a1',
+          backgroundColor: 'rgba(0,197,161,0.08)',
+          fill: true,
+          tension: 0.4,
+          borderWidth: 2.5,
+          pointBackgroundColor: '#00c5a1',
+          pointRadius: 4
+        },
+        {
+          label: 'VN-Index avg',
+          data: [48, 52, 56, 58, 61, 64],
+          borderColor: '#8896b0',
+          backgroundColor: 'transparent',
+          borderDash: [5, 4],
+          tension: 0.4,
+          borderWidth: 1.5,
+          pointRadius: 3,
+          pointBackgroundColor: '#8896b0'
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: {
+          ticks: { color: '#8896b0', font: { size: 11 } },
+          grid:  { color: 'rgba(255,255,255,0.05)' }
+        },
+        y: {
+          min: 40, max: 100,
+          ticks: { color: '#8896b0', font: { size: 11 } },
+          grid:  { color: 'rgba(255,255,255,0.05)' }
+        }
+      }
+    }
+  });
+
+  /* ---- Donut chart ---- */
+  new Chart(document.getElementById('donutChart').getContext('2d'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Ngân hàng xanh','Năng lượng tái tạo','Công nghệ','BĐS xanh','Khác'],
+      datasets: [{
+        data: [28, 22, 20, 15, 15],
+        backgroundColor: ['#00c5a1','#4ade80','#93c5fd','#fcd34d','#c084fc'],
+        borderWidth: 0,
+        hoverOffset: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      cutout: '70%'
+    }
+  });
+</script>
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VVRTLD2GMN"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-VVRTLD2GMN');
+</script>
+
+</body>
+</html>

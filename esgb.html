@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phát triển Bền vững – DOB Bank</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy:        #04045d;
+      --navy2:       #07078a;
+      --gold:        #c9a84c;
+      --gold-light:  #e8c96e;
+      --forest:      #0b4d2e;
+      --green:       #1a8a4a;
+      --green-mid:   #23a85c;
+      --green-light: #5ec98a;
+      --green-pale:  #e6f7ee;
+      --cream:       #f5f7f2;
+      --white:       #ffffff;
+      --gray:        #f0eff9;
+      --text:        #1a1a3e;
+      --muted:       #6b7a6b;
+      --border:      rgba(11,77,46,.12);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Be Vietnam Pro', sans-serif; background: var(--white); color: var(--text); overflow-x: hidden; }
+
+    /* ── TOPBAR ── */
+    .topbar { background: var(--navy); color: rgba(255,255,255,.6); font-size: .72rem; padding: .45rem 0; }
+    .topbar-inner { max-width: 1280px; margin: auto; padding: 0 2rem; display: flex; justify-content: space-between; }
+    .topbar a { color: inherit; text-decoration: none; } .topbar a:hover { color: var(--gold-light); }
+    .topbar-links { display: flex; gap: 1.4rem; }
+
+    /* ── NAVBAR ── */
+    nav { position: sticky; top: 0; z-index: 100; background: var(--white); box-shadow: 0 2px 20px rgba(4,4,93,.1); border-bottom: 3px solid var(--gold); }
+    .nav-inner { max-width: 1280px; margin: auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 72px; }
+    .logo-wrap { display: flex; align-items: center; gap: .9rem; text-decoration: none; }
+    .logo-wrap img { height: 46px; object-fit: contain; }
+    .logo-name { font-family: 'Playfair Display', serif; font-size: 1.55rem; font-weight: 700; color: var(--navy); }
+    .logo-sub { font-size: .62rem; color: var(--gold); letter-spacing: .14em; text-transform: uppercase; font-weight: 600; }
+    .nav-menu { display: flex; align-items: center; gap: .15rem; }
+    .nav-item { position: relative; }
+    .nav-link { display: block; padding: .55rem 1rem; font-size: .82rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--navy); text-decoration: none; border-radius: 4px; transition: background .2s, color .2s; }
+    .nav-link:hover { background: var(--gray); }
+    .nav-link.active { color: var(--green); }
+    .dropdown { position: absolute; top: calc(100% + 8px); left: 0; background: var(--white); border-top: 3px solid var(--gold); box-shadow: 0 12px 40px rgba(4,4,93,.15); min-width: 220px; border-radius: 0 0 8px 8px; opacity: 0; pointer-events: none; transform: translateY(-8px); transition: all .22s ease; z-index: 200; }
+    .nav-item:hover .dropdown { opacity: 1; pointer-events: auto; transform: none; }
+    .dropdown a { display: block; padding: .7rem 1.2rem; font-size: .8rem; color: var(--text); text-decoration: none; font-weight: 500; border-bottom: 1px solid var(--gray); transition: background .15s, padding-left .15s; }
+    .dropdown a:last-child { border-bottom: none; } .dropdown a:hover { background: var(--gray); padding-left: 1.6rem; }
+    .nav-cta { background: var(--navy); color: var(--white) !important; border-radius: 4px; padding: .55rem 1.3rem !important; }
+    .nav-cta:hover { background: var(--navy2) !important; }
+
+    /* ══════════════════════════════════════
+       HERO – Editorial split: dark forest left, animated organic right
+    ══════════════════════════════════════ */
+    .hero {
+      min-height: 92vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-left {
+      background: var(--forest);
+      padding: 7rem 4rem 5rem 2rem;
+      padding-left: max(2rem, calc((100vw - 1280px)/2 + 2rem));
+      display: flex; flex-direction: column; justify-content: center;
+      position: relative; z-index: 2;
+    }
+    .hero-left::after {
+      content: '';
+      position: absolute; top: 0; right: -60px; bottom: 0; width: 120px;
+      background: var(--forest);
+      clip-path: polygon(0 0, 60px 0, 100% 100%, 0 100%);
+      z-index: 1;
+    }
+    .hero-eyebrow {
+      display: flex; align-items: center; gap: .8rem;
+      font-size: .68rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--green-light); margin-bottom: 2rem;
+    }
+    .hero-eyebrow::before { content: ''; width: 32px; height: 1.5px; background: var(--green-light); }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 4.5vw, 4.2rem);
+      font-weight: 700; line-height: 1.1;
+      color: var(--white); margin-bottom: 1.8rem;
+    }
+    .hero h1 .italic { font-style: italic; color: var(--green-light); }
+    .hero-body {
+      color: rgba(255,255,255,.68); font-size: .95rem; line-height: 1.82;
+      max-width: 460px; margin-bottom: 3rem;
+    }
+    .hero-pledge {
+      border-left: 3px solid var(--green-mid);
+      padding: 1.2rem 1.5rem;
+      background: rgba(35,168,92,.08);
+      border-radius: 0 10px 10px 0;
+      margin-bottom: 3rem;
+    }
+    .hero-pledge p { font-size: .85rem; color: rgba(255,255,255,.75); line-height: 1.7; font-style: italic; }
+    .hero-pledge cite { font-size: .72rem; color: var(--green-light); font-style: normal; font-weight: 700; display: block; margin-top: .5rem; }
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-green {
+      background: linear-gradient(135deg, var(--green), var(--green-mid));
+      color: var(--white); font-weight: 700; font-size: .86rem;
+      padding: .9rem 2.2rem; border-radius: 6px; text-decoration: none;
+      box-shadow: 0 6px 24px rgba(26,138,74,.35);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn-green:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(26,138,74,.45); }
+    .btn-ghost-w {
+      border: 1.5px solid rgba(255,255,255,.3); color: rgba(255,255,255,.85);
+      font-weight: 600; font-size: .86rem; padding: .9rem 2.2rem;
+      border-radius: 6px; text-decoration: none; transition: border-color .2s;
+    }
+    .btn-ghost-w:hover { border-color: var(--green-light); }
+
+    /* Hero right – animated organic visual */
+    .hero-right {
+      background: var(--cream);
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-right-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 60% 40%, rgba(26,138,74,.12) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 50% at 20% 80%, rgba(11,77,46,.08) 0%, transparent 60%),
+        var(--cream);
+    }
+    .hero-orbs { position: absolute; inset: 0; }
+    .orb {
+      position: absolute; border-radius: 50%;
+      animation: orbFloat 8s ease-in-out infinite;
+    }
+    .orb1 { width: 320px; height: 320px; background: radial-gradient(circle, rgba(26,138,74,.18), transparent 70%); top: 10%; left: 15%; animation-delay: 0s; }
+    .orb2 { width: 200px; height: 200px; background: radial-gradient(circle, rgba(94,201,138,.15), transparent 70%); top: 55%; left: 55%; animation-delay: -3s; }
+    .orb3 { width: 140px; height: 140px; background: radial-gradient(circle, rgba(201,168,76,.12), transparent 70%); top: 20%; left: 65%; animation-delay: -5s; }
+    @keyframes orbFloat {
+      0%, 100% { transform: translate(0,0) scale(1); }
+      33%       { transform: translate(12px,-18px) scale(1.04); }
+      66%       { transform: translate(-8px,12px) scale(.97); }
+    }
+    .hero-metrics {
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem;
+      padding: 3rem;
+    }
+    .hero-metric {
+      background: var(--white);
+      border-radius: 16px; padding: 1.8rem;
+      box-shadow: 0 4px 24px rgba(11,77,46,.1);
+      border: 1px solid rgba(11,77,46,.08);
+      transition: transform .3s, box-shadow .3s;
+    }
+    .hero-metric:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(11,77,46,.15); }
+    .metric-icon { font-size: 1.5rem; margin-bottom: .8rem; }
+    .metric-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 700;
+      color: var(--forest); line-height: 1; margin-bottom: .3rem;
+    }
+    .metric-label { font-size: .75rem; color: var(--muted); line-height: 1.5; }
+    .metric-badge { display: inline-block; margin-top: .6rem; font-size: .65rem; font-weight: 700; background: var(--green-pale); color: var(--green); padding: .2rem .65rem; border-radius: 100px; }
+    .hero-metric.accent { background: linear-gradient(135deg, var(--forest), var(--green)); }
+    .hero-metric.accent .metric-num { color: var(--white); }
+    .hero-metric.accent .metric-label { color: rgba(255,255,255,.65); }
+    .hero-metric.accent .metric-badge { background: rgba(255,255,255,.15); color: rgba(255,255,255,.9); }
+
+    /* ── PROGRESS TICKER ── */
+    .ticker {
+      background: var(--green); padding: .7rem 0; overflow: hidden;
+      border-top: 2px solid var(--forest); border-bottom: 2px solid var(--forest);
+    }
+    .ticker-track { display: flex; gap: 3.5rem; animation: tickerScroll 30s linear infinite; white-space: nowrap; }
+    .ticker-track:hover { animation-play-state: paused; }
+    @keyframes tickerScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .ticker-item { color: rgba(255,255,255,.9); font-size: .76rem; font-weight: 700; letter-spacing: .06em; display: flex; align-items: center; gap: .6rem; }
+    .ticker-item::before { content: '●'; font-size: .4rem; color: var(--green-light); }
+
+    /* ── STICKY CHAPTER NAV ── */
+    .chapter-nav { background: var(--white); border-bottom: 1px solid rgba(11,77,46,.1); position: sticky; top: 72px; z-index: 90; }
+    .chapter-tabs { max-width: 1280px; margin: auto; padding: 0 2rem; display: flex; overflow-x: auto; }
+    .chapter-tab { padding: 1rem 1.4rem; font-size: .8rem; font-weight: 600; color: var(--muted); text-decoration: none; border-bottom: 3px solid transparent; transition: all .2s; white-space: nowrap; }
+    .chapter-tab:hover { color: var(--green); border-color: rgba(26,138,74,.2); }
+    .chapter-tab.active { color: var(--green); border-color: var(--green); }
+
+    /* ── SECTION COMMONS ── */
+    .section { padding: 6rem 0; }
+    .section-alt { background: var(--cream); }
+    .section-forest { background: var(--forest); }
+    .sec-inner { max-width: 1280px; margin: auto; padding: 0 2rem; }
+    .sec-eyebrow { font-size: .68rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--green); margin-bottom: .7rem; display: flex; align-items: center; gap: .6rem; }
+    .sec-eyebrow::before { content: ''; width: 22px; height: 1.5px; background: var(--green); }
+    .sec-eyebrow.light { color: var(--green-light); }
+    .sec-eyebrow.light::before { background: var(--green-light); }
+    .sec-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 700; color: var(--forest); line-height: 1.2; margin-bottom: 1rem; }
+    .sec-title.light { color: var(--white); }
+    .sec-desc { color: var(--muted); font-size: .93rem; line-height: 1.8; max-width: 620px; }
+    .sec-desc.light { color: rgba(255,255,255,.65); }
+    .sec-anchor { scroll-margin-top: 148px; }
+
+    /* ── COMMITMENT PILLARS ── */
+    .pillars-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3.5rem; }
+    .pillar-card {
+      border-radius: 18px; overflow: hidden;
+      border: 1px solid var(--border);
+      transition: transform .3s, box-shadow .3s;
+    }
+    .pillar-card:hover { transform: translateY(-7px); box-shadow: 0 20px 50px rgba(11,77,46,.12); }
+    .pillar-header { padding: 2.2rem 2rem 1.5rem; position: relative; overflow: hidden; }
+    .pillar-card:nth-child(1) .pillar-header { background: linear-gradient(135deg, var(--forest), #0d6038); }
+    .pillar-card:nth-child(2) .pillar-header { background: linear-gradient(135deg, var(--navy), var(--navy2)); }
+    .pillar-card:nth-child(3) .pillar-header { background: linear-gradient(135deg, #1a5200, #2d7a00); }
+    .pillar-header::after {
+      content: attr(data-letter);
+      position: absolute; right: 1.2rem; bottom: -1rem;
+      font-family: 'Playfair Display', serif; font-size: 7rem; font-weight: 700;
+      color: rgba(255,255,255,.06); line-height: 1;
+    }
+    .pillar-letter { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: rgba(255,255,255,.5); letter-spacing: .08em; margin-bottom: .6rem; }
+    .pillar-heading { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--white); line-height: 1.2; }
+    .pillar-sub { color: rgba(255,255,255,.6); font-size: .78rem; margin-top: .5rem; }
+    .pillar-body { padding: 1.8rem 2rem; background: var(--white); }
+    .pillar-items { display: flex; flex-direction: column; gap: .8rem; }
+    .pillar-item { display: flex; gap: .8rem; align-items: flex-start; font-size: .82rem; color: var(--text); line-height: 1.55; }
+    .pillar-item::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex-shrink: 0; margin-top: .45rem; }
+    .pillar-target { margin-top: 1.4rem; padding: 1rem; background: var(--green-pale); border-radius: 10px; }
+    .pillar-target-label { font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--green); margin-bottom: .3rem; }
+    .pillar-target-val { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--forest); }
+
+    /* ── PROGRESS BARS ── */
+    .progress-section { }
+    .progress-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem; }
+    .progress-group { }
+    .progress-group-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; color: var(--forest); margin-bottom: 1.5rem; padding-bottom: .6rem; border-bottom: 2px solid var(--green-pale); display: flex; align-items: center; gap: .6rem; }
+    .progress-items { display: flex; flex-direction: column; gap: 1.4rem; }
+    .progress-item { }
+    .progress-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: .5rem; }
+    .progress-label { font-size: .82rem; font-weight: 600; color: var(--text); }
+    .progress-vals { display: flex; align-items: center; gap: .5rem; }
+    .progress-current { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--forest); }
+    .progress-target { font-size: .7rem; color: var(--muted); }
+    .progress-bar-track { height: 8px; background: var(--green-pale); border-radius: 100px; overflow: hidden; }
+    .progress-bar-fill {
+      height: 100%; border-radius: 100px;
+      background: linear-gradient(90deg, var(--green), var(--green-mid));
+      width: 0; transition: width 1.2s cubic-bezier(.4,0,.2,1);
+    }
+    .progress-bar-fill.animate { width: var(--pct); }
+    .progress-note { font-size: .7rem; color: var(--muted); margin-top: .35rem; }
+
+    /* ── NET ZERO COUNTDOWN ── */
+    .netzero { background: var(--forest); padding: 5rem 0; position: relative; overflow: hidden; }
+    .netzero::before {
+      content: '2040';
+      position: absolute; right: 5%; top: 50%; transform: translateY(-50%);
+      font-family: 'Playfair Display', serif; font-size: 18rem; font-weight: 700;
+      color: rgba(255,255,255,.03); line-height: 1; pointer-events: none;
+    }
+    .netzero-inner { max-width: 1280px; margin: auto; padding: 0 2rem; position: relative; z-index: 1; }
+    .netzero-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 5rem; align-items: center; }
+    .netzero-roadmap { display: flex; flex-direction: column; gap: 0; margin-top: 2.5rem; }
+    .roadmap-item { display: grid; grid-template-columns: 80px 1fr; gap: 1.5rem; position: relative; }
+    .roadmap-item:not(:last-child)::before {
+      content: ''; position: absolute; left: 36px; top: 32px; bottom: -1px;
+      width: 2px; background: rgba(94,201,138,.2);
+    }
+    .roadmap-item { padding-bottom: 2rem; }
+    .roadmap-item:last-child { padding-bottom: 0; }
+    .roadmap-year {
+      width: 72px; height: 72px; border-radius: 50%;
+      border: 2px solid rgba(94,201,138,.3);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif; font-size: .9rem; font-weight: 700;
+      color: var(--green-light); line-height: 1; text-align: center;
+      flex-shrink: 0; position: relative; z-index: 1;
+      background: var(--forest);
+      transition: border-color .3s, background .3s;
+    }
+    .roadmap-item.done .roadmap-year { border-color: var(--green-mid); background: rgba(35,168,92,.15); color: var(--white); }
+    .roadmap-item.current .roadmap-year { border-color: var(--green-mid); background: var(--green); color: var(--white); box-shadow: 0 0 0 4px rgba(35,168,92,.25); }
+    .roadmap-content { padding-top: .9rem; }
+    .roadmap-tag { font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--green-light); margin-bottom: .4rem; }
+    .roadmap-title { font-weight: 700; font-size: .92rem; color: var(--white); margin-bottom: .3rem; }
+    .roadmap-body { font-size: .78rem; color: rgba(255,255,255,.5); line-height: 1.65; }
+    .netzero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .nz-stat {
+      background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08);
+      border-radius: 14px; padding: 1.8rem; text-align: center;
+      transition: background .2s;
+    }
+    .nz-stat:hover { background: rgba(255,255,255,.08); }
+    .nz-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: var(--green-light); line-height: 1; margin-bottom: .4rem; }
+    .nz-label { font-size: .73rem; color: rgba(255,255,255,.5); line-height: 1.45; }
+
+    /* ── GREEN FINANCE ── */
+    .greenfinance-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 4rem; align-items: center; margin-top: 3rem; }
+    .gf-visual {
+      border-radius: 20px; overflow: hidden;
+      background: linear-gradient(160deg, var(--forest), #0e5c33);
+      padding: 2.5rem; min-height: 440px;
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .gf-visual-title { font-family: 'Playfair Display', serif; color: var(--white); font-size: 1.6rem; font-weight: 700; line-height: 1.2; margin-bottom: 1.5rem; }
+    .gf-donut-wrap { display: flex; align-items: center; gap: 2rem; }
+    .gf-donut { flex-shrink: 0; }
+    .gf-donut svg { width: 140px; height: 140px; display: block; }
+    .gf-legend { display: flex; flex-direction: column; gap: .7rem; }
+    .gf-leg-item { display: flex; align-items: center; gap: .7rem; font-size: .78rem; color: rgba(255,255,255,.75); }
+    .gf-leg-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+    .gf-leg-pct { font-weight: 700; color: var(--white); margin-left: auto; }
+    .gf-bottom { background: rgba(255,255,255,.06); border-radius: 12px; padding: 1.2rem 1.5rem; }
+    .gf-total-label { font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.5); }
+    .gf-total-val { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--gold-light); }
+    .gf-products { display: flex; flex-direction: column; gap: 1rem; }
+    .gf-product {
+      background: var(--white); border-radius: 12px; padding: 1.5rem;
+      border: 1px solid var(--border); display: flex; gap: 1.2rem;
+      align-items: flex-start; transition: border-color .2s, transform .2s;
+    }
+    .gf-product:hover { border-color: var(--green); transform: translateX(4px); }
+    .gf-prod-icon { width: 44px; height: 44px; border-radius: 10px; background: var(--green-pale); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+    .gf-prod-name { font-weight: 700; font-size: .88rem; color: var(--forest); margin-bottom: .3rem; }
+    .gf-prod-desc { font-size: .78rem; color: var(--muted); line-height: 1.55; }
+    .gf-prod-rate { margin-top: .5rem; display: inline-flex; align-items: center; gap: .4rem; font-size: .72rem; font-weight: 700; color: var(--green); background: var(--green-pale); padding: .2rem .65rem; border-radius: 100px; }
+
+    /* ── SOCIAL / COMMUNITY ── */
+    .social-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+    .social-card {
+      border-radius: 16px; overflow: hidden;
+      border: 1px solid var(--border); transition: transform .25s, box-shadow .25s;
+    }
+    .social-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(11,77,46,.1); }
+    .social-card-top { padding: 2rem; position: relative; overflow: hidden; min-height: 140px; display: flex; flex-direction: column; justify-content: flex-end; }
+    .social-card:nth-child(1) .social-card-top { background: linear-gradient(135deg, #1a4a0a, #2d7a10); }
+    .social-card:nth-child(2) .social-card-top { background: linear-gradient(135deg, var(--navy), var(--navy2)); }
+    .social-card:nth-child(3) .social-card-top { background: linear-gradient(135deg, #4a1a0a, #7a2d10); }
+    .social-card-big-icon { position: absolute; right: 1.2rem; bottom: .5rem; font-size: 5rem; opacity: .15; }
+    .social-card-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--white); position: relative; z-index: 1; }
+    .social-card-body { padding: 1.5rem; background: var(--white); }
+    .social-stat-row { display: flex; align-items: baseline; gap: .5rem; margin-bottom: .5rem; }
+    .social-stat-num { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--forest); }
+    .social-stat-label { font-size: .75rem; color: var(--muted); }
+    .social-desc { font-size: .78rem; color: var(--muted); line-height: 1.65; }
+    .social-tag { display: inline-block; margin-top: .9rem; font-size: .65rem; font-weight: 700; background: var(--green-pale); color: var(--green); padding: .25rem .7rem; border-radius: 100px; }
+
+    /* ── GOVERNANCE ── */
+    .gov-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: start; margin-top: 3rem; }
+    .gov-principles { display: flex; flex-direction: column; gap: 1rem; }
+    .gov-principle {
+      display: flex; gap: 1.2rem; padding: 1.4rem; background: var(--white);
+      border-radius: 12px; border: 1px solid var(--border);
+      border-left: 4px solid var(--green); transition: transform .2s;
+    }
+    .gov-principle:hover { transform: translateX(4px); }
+    .gov-prin-icon { font-size: 1.4rem; flex-shrink: 0; }
+    .gov-prin-title { font-weight: 700; font-size: .88rem; color: var(--forest); margin-bottom: .3rem; }
+    .gov-prin-body { font-size: .78rem; color: var(--muted); line-height: 1.6; }
+    .gov-ratings { display: flex; flex-direction: column; gap: 1rem; }
+    .gov-rating-card { background: var(--white); border-radius: 12px; padding: 1.5rem; border: 1px solid var(--border); }
+    .gov-rating-name { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: .5rem; }
+    .gov-rating-row { display: flex; align-items: center; justify-content: space-between; }
+    .gov-rating-val { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--forest); }
+    .gov-rating-desc { font-size: .75rem; color: var(--muted); text-align: right; line-height: 1.4; }
+    .gov-rating-bar-track { height: 6px; background: var(--green-pale); border-radius: 100px; overflow: hidden; margin-top: .8rem; }
+    .gov-rating-bar { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--green), var(--green-mid)); }
+
+    /* ── REPORTS ── */
+    .reports-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+    .report-card {
+      border-radius: 14px; overflow: hidden;
+      border: 1px solid var(--border);
+      transition: transform .25s, box-shadow .25s;
+      text-decoration: none; color: inherit;
+    }
+    .report-card:hover { transform: translateY(-5px); box-shadow: 0 14px 36px rgba(11,77,46,.1); }
+    .report-card-top { padding: 2rem; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; min-height: 130px; position: relative; overflow: hidden; }
+    .report-card:nth-child(1) .report-card-top { background: linear-gradient(135deg, var(--forest), #0d6038); }
+    .report-card:nth-child(2) .report-card-top { background: linear-gradient(135deg, #1a3a1a, #2d602d); }
+    .report-card:nth-child(3) .report-card-top { background: linear-gradient(135deg, var(--navy), #1a1a6e); }
+    .report-card:nth-child(4) .report-card-top { background: linear-gradient(135deg, #3a2a00, #5a4400); }
+    .report-year { font-size: .65rem; font-weight: 700; letter-spacing: .1em; color: rgba(255,255,255,.5); }
+    .report-icon-bg { position: absolute; right: 1rem; bottom: .5rem; font-size: 4rem; opacity: .12; }
+    .report-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--white); line-height: 1.3; position: relative; z-index: 1; }
+    .report-card-body { padding: 1.2rem; background: var(--white); }
+    .report-desc { font-size: .77rem; color: var(--muted); line-height: 1.6; margin-bottom: .9rem; }
+    .report-dl { display: flex; align-items: center; gap: .5rem; font-size: .75rem; font-weight: 700; color: var(--green); }
+
+    /* ── CTA ── */
+    .esg-cta { background: linear-gradient(135deg, var(--forest) 0%, #0e6038 55%, var(--navy) 100%); padding: 5rem 0; position: relative; overflow: hidden; }
+    .esg-cta::before { content: ''; position: absolute; top: -60px; right: -60px; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(94,201,138,.15), transparent 70%); }
+    .esg-cta-inner { max-width: 1280px; margin: auto; padding: 0 2rem; text-align: center; position: relative; z-index: 1; }
+    .esg-cta h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3.5vw, 3rem); font-weight: 700; color: var(--white); margin-bottom: 1rem; line-height: 1.2; }
+    .esg-cta h2 em { color: var(--green-light); font-style: italic; }
+    .esg-cta p { color: rgba(255,255,255,.65); font-size: .95rem; max-width: 540px; margin: 0 auto 2.5rem; line-height: 1.75; }
+    .esg-cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    /* ── FOOTER ── */
+    footer { background: #020238; color: rgba(255,255,255,.6); padding-top: 3.5rem; }
+    .footer-grid { max-width: 1280px; margin: auto; padding: 0 2rem 2.5rem; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; }
+    .footer-logo-name { font-family: 'Playfair Display', serif; color: var(--white); font-size: 1.4rem; font-weight: 700; }
+    .footer-logo-sub { color: var(--gold); font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; margin-top: .15rem; }
+    .footer-about { margin-top: .9rem; font-size: .78rem; line-height: 1.7; max-width: 260px; }
+    .footer-col h4 { color: var(--white); font-size: .76rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; margin-bottom: .9rem; padding-bottom: .5rem; border-bottom: 1px solid rgba(255,255,255,.1); }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
+    .footer-col ul li a { color: rgba(255,255,255,.5); font-size: .78rem; text-decoration: none; transition: color .2s; }
+    .footer-col ul li a:hover { color: var(--green-light); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.08); max-width: 1280px; margin: auto; padding: 1.1rem 2rem; display: flex; justify-content: space-between; font-size: .72rem; }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-l { opacity: 0; transform: translateX(-24px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal-l.visible { opacity: 1; transform: none; }
+    .reveal-r { opacity: 0; transform: translateX(24px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal-r.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-left::after { display: none; }
+      .hero-left { padding: 5rem 2rem 3rem; }
+      .hero-metrics { grid-template-columns: repeat(2, 1fr); }
+      .pillars-grid { grid-template-columns: 1fr; }
+      .progress-grid, .greenfinance-grid, .gov-grid, .netzero-grid { grid-template-columns: 1fr; }
+      .netzero::before { display: none; }
+      .social-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .hero-metrics { grid-template-columns: 1fr 1fr; }
+      .social-grid { grid-template-columns: 1fr; }
+      .netzero-stats { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-links">
+      <a href="#">Hỗ trợ: 1800 58 68</a><a href="#">Tỷ giá</a><a href="#">Chi nhánh</a>
+    </div>
+    <div class="topbar-links">
+      <a href="#">Tiếng Việt</a><a href="#">English</a><a href="#">Internet Banking</a>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-inner">
+    <a href="homebank.html" class="logo-wrap">
+      <img src="DOBN/bank.png" alt="DOB Bank" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
+      <div style="display:none"><div class="logo-name">DOB Bank</div><div class="logo-sub">Ngân hàng TMCP DOB</div></div>
+    </a>
+    <div class="nav-menu">
+      <div class="nav-item">
+        <a href="services.html" class="nav-link">Sản phẩm &amp; Dịch vụ ▾</a>
+        <div class="dropdown">
+          <a href="services.html#dinh-che">🏦 Định chế tài chính</a>
+          <a href="services.html#doanh-nghiep">🏢 Doanh nghiệp</a>
+          <a href="services.html#ca-nhan">👤 Cá nhân</a>
+          <a href="services.html#premium">💎 Cá nhân Premium</a>
+        </div>
+      </div>
+      <div class="nav-item"><a href="aboutb.html" class="nav-link">Về chúng tôi</a></div>
+      <div class="nav-item"><a href="shareholderb.html" class="nav-link">Quan hệ nhà đầu tư</a></div>
+      <div class="nav-item"><a href="newsb.html" class="nav-link">Tin tức</a></div>
+      <div class="nav-item"><a href="esgb.html" class="nav-link active">Phát triển bền vững</a></div>
+      <div class="nav-item"><a href="#" class="nav-link nav-cta">Internet Banking</a></div>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">DOB Bank · ESG &amp; Sustainability</div>
+    <h1>Ngân hàng xanh<br/>cho một<br/><span class="italic">tương lai bền vững</span></h1>
+    <p class="hero-body">DOB Bank cam kết đặt phát triển bền vững làm trung tâm của chiến lược kinh doanh. Chúng tôi không chỉ tài trợ vốn – chúng tôi tài trợ cho một Việt Nam xanh hơn, công bằng hơn và thịnh vượng hơn.</p>
+    <div class="hero-pledge">
+      <p>"Mỗi quyết định cho vay, mỗi đồng vốn phân bổ đều phải đi qua câu hỏi: điều này có tốt cho thế hệ tiếp theo không?"</p>
+      <cite>— Bà Trần Phương Linh, CEO DOB Bank</cite>
+    </div>
+    <div class="hero-ctas">
+      <a href="#green-finance" class="btn-green">Tín dụng xanh</a>
+      <a href="#bao-cao" class="btn-ghost-w">Báo cáo ESG 2025</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-bg"></div>
+    <div class="hero-orbs"><div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div></div>
+    <div class="hero-metrics">
+      <div class="hero-metric accent">
+        <div class="metric-icon">🌿</div>
+        <div class="metric-num">Net Zero</div>
+        <div class="metric-label">Mục tiêu phát thải ròng bằng 0</div>
+        <div class="metric-badge">Cam kết 2040</div>
+      </div>
+      <div class="hero-metric">
+        <div class="metric-icon">💚</div>
+        <div class="metric-num">3,000<span style="font-size:1rem;font-weight:400"> tỷ</span></div>
+        <div class="metric-label">Dư nợ tín dụng xanh VNĐ</div>
+        <div class="metric-badge">▲ +85% YoY</div>
+      </div>
+      <div class="hero-metric">
+        <div class="metric-icon">♻️</div>
+        <div class="metric-num">-40%</div>
+        <div class="metric-label">Giảm phát thải carbon nội bộ</div>
+        <div class="metric-badge">So với 2020</div>
+      </div>
+      <div class="hero-metric">
+        <div class="metric-icon">👩‍💼</div>
+        <div class="metric-num">52%</div>
+        <div class="metric-label">Tỷ lệ nhân viên nữ toàn hệ thống</div>
+        <div class="metric-badge">Top ngành</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item">Tín dụng xanh: 3,000 tỷ VNĐ</span>
+    <span class="ticker-item">Carbon nội bộ: -40% so với 2020</span>
+    <span class="ticker-item">100% điện năng tái tạo tại trụ sở chính từ 2024</span>
+    <span class="ticker-item">5,000+ suất học bổng DOB Futures</span>
+    <span class="ticker-item">Net Zero cam kết 2040</span>
+    <span class="ticker-item">52% nhân viên nữ · 40% lãnh đạo nữ</span>
+    <span class="ticker-item">Top 3 ESG ngân hàng Việt Nam 2025</span>
+    <span class="ticker-item">Thành viên UNEP FI</span>
+    <span class="ticker-item">Tín dụng xanh: 3,000 tỷ VNĐ</span>
+    <span class="ticker-item">Carbon nội bộ: -40% so với 2020</span>
+    <span class="ticker-item">100% điện năng tái tạo tại trụ sở chính từ 2024</span>
+    <span class="ticker-item">5,000+ suất học bổng DOB Futures</span>
+    <span class="ticker-item">Net Zero cam kết 2040</span>
+    <span class="ticker-item">52% nhân viên nữ · 40% lãnh đạo nữ</span>
+    <span class="ticker-item">Top 3 ESG ngân hàng Việt Nam 2025</span>
+    <span class="ticker-item">Thành viên UNEP FI</span>
+  </div>
+</div>
+
+<!-- CHAPTER NAV -->
+<div class="chapter-nav">
+  <div class="chapter-tabs">
+    <a class="chapter-tab" href="#cam-ket">Cam kết ESG</a>
+    <a class="chapter-tab" href="#tien-do">Tiến độ mục tiêu</a>
+    <a class="chapter-tab" href="#net-zero">Lộ trình Net Zero</a>
+    <a class="chapter-tab" href="#green-finance">Tài chính Xanh</a>
+    <a class="chapter-tab" href="#xa-hoi">Xã hội &amp; Cộng đồng</a>
+    <a class="chapter-tab" href="#quan-tri">Quản trị</a>
+    <a class="chapter-tab" href="#bao-cao">Báo cáo</a>
+  </div>
+</div>
+
+<!-- ══ CAM KẾT ESG ══ -->
+<section class="section sec-anchor" id="cam-ket">
+  <div class="sec-inner">
+    <div class="reveal" style="max-width:640px">
+      <div class="sec-eyebrow">Chiến lược bền vững 2026–2030</div>
+      <h2 class="sec-title">Ba trụ cột <em style="font-style:italic;color:var(--green)">ESG</em></h2>
+      <p class="sec-desc">DOB Bank xây dựng chiến lược phát triển bền vững trên ba trụ cột xuyên suốt mọi hoạt động, từ cấp hội đồng quản trị đến từng giao dịch với khách hàng.</p>
+    </div>
+    <div class="pillars-grid reveal">
+      <div class="pillar-card">
+        <div class="pillar-header" data-letter="E">
+          <div class="pillar-letter">E · Environmental</div>
+          <div class="pillar-heading">Môi trường</div>
+          <div class="pillar-sub">Giảm thiểu tác động, tài trợ giải pháp xanh</div>
+        </div>
+        <div class="pillar-body">
+          <div class="pillar-items">
+            <div class="pillar-item">Phân bổ 15% tổng dư nợ cho tín dụng xanh theo định nghĩa Ngân hàng Nhà nước đến 2030</div>
+            <div class="pillar-item">Giảm 70% phát thải carbon hoạt động nội bộ so với mức nền 2020</div>
+            <div class="pillar-item">100% điện từ nguồn tái tạo tại toàn bộ chi nhánh đến 2028</div>
+            <div class="pillar-item">Thẩm định rủi ro môi trường bắt buộc với 100% khoản vay trên 50 tỷ đồng</div>
+            <div class="pillar-item">Phát hành trái phiếu xanh đạt 10,000 tỷ đồng đến 2030</div>
+          </div>
+          <div class="pillar-target">
+            <div class="pillar-target-label">Mục tiêu 2030</div>
+            <div class="pillar-target-val">Net Zero nội bộ · 2040 toàn diện</div>
+          </div>
+        </div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-header" data-letter="S">
+          <div class="pillar-letter">S · Social</div>
+          <div class="pillar-heading">Xã hội</div>
+          <div class="pillar-sub">Con người là trung tâm của phát triển</div>
+        </div>
+        <div class="pillar-body">
+          <div class="pillar-items">
+            <div class="pillar-item">Đảm bảo bình đẳng giới ở mọi cấp quản lý – mục tiêu 45% lãnh đạo nữ đến 2028</div>
+            <div class="pillar-item">Trao 10,000 suất học bổng DOB Futures giai đoạn 2026–2030</div>
+            <div class="pillar-item">Mở rộng tài chính toàn diện – phục vụ 500,000 hộ nông dân, tiểu thương vùng sâu</div>
+            <div class="pillar-item">Đào tạo kỹ năng số cho 50,000 người dân chưa có tài khoản ngân hàng</div>
+            <div class="pillar-item">Chương trình sức khỏe tâm thần và phúc lợi nhân viên toàn diện</div>
+          </div>
+          <div class="pillar-target">
+            <div class="pillar-target-label">Mục tiêu xã hội</div>
+            <div class="pillar-target-val">500K hộ · 10K học bổng</div>
+          </div>
+        </div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-header" data-letter="G">
+          <div class="pillar-letter">G · Governance</div>
+          <div class="pillar-heading">Quản trị</div>
+          <div class="pillar-sub">Minh bạch và trách nhiệm giải trình</div>
+        </div>
+        <div class="pillar-body">
+          <div class="pillar-items">
+            <div class="pillar-item">Ủy ban ESG độc lập trực thuộc HĐQT, họp hàng quý, công bố toàn bộ biên bản</div>
+            <div class="pillar-item">Gắn 30% thưởng điều hành với KPI bền vững hàng năm</div>
+            <div class="pillar-item">Công bố thông tin theo GRI Standards, TCFD và SASB Financial Sector</div>
+            <div class="pillar-item">Kiểm toán độc lập báo cáo ESG bởi Big-4 kể từ năm 2024</div>
+            <div class="pillar-item">Zero tolerance với tham nhũng, hối lộ và xung đột lợi ích</div>
+          </div>
+          <div class="pillar-target">
+            <div class="pillar-target-label">Khung chuẩn</div>
+            <div class="pillar-target-val">GRI · TCFD · SASB · UNEP FI</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TIẾN ĐỘ MỤC TIÊU ══ -->
+<section class="section section-alt sec-anchor" id="tien-do">
+  <div class="sec-inner">
+    <div class="reveal">
+      <div class="sec-eyebrow">Cập nhật 2025</div>
+      <h2 class="sec-title">Tiến độ thực hiện mục tiêu</h2>
+      <p class="sec-desc">Chúng tôi công bố minh bạch tiến độ hàng năm đối với từng cam kết ESG, được kiểm toán độc lập.</p>
+    </div>
+    <div class="progress-grid reveal">
+      <div class="progress-group">
+        <div class="progress-group-title">🌿 Môi trường</div>
+        <div class="progress-items">
+          <div class="progress-item">
+            <div class="progress-header">
+              <span class="progress-label">Giảm phát thải carbon nội bộ</span>
+              <div class="progress-vals"><span class="progress-current">40%</span><span class="progress-target">/ mục tiêu 70% (2030)</span></div>
+            </div>
+            <div class="progress-bar-track"><div class="progress-bar-fill" style="--pct:57%"></div></div>
+            <div class="progress-note">57% tiến độ · Đúng lộ trình ✓</div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-header">
+              <span class="progress-label">Tỷ trọng tín dụng xanh / tổng dư nợ</span>
+              <div class="progress-vals"><span class="progress-current">8.2%</span><span class="progress-target">/ mục tiêu 15% (2030)</span></div>
+            </div>
+            <div class="progress-bar-track"><div class="progress-bar-fill" style="--pct:55%"></div></div>
+            <div class="progress-note">55% tiến độ · Vượt kế hoạch năm ✓</div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-header">
+              <span class="progress-label">Chi nhánh dùng điện tái tạo</span>
+              <div class="progress-vals"><span class="progress-current">38%</span><span class="progress-target">/ mục tiêu 100% (2028)</span></div>
+            </div>
+            <div class="progress-bar-track"><div class="progress-bar-fill" style="--pct:38%"></div></div>
+            <div class="progress-note">38% tiến độ · Đang tăng tốc</div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-header">
+              <span class="progress-label">Trái phiếu xanh phát hành</span>
+              <div class="progress-vals"><span class="progress-current">3,000 tỷ</span><span class="progress-target">/ mục tiêu 10,000 tỷ (2030)</span></div>
+            </div>
+            <div class="progress-bar-track"><div class="progress-bar-fill" style="--pct:30%"></div></div>
+            <div class="progress-note">30% tiến độ · 3 đợt phát hành hoàn thành</div>
+          </div>
+        </div>
+      </div>
+      <div class="progress-group">
+        <div class="progress-group-title">🤝 Xã hội &amp; Quản trị</div>
+        <div class="progress-items">
+          <div class="progress-item">
+            <div class="progress-header">
+              <span class="progress-label">Tỷ lệ lãnh đạo nữ</span>
+              <div class="progress-vals"><span class="progress-current">40%</span><span class="progress-target">/ mục tiêu 45% (2028)</span></div>
+            </div>
+            <div class="progress-bar-track"><div class="progress-bar-fill" style="--pct:89%"></div></div>
+            <div class="progress-note">89% tiến độ · Gần đạt mục tiêu ✓</div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-header">
+              <span class="progress-label">Học bổng DOB Futures (2026–2030)</span>
+              <div class="progress-vals"><span class="progress-current">0</span><span class="progress-target">/ mục tiêu 10,000 suất</span></div>
+            </div>
+            <div class="progress-bar-track"><div class="progress-bar-fill" style="--pct:5%"></div></div>
+            <div class="progress-note">Năm 2026 – đang khởi động chu kỳ mới</div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-header">
+              <span class="progress-label">Hộ gia đình tiếp cận tài chính toàn diện</span>
+              <div class="progress-vals"><span class="progress-current">200K</span><span class="progress-target">/ mục tiêu 500K (2030)</span></div>
+            </div>
+            <div class="progress-bar-track"><div class="progress-bar-fill" style="--pct:40%"></div></div>
+            <div class="progress-note">40% tiến độ · Đúng lộ trình ✓</div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-header">
+              <span class="progress-label">Điểm hài lòng nhân viên (eNPS)</span>
+              <div class="progress-vals"><span class="progress-current">72</span><span class="progress-target">/ mục tiêu 80 (2028)</span></div>
+            </div>
+            <div class="progress-bar-track"><div class="progress-bar-fill" style="--pct:90%"></div></div>
+            <div class="progress-note">90% tiến độ · Cải thiện +8pts từ 2022 ✓</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ NET ZERO ROADMAP ══ -->
+<section class="netzero sec-anchor" id="net-zero">
+  <div class="netzero-inner">
+    <div class="netzero-grid">
+      <div>
+        <div class="reveal">
+          <div class="sec-eyebrow light">Lộ trình khí hậu</div>
+          <h2 class="sec-title light">Cam kết<br/><em style="font-style:italic;color:var(--green-light)">Net Zero 2040</em></h2>
+          <p class="sec-desc light" style="margin-bottom:3rem">DOB Bank là một trong những ngân hàng thương mại cổ phần Việt Nam đầu tiên công bố lộ trình Net Zero toàn diện, đồng thuận với Thỏa thuận Paris và mục tiêu giảm phát thải của Chính phủ Việt Nam NDC 2030.</p>
+        </div>
+        <div class="netzero-roadmap reveal">
+          <div class="roadmap-item done">
+            <div class="roadmap-year">2020<br/>–<br/>2022</div>
+            <div class="roadmap-content">
+              <div class="roadmap-tag">Giai đoạn 1 · Hoàn thành ✓</div>
+              <div class="roadmap-title">Đo lường &amp; Lập nền</div>
+              <div class="roadmap-body">Kiểm kê phát thải Scope 1, 2, 3. Thiết lập hệ thống dữ liệu carbon. Giảm 25% điện năng tiêu thụ qua hiệu quả năng lượng.</div>
+            </div>
+          </div>
+          <div class="roadmap-item current">
+            <div class="roadmap-year">2023<br/>–<br/>2026</div>
+            <div class="roadmap-content">
+              <div class="roadmap-tag">Giai đoạn 2 · Đang thực hiện ●</div>
+              <div class="roadmap-title">Chuyển đổi tích cực</div>
+              <div class="roadmap-body">Lắp đặt điện mặt trời tại 60 chi nhánh. Loại bỏ xe công đốt xăng. Gắn KPI carbon vào toàn bộ quyết định cho vay từ 2025.</div>
+            </div>
+          </div>
+          <div class="roadmap-item">
+            <div class="roadmap-year">2027<br/>–<br/>2032</div>
+            <div class="roadmap-content">
+              <div class="roadmap-tag">Giai đoạn 3 · Kế hoạch</div>
+              <div class="roadmap-title">Trung hòa nội bộ</div>
+              <div class="roadmap-body">Đạt Net Zero Scope 1 &amp; 2. 100% điện tái tạo. Bù đắp carbon còn lại qua tín chỉ chất lượng cao và rừng tự nhiên.</div>
+            </div>
+          </div>
+          <div class="roadmap-item">
+            <div class="roadmap-year">2040</div>
+            <div class="roadmap-content">
+              <div class="roadmap-tag">Mục tiêu cuối · Net Zero toàn diện</div>
+              <div class="roadmap-title">Zero Carbon – Danh mục &amp; Hoạt động</div>
+              <div class="roadmap-body">Toàn bộ danh mục cho vay đạt phù hợp 1.5°C. Phát thải ròng bằng 0 trên cả Scope 3 – bao gồm khách hàng và chuỗi cung ứng.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="netzero-stats reveal">
+        <div class="nz-stat"><div class="nz-num">-40%</div><div class="nz-label">Carbon nội bộ giảm so với 2020</div></div>
+        <div class="nz-stat"><div class="nz-num">100%</div><div class="nz-label">Điện tái tạo tại trụ sở chính từ 2024</div></div>
+        <div class="nz-stat"><div class="nz-num">60</div><div class="nz-label">Chi nhánh lắp điện mặt trời đến 2026</div></div>
+        <div class="nz-stat"><div class="nz-num">1.5°C</div><div class="nz-label">Mục tiêu phù hợp Thỏa thuận Paris</div></div>
+        <div class="nz-stat" style="grid-column:1/-1"><div class="nz-num">Thành viên UNEP FI</div><div class="nz-label">UN Environment Programme Finance Initiative · Principles for Responsible Banking</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TÀI CHÍNH XANH ══ -->
+<section class="section sec-anchor" id="green-finance">
+  <div class="sec-inner">
+    <div class="reveal">
+      <div class="sec-eyebrow">Green &amp; Sustainable Finance</div>
+      <h2 class="sec-title">Tài chính Xanh DOB</h2>
+      <p class="sec-desc">Danh mục tín dụng xanh và sản phẩm tài chính bền vững – giúp khách hàng chuyển đổi sang kinh doanh có trách nhiệm với môi trường.</p>
+    </div>
+    <div class="greenfinance-grid">
+      <div class="gf-visual reveal-l">
+        <div class="gf-visual-title">Phân bổ danh mục<br/>Tín dụng Xanh 2025</div>
+        <div class="gf-donut-wrap">
+          <div class="gf-donut">
+            <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+              <!-- Năng lượng tái tạo 42% -->
+              <path d="M70,70 L70,10 A60,60 0,0,1 122.4,85 Z" fill="#1a8a4a" opacity=".9"/>
+              <!-- Nông nghiệp bền vững 25% -->
+              <path d="M70,70 L122.4,85 A60,60 0,0,1 70,130 Z" fill="#5ec98a"/>
+              <!-- Công trình xanh 18% -->
+              <path d="M70,70 L70,130 A60,60 0,0,1 17.6,85 Z" fill="#c9a84c"/>
+              <!-- Giao thông xanh 15% -->
+              <path d="M70,70 L17.6,85 A60,60 0,0,1 70,10 Z" fill="#23a85c"/>
+              <circle cx="70" cy="70" r="36" fill="white"/>
+              <text x="70" y="66" font-size="10" fill="#0b4d2e" font-weight="700" text-anchor="middle" font-family="serif">3,000</text>
+              <text x="70" y="79" font-size="8" fill="#6b7a6b" text-anchor="middle">tỷ VNĐ</text>
+            </svg>
+          </div>
+          <div class="gf-legend">
+            <div class="gf-leg-item"><div class="gf-leg-dot" style="background:#1a8a4a"></div>Năng lượng tái tạo<span class="gf-leg-pct">42%</span></div>
+            <div class="gf-leg-item"><div class="gf-leg-dot" style="background:#5ec98a"></div>Nông nghiệp bền vững<span class="gf-leg-pct">25%</span></div>
+            <div class="gf-leg-item"><div class="gf-leg-dot" style="background:#c9a84c"></div>Công trình xanh<span class="gf-leg-pct">18%</span></div>
+            <div class="gf-leg-item"><div class="gf-leg-dot" style="background:#23a85c"></div>Giao thông xanh<span class="gf-leg-pct">15%</span></div>
+          </div>
+        </div>
+        <div class="gf-bottom">
+          <div class="gf-total-label">Tổng dư nợ tín dụng xanh 2025</div>
+          <div class="gf-total-val">3,000 tỷ VNĐ</div>
+        </div>
+      </div>
+      <div class="gf-products reveal-r">
+        <div class="gf-product">
+          <div class="gf-prod-icon">☀️</div>
+          <div>
+            <div class="gf-prod-name">Vay năng lượng tái tạo</div>
+            <div class="gf-prod-desc">Tài trợ dự án điện mặt trời, điện gió và điện sinh khối cho doanh nghiệp và hộ gia đình. Thời hạn lên đến 15 năm.</div>
+            <div class="gf-prod-rate">Từ 7.2%/năm · Ưu đãi -0.5% so thông thường</div>
+          </div>
+        </div>
+        <div class="gf-product">
+          <div class="gf-prod-icon">🏢</div>
+          <div>
+            <div class="gf-prod-name">Vay công trình xanh</div>
+            <div class="gf-prod-desc">Tài trợ xây dựng, cải tạo công trình đạt chứng chỉ LEED, LOTUS hoặc EDGE. Hạn mức linh hoạt, giải ngân theo tiến độ.</div>
+            <div class="gf-prod-rate">Từ 7.9%/năm · Miễn phí thẩm định môi trường</div>
+          </div>
+        </div>
+        <div class="gf-product">
+          <div class="gf-prod-icon">🌾</div>
+          <div>
+            <div class="gf-prod-name">Tín dụng nông nghiệp xanh</div>
+            <div class="gf-prod-desc">Vốn lưu động và đầu tư cho hộ nông dân áp dụng VietGAP, GlobalGAP hoặc canh tác hữu cơ. Thủ tục đơn giản, giải ngân 3 ngày.</div>
+            <div class="gf-prod-rate">Từ 6.5%/năm · Hỗ trợ chứng nhận miễn phí</div>
+          </div>
+        </div>
+        <div class="gf-product">
+          <div class="gf-prod-icon">🚗</div>
+          <div>
+            <div class="gf-prod-name">Vay xe điện &amp; giao thông xanh</div>
+            <div class="gf-prod-desc">Tài trợ mua xe điện cá nhân và đội xe điện doanh nghiệp. Hạn mức đến 90% giá trị, thời hạn 7 năm.</div>
+            <div class="gf-prod-rate">Từ 7.5%/năm · Tặng sạc thông minh miễn phí</div>
+          </div>
+        </div>
+        <div class="gf-product">
+          <div class="gf-prod-icon">📋</div>
+          <div>
+            <div class="gf-prod-name">Trái phiếu xanh &amp; xã hội</div>
+            <div class="gf-prod-desc">Phân phối trái phiếu xanh có gắn nhãn cho nhà đầu tư cá nhân và tổ chức, lãi suất từ 6.5–7.2%/năm, kỳ hạn 3–5 năm.</div>
+            <div class="gf-prod-rate">6.5–7.2%/năm · Chứng nhận CBI</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ XÃ HỘI ══ -->
+<section class="section section-alt sec-anchor" id="xa-hoi">
+  <div class="sec-inner">
+    <div class="reveal">
+      <div class="sec-eyebrow">Social Impact</div>
+      <h2 class="sec-title">Tác động xã hội</h2>
+      <p class="sec-desc">DOB Bank tin rằng ngân hàng phát triển bền vững khi cộng đồng phát triển cùng. Mỗi năm chúng tôi đầu tư hàng trăm tỷ đồng vào giáo dục, tài chính toàn diện và bình đẳng cơ hội.</p>
+    </div>
+    <div class="social-grid reveal">
+      <div class="social-card">
+        <div class="social-card-top">
+          <div class="social-card-big-icon">📚</div>
+          <div class="social-card-title">Giáo dục &amp; Học bổng</div>
+        </div>
+        <div class="social-card-body">
+          <div class="social-stat-row"><span class="social-stat-num">5,000+</span><span class="social-stat-label">suất học bổng</span></div>
+          <div class="social-desc">Quỹ DOB Futures trao học bổng cho học sinh, sinh viên nghèo vượt khó trên toàn quốc từ 2015 đến nay. Tổng giá trị hơn 50 tỷ đồng.</div>
+          <div class="social-tag">Mục tiêu: 10,000 suất 2026–2030</div>
+        </div>
+      </div>
+      <div class="social-card">
+        <div class="social-card-top">
+          <div class="social-card-big-icon">🏦</div>
+          <div class="social-card-title">Tài chính Toàn diện</div>
+        </div>
+        <div class="social-card-body">
+          <div class="social-stat-row"><span class="social-stat-num">200K</span><span class="social-stat-label">hộ gia đình phục vụ</span></div>
+          <div class="social-desc">Mạng lưới đại lý và ứng dụng di động mang dịch vụ ngân hàng đến tận vùng sâu vùng xa, hỗ trợ tiếp cận vốn cho nông dân và tiểu thương.</div>
+          <div class="social-tag">Mục tiêu: 500K hộ đến 2030</div>
+        </div>
+      </div>
+      <div class="social-card">
+        <div class="social-card-top">
+          <div class="social-card-big-icon">👩‍💼</div>
+          <div class="social-card-title">Bình đẳng giới &amp; Nhân tài</div>
+        </div>
+        <div class="social-card-body">
+          <div class="social-stat-row"><span class="social-stat-num">52%</span><span class="social-stat-label">nhân viên nữ</span></div>
+          <div class="social-desc">40% vị trí lãnh đạo cấp cao là phụ nữ. Chương trình DOB Next Generation đào tạo 300 nhà lãnh đạo trẻ mỗi năm, 50% là nữ.</div>
+          <div class="social-tag">Mục tiêu: 45% lãnh đạo nữ 2028</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ QUẢN TRỊ ══ -->
+<section class="section sec-anchor" id="quan-tri">
+  <div class="sec-inner">
+    <div class="reveal">
+      <div class="sec-eyebrow">Corporate Governance</div>
+      <h2 class="sec-title">Quản trị doanh nghiệp</h2>
+      <p class="sec-desc">Quản trị tốt là nền tảng của mọi cam kết ESG. DOB Bank xây dựng hệ thống kiểm soát nội bộ và minh bạch thông tin đạt chuẩn quốc tế.</p>
+    </div>
+    <div class="gov-grid">
+      <div class="gov-principles reveal-l">
+        <div class="gov-principle">
+          <div class="gov-prin-icon">🏛️</div>
+          <div>
+            <div class="gov-prin-title">Ủy ban ESG độc lập trực thuộc HĐQT</div>
+            <div class="gov-prin-body">Họp hàng quý, công bố toàn bộ biên bản. 3/5 thành viên là độc lập bên ngoài. Chủ tịch Ủy ban báo cáo trực tiếp trước Đại hội cổ đông.</div>
+          </div>
+        </div>
+        <div class="gov-principle">
+          <div class="gov-prin-icon">🎯</div>
+          <div>
+            <div class="gov-prin-title">KPI bền vững gắn với thưởng điều hành</div>
+            <div class="gov-prin-body">30% thưởng hàng năm của Ban điều hành phụ thuộc vào KPI ESG bao gồm carbon, tín dụng xanh, tỷ lệ nữ lãnh đạo và điểm hài lòng nhân viên.</div>
+          </div>
+        </div>
+        <div class="gov-principle">
+          <div class="gov-prin-icon">📊</div>
+          <div>
+            <div class="gov-prin-title">Công bố thông tin theo chuẩn quốc tế</div>
+            <div class="gov-prin-body">Báo cáo ESG hàng năm theo GRI Standards (Core), TCFD và SASB Financial Sector. Kiểm toán độc lập bởi PricewaterhouseCoopers kể từ 2024.</div>
+          </div>
+        </div>
+        <div class="gov-principle">
+          <div class="gov-prin-icon">🔍</div>
+          <div>
+            <div class="gov-prin-title">Thẩm định rủi ro môi trường &amp; xã hội (ESRS)</div>
+            <div class="gov-prin-body">Bắt buộc đánh giá rủi ro E&amp;S với 100% khoản vay trên 50 tỷ đồng kể từ 2024. Danh sách loại trừ và hạn chế ngành rõ ràng theo khung ESMS.</div>
+          </div>
+        </div>
+        <div class="gov-principle">
+          <div class="gov-prin-icon">🚫</div>
+          <div>
+            <div class="gov-prin-title">Zero tolerance – Chống tham nhũng</div>
+            <div class="gov-prin-body">Chính sách không khoan nhượng với tham nhũng, hối lộ và xung đột lợi ích. Đường dây báo cáo nội bộ ẩn danh 24/7 với bảo vệ người tố cáo.</div>
+          </div>
+        </div>
+      </div>
+      <div class="gov-ratings reveal-r">
+        <div class="gov-rating-card">
+          <div class="gov-rating-name">Xếp hạng tín nhiệm · FiinRatings 2025</div>
+          <div class="gov-rating-row"><span class="gov-rating-val">AA+</span><span class="gov-rating-desc">Triển vọng Ổn định<br/>Tháng 11/2025</span></div>
+          <div class="gov-rating-bar-track"><div class="gov-rating-bar" style="width:92%"></div></div>
+        </div>
+        <div class="gov-rating-card">
+          <div class="gov-rating-name">Điểm ESG · Sustainalytics 2025</div>
+          <div class="gov-rating-row"><span class="gov-rating-val">Low Risk</span><span class="gov-rating-desc">Score: 18.4<br/>Top 15% ngành</span></div>
+          <div class="gov-rating-bar-track"><div class="gov-rating-bar" style="width:85%"></div></div>
+        </div>
+        <div class="gov-rating-card">
+          <div class="gov-rating-name">ESG Score · MSCI Vietnam</div>
+          <div class="gov-rating-row"><span class="gov-rating-val" style="font-size:1.6rem">BBB</span><span class="gov-rating-desc">Average · Cải thiện từ BB<br/>năm 2023</span></div>
+          <div class="gov-rating-bar-track"><div class="gov-rating-bar" style="width:70%"></div></div>
+        </div>
+        <div class="gov-rating-card">
+          <div class="gov-rating-name">Chỉ số quản trị ASEAN · CG Scorecard</div>
+          <div class="gov-rating-row"><span class="gov-rating-val" style="font-size:1.6rem">78.5</span><span class="gov-rating-desc">/ 100 điểm<br/>Top 5 ngân hàng VN</span></div>
+          <div class="gov-rating-bar-track"><div class="gov-rating-bar" style="width:78.5%"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ BÁO CÁO ══ -->
+<section class="section section-alt sec-anchor" id="bao-cao">
+  <div class="sec-inner">
+    <div class="reveal">
+      <div class="sec-eyebrow">Tài liệu công bố</div>
+      <h2 class="sec-title">Báo cáo Bền vững &amp; ESG</h2>
+      <p class="sec-desc">Tất cả báo cáo được kiểm toán độc lập và công bố theo các chuẩn mực quốc tế nhất quán.</p>
+    </div>
+    <div class="reports-grid reveal">
+      <a href="#" class="report-card">
+        <div class="report-card-top">
+          <div class="report-year">Báo cáo thường niên ESG</div>
+          <div class="report-icon-bg">📗</div>
+          <div class="report-title">Báo cáo Phát triển Bền vững 2025</div>
+        </div>
+        <div class="report-card-body">
+          <div class="report-desc">Báo cáo tổng hợp hiệu quả ESG năm 2025 theo GRI Standards Core, TCFD và SASB. Kiểm toán bởi PwC Việt Nam.</div>
+          <div class="report-dl">📥 Tải PDF (8.4MB) →</div>
+        </div>
+      </a>
+      <a href="#" class="report-card">
+        <div class="report-card-top">
+          <div class="report-year">Lộ trình khí hậu</div>
+          <div class="report-icon-bg">🌿</div>
+          <div class="report-title">Climate Transition Plan 2024</div>
+        </div>
+        <div class="report-card-body">
+          <div class="report-desc">Kế hoạch chuyển đổi khí hậu chi tiết theo khung TCFD, bao gồm phân tích kịch bản 1.5°C và lộ trình Net Zero 2040.</div>
+          <div class="report-dl">📥 Tải PDF (5.2MB) →</div>
+        </div>
+      </a>
+      <a href="#" class="report-card">
+        <div class="report-card-top">
+          <div class="report-year">Tài chính xanh</div>
+          <div class="report-icon-bg">💚</div>
+          <div class="report-title">Green Bond Framework &amp; Impact Report 2025</div>
+        </div>
+        <div class="report-card-body">
+          <div class="report-desc">Khung phát hành và báo cáo tác động của 3,000 tỷ đồng trái phiếu xanh, chứng nhận bởi Climate Bonds Initiative (CBI).</div>
+          <div class="report-dl">📥 Tải PDF (3.8MB) →</div>
+        </div>
+      </a>
+      <a href="#" class="report-card">
+        <div class="report-card-top">
+          <div class="report-year">Chính sách tín dụng</div>
+          <div class="report-icon-bg">📋</div>
+          <div class="report-title">Khung Quản lý Rủi ro Môi trường &amp; Xã hội</div>
+        </div>
+        <div class="report-card-body">
+          <div class="report-desc">Hệ thống ESMS (Environmental &amp; Social Management System) bao gồm danh sách loại trừ, tiêu chí thẩm định và quy trình giám sát.</div>
+          <div class="report-dl">📥 Tải PDF (2.1MB) →</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA ══ -->
+<section class="esg-cta">
+  <div class="esg-cta-inner">
+    <div class="reveal">
+      <div class="sec-eyebrow light" style="justify-content:center;margin-bottom:1rem">Cùng nhau xây dựng tương lai xanh</div>
+      <h2>Đồng hành cùng DOB Bank<br/><em>trên hành trình bền vững</em></h2>
+      <p>Dù bạn là doanh nghiệp muốn tiếp cận tín dụng xanh, nhà đầu tư tìm kiếm trái phiếu bền vững hay đối tác chiến lược trong hệ sinh thái ESG – DOB Bank sẵn sàng đồng hành.</p>
+      <div class="esg-cta-btns">
+        <a href="services.html#ca-nhan" class="btn-green">Tìm hiểu tín dụng xanh</a>
+        <a href="#bao-cao" class="btn-ghost-w">Tải báo cáo ESG 2025</a>
+        <a href="shareholderb.html" class="btn-ghost-w">Thông tin nhà đầu tư</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo-name">DOB Bank</div>
+      <div class="footer-logo-sub">Ngân hàng Thương mại Cổ phần DOB</div>
+      <p class="footer-about">Cam kết Net Zero 2040. Thành viên UNEP FI Principles for Responsible Banking. Báo cáo ESG theo GRI Standards &amp; TCFD.</p>
+    </div>
+    <div class="footer-col"><h4>Bền vững</h4><ul>
+      <li><a href="#cam-ket">Cam kết ESG</a></li>
+      <li><a href="#tien-do">Tiến độ mục tiêu</a></li>
+      <li><a href="#net-zero">Net Zero 2040</a></li>
+      <li><a href="#green-finance">Tài chính Xanh</a></li>
+      <li><a href="#bao-cao">Báo cáo ESG</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Liên kết</h4><ul>
+      <li><a href="homebank.html">Trang chủ</a></li>
+      <li><a href="aboutb.html">Về chúng tôi</a></li>
+      <li><a href="shareholderb.html">Quan hệ NĐT</a></li>
+      <li><a href="newsb.html">Tin tức</a></li>
+      <li><a href="services.html">Sản phẩm</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Liên hệ ESG</h4><ul>
+      <li><a href="#">esg@dobbank.com.vn</a></li>
+      <li><a href="#">📞 1800 58 68</a></li>
+      <li><a href="#">UNEP FI Member</a></li>
+      <li><a href="#">Climate Bonds Initiative</a></li>
+      <li><a href="#">GRI Community</a></li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Ngân hàng Thương mại Cổ phần DOB. Bảo lưu mọi quyền.</p>
+    <p>Net Zero 2040 · UNEP FI · GRI · TCFD</p>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const allReveal = document.querySelectorAll('.reveal, .reveal-l, .reveal-r');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        // Animate progress bars when visible
+        e.target.querySelectorAll('.progress-bar-fill').forEach(bar => bar.classList.add('animate'));
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  allReveal.forEach(el => io.observe(el));
+
+  // Chapter nav active on scroll
+  const tabs = document.querySelectorAll('.chapter-tab');
+  const secs = ['cam-ket','tien-do','net-zero','green-finance','xa-hoi','quan-tri','bao-cao']
+    .map(id => document.getElementById(id));
+  window.addEventListener('scroll', () => {
+    let cur = 0;
+    secs.forEach((s, i) => { if (s && window.scrollY >= s.offsetTop - 200) cur = i; });
+    tabs.forEach((t, i) => t.classList.toggle('active', i === cur));
+  });
+</script>
+</body>
+</html>

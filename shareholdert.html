@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Quan hệ Cổ đông – DOBTECH (DOT)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --navy:#0A0F2C;--navy2:#0D1533;--cyan:#00D4FF;--cyan2:#0099BB;
+      --gold:#FFD166;--white:#F0F4FF;--slate:#8892B0;
+      --card:rgba(255,255,255,0.04);--border:rgba(0,212,255,0.15);
+      --glow:0 0 32px rgba(0,212,255,0.18);
+      --green:#4ADE80;--red:#F87171;
+    }
+    html{scroll-behavior:smooth}
+    body{background:var(--navy);color:var(--white);font-family:'Inter',sans-serif;font-size:16px;line-height:1.7;overflow-x:hidden}
+
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:72px;background:rgba(10,15,44,0.85);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+    .logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+    .logo-mark{width:40px;height:40px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;color:var(--navy)}
+    .logo-text{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;color:var(--white)}
+    .logo-text span{color:var(--cyan)}
+    .nav-links{display:flex;align-items:center;gap:36px;list-style:none}
+    .nav-links a{color:var(--slate);text-decoration:none;font-size:14px;font-weight:500;transition:color 0.2s}
+    .nav-links a:hover,.nav-links a.active{color:var(--cyan)}
+    .nav-cta{padding:9px 22px;border:1px solid var(--cyan);border-radius:8px;color:var(--cyan)!important}
+
+    /* HERO */
+    .page-hero{padding:160px 5% 60px;position:relative}
+    .page-hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse 60% 50% at 90% 30%,rgba(255,209,102,0.07),transparent);pointer-events:none}
+    .breadcrumb{font-size:13px;color:var(--slate);margin-bottom:24px}
+    .breadcrumb a{color:var(--cyan);text-decoration:none}
+    .breadcrumb span{margin:0 8px}
+    .page-hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(36px,5vw,64px);font-weight:700;line-height:1.1;letter-spacing:-1.5px;margin-bottom:24px;max-width:700px}
+    .page-hero h1 em{font-style:normal;color:var(--gold)}
+    .page-hero p{font-size:18px;color:var(--slate);max-width:560px;line-height:1.8}
+
+    section{padding:80px 5%}
+    .section-label{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+    .section-heading{font-family:'Space Grotesk',sans-serif;font-size:clamp(26px,3vw,42px);font-weight:700;line-height:1.15;letter-spacing:-0.8px;margin-bottom:16px}
+    .section-sub{font-size:17px;color:var(--slate);max-width:540px;margin-bottom:48px}
+
+    /* STOCK PANEL */
+    .stock-panel{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:0;overflow:hidden;margin-bottom:64px}
+    .stock-header{background:rgba(255,209,102,0.06);border-bottom:1px solid var(--border);padding:32px 40px;display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:24px}
+    .dot-badge{display:inline-flex;align-items:center;gap:10px;background:rgba(255,209,102,0.12);border:1px solid rgba(255,209,102,0.3);border-radius:8px;padding:6px 14px;margin-bottom:12px}
+    .dot-badge .ticker{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:var(--gold);letter-spacing:1px}
+    .dot-badge .exchange{font-size:12px;color:var(--slate)}
+    .stock-price{font-family:'Space Grotesk',sans-serif;font-size:60px;font-weight:700;line-height:1;color:var(--white)}
+    .stock-price sup{font-size:24px;color:var(--slate)}
+    .stock-change{font-size:20px;font-weight:600;color:var(--green);margin-top:8px}
+    .stock-date{font-size:13px;color:var(--slate);margin-top:4px}
+    .stock-metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border)}
+    .stock-metric{background:var(--navy2);padding:24px 28px}
+    .metric-label{font-size:11px;color:var(--slate);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+    .metric-val{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600}
+    .metric-sub{font-size:12px;color:var(--slate);margin-top:2px}
+
+    /* MINI CHART */
+    .chart-container{padding:32px 40px;border-top:1px solid var(--border)}
+    .chart-label{font-size:12px;color:var(--slate);margin-bottom:16px;font-weight:500}
+    .chart-svg{width:100%;height:140px}
+
+    /* FINANCIAL HIGHLIGHTS */
+    .fin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
+    .fin-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px}
+    .fin-card .fin-label{font-size:12px;color:var(--slate);letter-spacing:0.5px;margin-bottom:8px}
+    .fin-card .fin-val{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;margin-bottom:4px}
+    .fin-card .fin-delta{font-size:13px;font-weight:600}
+    .fin-card .fin-delta.up{color:var(--green)}
+    .fin-card .fin-delta.down{color:var(--red)}
+    .fin-card .fin-period{font-size:12px;color:var(--slate)}
+
+    /* REPORTS */
+    #reports{scroll-margin-top:80px}
+    .report-list{display:flex;flex-direction:column;gap:12px}
+    .report-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px;transition:border-color 0.2s}
+    .report-item:hover{border-color:var(--gold)}
+    .report-info{display:flex;align-items:center;gap:16px}
+    .report-icon{width:44px;height:44px;background:rgba(255,209,102,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+    .report-title{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;margin-bottom:2px}
+    .report-meta{font-size:13px;color:var(--slate)}
+    .btn-download{padding:8px 20px;background:transparent;border:1px solid rgba(255,209,102,0.4);border-radius:8px;color:var(--gold);font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;transition:background 0.2s}
+    .btn-download:hover{background:rgba(255,209,102,0.1)}
+
+    /* GOVERNANCE */
+    #governance{scroll-margin-top:80px}
+    .gov-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+    .gov-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:36px}
+    .gov-card h3{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;margin-bottom:16px}
+    .gov-card ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+    .gov-card li{font-size:14px;color:var(--slate);display:flex;gap:10px;align-items:flex-start}
+    .gov-card li::before{content:'→';color:var(--gold);min-width:16px;font-weight:600}
+
+    /* SHAREHOLDER STRUCTURE */
+    .shareholder-row{display:flex;align-items:center;gap:16px;margin-bottom:12px}
+    .sh-label{font-size:14px;width:200px;flex-shrink:0}
+    .sh-bar-wrap{flex:1;background:rgba(255,255,255,0.06);border-radius:4px;height:10px;overflow:hidden}
+    .sh-bar{height:100%;border-radius:4px;background:var(--cyan);transition:width 1s ease}
+    .sh-pct{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;min-width:48px;text-align:right;color:var(--cyan)}
+
+    /* CALENDAR */
+    .calendar-list{display:flex;flex-direction:column;gap:16px}
+    .cal-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 24px;display:flex;align-items:center;gap:24px}
+    .cal-date{text-align:center;min-width:64px}
+    .cal-day{font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:700;line-height:1;color:var(--gold)}
+    .cal-month{font-size:12px;color:var(--slate);text-transform:uppercase;letter-spacing:1px}
+    .cal-title{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;margin-bottom:4px}
+    .cal-desc{font-size:13px;color:var(--slate)}
+    .cal-badge{margin-left:auto;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap}
+    .cal-badge.upcoming{background:rgba(0,212,255,0.1);color:var(--cyan);border:1px solid rgba(0,212,255,0.3)}
+    .cal-badge.done{background:rgba(255,255,255,0.06);color:var(--slate)}
+
+    /* CONTACT IR */
+    #contact{scroll-margin-top:80px}
+    .ir-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:start}
+    .ir-info h3{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;margin-bottom:16px}
+    .ir-info p{color:var(--slate);margin-bottom:24px}
+    .contact-item{display:flex;gap:14px;align-items:flex-start;margin-bottom:20px}
+    .contact-icon{font-size:20px;margin-top:2px}
+    .contact-detail small{display:block;font-size:12px;color:var(--slate);margin-bottom:2px}
+    .contact-detail a{color:var(--white);text-decoration:none;font-weight:500}
+    .contact-detail a:hover{color:var(--cyan)}
+    .ir-form{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:32px}
+    .ir-form h4{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;margin-bottom:24px}
+    .form-group{margin-bottom:16px}
+    .form-group label{display:block;font-size:13px;color:var(--slate);margin-bottom:6px}
+    .form-group input,.form-group select,.form-group textarea{width:100%;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:8px;padding:12px 16px;color:var(--white);font-family:'Inter',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s}
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--cyan)}
+    .form-group textarea{resize:vertical;min-height:100px}
+    .form-group select option{background:var(--navy2)}
+
+    .btn-gold{padding:14px 32px;background:var(--gold);color:var(--navy);border:none;border-radius:10px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;cursor:pointer;width:100%;transition:transform 0.2s,box-shadow 0.2s;box-shadow:0 4px 24px rgba(255,209,102,0.35)}
+    .btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(255,209,102,0.5)}
+    .btn-primary{padding:14px 32px;background:var(--cyan);color:var(--navy);border:none;border-radius:10px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;cursor:pointer;text-decoration:none;display:inline-block;transition:transform 0.2s,box-shadow 0.2s}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,212,255,0.5)}
+    .btn-ghost{padding:14px 32px;background:transparent;color:var(--white);border:1px solid rgba(255,255,255,0.2);border-radius:10px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;cursor:pointer;text-decoration:none;display:inline-block;transition:border-color 0.2s,background 0.2s}
+    .btn-ghost:hover{border-color:var(--cyan);background:rgba(0,212,255,0.06)}
+
+    .divider{height:1px;background:var(--border);margin:0 5%}
+
+    footer{border-top:1px solid var(--border);padding:60px 5% 40px}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+    .footer-brand p{font-size:14px;color:var(--slate);margin-top:16px;max-width:260px;line-height:1.7}
+    .footer-col h5{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--white);margin-bottom:20px}
+    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+    .footer-col a{color:var(--slate);text-decoration:none;font-size:14px;transition:color 0.2s}
+    .footer-col a:hover{color:var(--cyan)}
+    .footer-bottom{border-top:1px solid var(--border);padding-top:28px;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--slate);flex-wrap:wrap;gap:12px}
+    .footer-bottom a{color:var(--slate);text-decoration:none}
+
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.6s,transform 0.6s}
+    .reveal.visible{opacity:1;transform:none}
+
+    @media(max-width:768px){
+      .nav-links{display:none}
+      .stock-metrics-grid{grid-template-columns:1fr 1fr}
+      .gov-grid,.ir-grid{grid-template-columns:1fr}
+      .footer-grid{grid-template-columns:1fr 1fr}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="hometech.html" class="logo">
+    <div class="logo-mark">DOB</div>
+    <span class="logo-text">DOB<span>TECH</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="aboutt.html">Về chúng tôi</a></li>
+    <li><a href="servicest.html">Sản phẩm & Dịch vụ</a></li>
+    <li><a href="shareholdert.html" class="active">Quan hệ cổ đông</a></li>
+    <li><a href="shareholdert.html" class="nav-cta" style="color:var(--gold)!important;border-color:var(--gold);">DOT ▲</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="breadcrumb"><a href="hometech.html">Trang chủ</a><span>/</span>Quan hệ cổ đông</div>
+  <h1>Mã cổ phiếu<br/><em>DOT</em> — HOSE</h1>
+  <p>Thông tin minh bạch, cập nhật liên tục cho cổ đông và nhà đầu tư của Công ty Cổ phần Phát triển Công nghệ DOB.</p>
+</div>
+
+<!-- STOCK PANEL -->
+<section style="padding-top:0;">
+  <div class="stock-panel reveal">
+    <div class="stock-header">
+      <div>
+        <div class="dot-badge">
+          <span class="ticker">DOT</span>
+          <span style="width:1px;height:16px;background:var(--border);display:inline-block;"></span>
+          <span class="exchange">HOSE · VNINDEX</span>
+        </div>
+        <div class="stock-price">48.200<sup> đ</sup></div>
+        <div class="stock-change">▲ +1.400 (+2,99%)</div>
+        <div class="stock-date">Phiên ngày 09/06/2026 · Đóng cửa 15:00 ICT</div>
+      </div>
+      <div>
+        <!-- Sparkline SVG -->
+        <svg width="260" height="80" viewBox="0 0 260 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#4ADE80" stop-opacity="0.3"/>
+              <stop offset="100%" stop-color="#4ADE80" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path d="M0,60 L20,55 L40,58 L60,48 L80,52 L100,42 L120,38 L140,44 L160,32 L180,28 L200,22 L220,18 L240,14 L260,10"
+            stroke="#4ADE80" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M0,60 L20,55 L40,58 L60,48 L80,52 L100,42 L120,38 L140,44 L160,32 L180,28 L200,22 L220,18 L240,14 L260,10 L260,80 L0,80Z"
+            fill="url(#sparkGrad)"/>
+        </svg>
+        <div style="font-size:12px;color:var(--slate);margin-top:4px;text-align:right">6 tháng gần nhất</div>
+      </div>
+    </div>
+    <div class="stock-metrics-grid">
+      <div class="stock-metric">
+        <div class="metric-label">Vốn hóa</div>
+        <div class="metric-val">4.820 tỷ đ</div>
+        <div class="metric-sub">~192 triệu USD</div>
+      </div>
+      <div class="stock-metric">
+        <div class="metric-label">Khối lượng</div>
+        <div class="metric-val">2.340.000</div>
+        <div class="metric-sub">CP khớp lệnh hôm nay</div>
+      </div>
+      <div class="stock-metric">
+        <div class="metric-label">P/E Ratio</div>
+        <div class="metric-val">18,4×</div>
+        <div class="metric-sub">TTM earnings</div>
+      </div>
+      <div class="stock-metric">
+        <div class="metric-label">52W Range</div>
+        <div class="metric-val">31.500 – 51.200</div>
+        <div class="metric-sub">đồng/cổ phiếu</div>
+      </div>
+    </div>
+    <div class="chart-container">
+      <div class="chart-label">Biến động giá cổ phiếu DOT — 12 tháng</div>
+      <svg class="chart-svg" viewBox="0 0 900 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#00D4FF" stop-opacity="0.2"/>
+            <stop offset="100%" stop-color="#00D4FF" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <!-- Grid lines -->
+        <line x1="0" y1="35" x2="900" y2="35" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <line x1="0" y1="70" x2="900" y2="70" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <line x1="0" y1="105" x2="900" y2="105" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <!-- Price line -->
+        <path d="M0,110 L75,108 L150,100 L225,95 L300,90 L375,85 L450,78 L525,72 L600,60 L675,52 L750,42 L825,30 L900,22"
+          stroke="#00D4FF" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M0,110 L75,108 L150,100 L225,95 L300,90 L375,85 L450,78 L525,72 L600,60 L675,52 L750,42 L825,30 L900,22 L900,140 L0,140Z"
+          fill="url(#areaGrad)"/>
+        <!-- Labels -->
+        <text x="0" y="130" font-family="Inter,sans-serif" font-size="10" fill="rgba(136,146,176,0.7)">T6/2025</text>
+        <text x="200" y="130" font-family="Inter,sans-serif" font-size="10" fill="rgba(136,146,176,0.7)">T9/2025</text>
+        <text x="430" y="130" font-family="Inter,sans-serif" font-size="10" fill="rgba(136,146,176,0.7)">T12/2025</text>
+        <text x="640" y="130" font-family="Inter,sans-serif" font-size="10" fill="rgba(136,146,176,0.7)">T3/2026</text>
+        <text x="840" y="130" font-family="Inter,sans-serif" font-size="10" fill="rgba(136,146,176,0.7)">T6/2026</text>
+        <!-- Price labels -->
+        <text x="860" y="26" font-family="Space Grotesk,sans-serif" font-size="11" fill="#4ADE80" font-weight="600">48.200</text>
+        <text x="860" y="114" font-family="Space Grotesk,sans-serif" font-size="11" fill="rgba(136,146,176,0.7)">31.500</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- FINANCIAL HIGHLIGHTS -->
+  <div class="section-label reveal">Kết quả kinh doanh</div>
+  <div class="section-heading reveal">Tài chính nổi bật<br/>năm 2025</div>
+  <div class="fin-grid reveal">
+    <div class="fin-card">
+      <div class="fin-label">Doanh thu thuần</div>
+      <div class="fin-val">3.241 tỷ</div>
+      <div class="fin-delta up">▲ +38,2% so với 2024</div>
+      <div class="fin-period">đồng</div>
+    </div>
+    <div class="fin-card">
+      <div class="fin-label">Lợi nhuận sau thuế</div>
+      <div class="fin-val">262 tỷ</div>
+      <div class="fin-delta up">▲ +51,4% so với 2024</div>
+      <div class="fin-period">đồng</div>
+    </div>
+    <div class="fin-card">
+      <div class="fin-label">EPS (Lợi nhuận/CP)</div>
+      <div class="fin-val">2.618 đ</div>
+      <div class="fin-delta up">▲ +47,6% so với 2024</div>
+      <div class="fin-period">đồng/cổ phiếu</div>
+    </div>
+    <div class="fin-card">
+      <div class="fin-label">Tổng tài sản</div>
+      <div class="fin-val">8.940 tỷ</div>
+      <div class="fin-delta up">▲ +22,1% so với 2024</div>
+      <div class="fin-period">đồng</div>
+    </div>
+    <div class="fin-card">
+      <div class="fin-label">ROE</div>
+      <div class="fin-val">19,4%</div>
+      <div class="fin-delta up">▲ +3,2 pp so với 2024</div>
+      <div class="fin-period">tỷ suất lợi nhuận vốn chủ</div>
+    </div>
+    <div class="fin-card">
+      <div class="fin-label">Cổ tức 2025</div>
+      <div class="fin-val">1.500 đ</div>
+      <div class="fin-delta up">Tiền mặt · Chi ngày 15/03/2026</div>
+      <div class="fin-period">đồng/cổ phiếu</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SHAREHOLDER STRUCTURE -->
+<section>
+  <div class="section-label reveal">Cơ cấu sở hữu</div>
+  <div class="section-heading reveal">Cổ đông lớn</div>
+  <div class="reveal" style="max-width:600px;">
+    <div class="shareholder-row">
+      <div class="sh-label">Ban lãnh đạo & sáng lập</div>
+      <div class="sh-bar-wrap"><div class="sh-bar" style="width:34.5%;background:var(--cyan)"></div></div>
+      <div class="sh-pct" style="color:var(--cyan)">34,5%</div>
+    </div>
+    <div class="shareholder-row">
+      <div class="sh-label">Quỹ đầu tư chiến lược</div>
+      <div class="sh-bar-wrap"><div class="sh-bar" style="width:22.8%;background:var(--gold)"></div></div>
+      <div class="sh-pct" style="color:var(--gold)">22,8%</div>
+    </div>
+    <div class="shareholder-row">
+      <div class="sh-label">Nhà đầu tư nước ngoài</div>
+      <div class="sh-bar-wrap"><div class="sh-bar" style="width:18.2%;background:#A78BFA"></div></div>
+      <div class="sh-pct" style="color:#A78BFA">18,2%</div>
+    </div>
+    <div class="shareholder-row">
+      <div class="sh-label">Quỹ nhà nước (SCIC)</div>
+      <div class="sh-bar-wrap"><div class="sh-bar" style="width:10.5%;background:#4ADE80"></div></div>
+      <div class="sh-pct" style="color:#4ADE80">10,5%</div>
+    </div>
+    <div class="shareholder-row">
+      <div class="sh-label">Cổ đông tự do (public)</div>
+      <div class="sh-bar-wrap"><div class="sh-bar" style="width:14%;background:var(--slate)"></div></div>
+      <div class="sh-pct" style="color:var(--slate)">14,0%</div>
+    </div>
+    <div style="font-size:12px;color:var(--slate);margin-top:16px;">Tổng số cổ phiếu lưu hành: 100.000.000 CP · Mệnh giá: 10.000 đ/CP</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- REPORTS -->
+<section id="reports">
+  <div class="section-label reveal">Tài liệu</div>
+  <div class="section-heading reveal">Báo cáo & Công bố<br/>thông tin</div>
+  <div class="report-list reveal">
+    <div class="report-item">
+      <div class="report-info">
+        <div class="report-icon">📊</div>
+        <div>
+          <div class="report-title">Báo cáo tài chính hợp nhất Q1/2026</div>
+          <div class="report-meta">Đã kiểm toán · Phát hành 30/04/2026 · PDF · 4,2 MB</div>
+        </div>
+      </div>
+      <a href="#" class="btn-download">↓ Tải về</a>
+    </div>
+    <div class="report-item">
+      <div class="report-info">
+        <div class="report-icon">📋</div>
+        <div>
+          <div class="report-title">Báo cáo thường niên 2025</div>
+          <div class="report-meta">Đã kiểm toán · Phát hành 31/03/2026 · PDF · 18,7 MB</div>
+        </div>
+      </div>
+      <a href="#" class="btn-download">↓ Tải về</a>
+    </div>
+    <div class="report-item">
+      <div class="report-info">
+        <div class="report-icon">🏛️</div>
+        <div>
+          <div class="report-title">Nghị quyết ĐHCĐ thường niên 2026</div>
+          <div class="report-meta">Phát hành 25/04/2026 · PDF · 1,8 MB</div>
+        </div>
+      </div>
+      <a href="#" class="btn-download">↓ Tải về</a>
+    </div>
+    <div class="report-item">
+      <div class="report-info">
+        <div class="report-icon">📈</div>
+        <div>
+          <div class="report-title">Bản cáo bạch và Điều lệ công ty</div>
+          <div class="report-meta">Cập nhật 01/01/2026 · PDF · 9,3 MB</div>
+        </div>
+      </div>
+      <a href="#" class="btn-download">↓ Tải về</a>
+    </div>
+    <div class="report-item">
+      <div class="report-info">
+        <div class="report-icon">📰</div>
+        <div>
+          <div class="report-title">Báo cáo phát triển bền vững ESG 2025</div>
+          <div class="report-meta">Phát hành 15/04/2026 · PDF · 6,1 MB</div>
+        </div>
+      </div>
+      <a href="#" class="btn-download">↓ Tải về</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- GOVERNANCE -->
+<section id="governance">
+  <div class="section-label reveal">Quản trị</div>
+  <div class="section-heading reveal">Quản trị công ty</div>
+  <div class="gov-grid reveal">
+    <div class="gov-card">
+      <h3>🏛️ Hội đồng Quản trị</h3>
+      <ul>
+        <li>Nguyễn Văn Đức — Chủ tịch HĐQT kiêm CEO</li>
+        <li>Lê Thị Minh Châu — Thành viên điều hành</li>
+        <li>Phạm Hoàng Nam — Thành viên độc lập</li>
+        <li>Trần Bích Phương — Thành viên độc lập</li>
+        <li>Michael Tan — Thành viên đại diện quỹ đầu tư</li>
+      </ul>
+    </div>
+    <div class="gov-card">
+      <h3>🔍 Ban Kiểm soát</h3>
+      <ul>
+        <li>Ngô Thanh Tùng — Trưởng ban Kiểm soát</li>
+        <li>Đinh Thị Lan — Kiểm soát viên</li>
+        <li>Vũ Minh Khoa — Kiểm soát viên độc lập</li>
+      </ul>
+    </div>
+    <div class="gov-card">
+      <h3>📋 Chính sách cổ tức</h3>
+      <ul>
+        <li>Chi trả cổ tức tối thiểu 30% lợi nhuận sau thuế</li>
+        <li>Ưu tiên hình thức tiền mặt, xem xét cổ phiếu khi tăng trưởng cao</li>
+        <li>Thời điểm chi trả: Quý I năm tiếp theo</li>
+        <li>Cổ tức 2025: 1.500 đ/CP (chi ngày 15/03/2026)</li>
+      </ul>
+    </div>
+    <div class="gov-card">
+      <h3>🔒 Cam kết minh bạch</h3>
+      <ul>
+        <li>Công bố thông tin theo chuẩn IAS/IFRS từ 2026</li>
+        <li>Kiểm toán độc lập bởi Big4</li>
+        <li>Báo cáo quản trị và ESG hàng năm</li>
+        <li>Không giao dịch nội gián — tuân thủ nghiêm quy định UBCKNN</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CALENDAR -->
+<section>
+  <div class="section-label reveal">Lịch sự kiện</div>
+  <div class="section-heading reveal">Sự kiện dành cho<br/>nhà đầu tư 2026</div>
+  <div class="calendar-list reveal">
+    <div class="cal-item">
+      <div class="cal-date"><div class="cal-day">15</div><div class="cal-month">T3</div></div>
+      <div>
+        <div class="cal-title">Chi trả cổ tức tiền mặt 2025</div>
+        <div class="cal-desc">1.500 đ/CP · Ngày chốt danh sách: 28/02/2026</div>
+      </div>
+      <div class="cal-badge done">Đã hoàn thành</div>
+    </div>
+    <div class="cal-item">
+      <div class="cal-date"><div class="cal-day">25</div><div class="cal-month">T4</div></div>
+      <div>
+        <div class="cal-title">Đại hội cổ đông thường niên 2026</div>
+        <div class="cal-desc">Khách sạn Sofitel Saigon Plaza, TP.HCM · 08:30 ICT</div>
+      </div>
+      <div class="cal-badge done">Đã hoàn thành</div>
+    </div>
+    <div class="cal-item">
+      <div class="cal-date"><div class="cal-day">30</div><div class="cal-month">T4</div></div>
+      <div>
+        <div class="cal-title">Công bố BCTC Q1/2026</div>
+        <div class="cal-desc">Kết quả kinh doanh quý I năm 2026</div>
+      </div>
+      <div class="cal-badge done">Đã hoàn thành</div>
+    </div>
+    <div class="cal-item">
+      <div class="cal-date"><div class="cal-day">30</div><div class="cal-month">T7</div></div>
+      <div>
+        <div class="cal-title">Công bố BCTC Q2/2026</div>
+        <div class="cal-desc">Kết quả kinh doanh quý II năm 2026</div>
+      </div>
+      <div class="cal-badge upcoming">Sắp diễn ra</div>
+    </div>
+    <div class="cal-item">
+      <div class="cal-date"><div class="cal-day">12</div><div class="cal-month">T9</div></div>
+      <div>
+        <div class="cal-title">DOB Investor Day 2026</div>
+        <div class="cal-desc">Trình bày chiến lược 5 năm và ra mắt sản phẩm mới · TP.HCM & Online</div>
+      </div>
+      <div class="cal-badge upcoming">Sắp diễn ra</div>
+    </div>
+    <div class="cal-item">
+      <div class="cal-date"><div class="cal-day">30</div><div class="cal-month">T10</div></div>
+      <div>
+        <div class="cal-title">Công bố BCTC Q3/2026</div>
+        <div class="cal-desc">Kết quả kinh doanh quý III năm 2026</div>
+      </div>
+      <div class="cal-badge upcoming">Sắp diễn ra</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- IR CONTACT -->
+<section id="contact">
+  <div class="section-label reveal">Liên hệ</div>
+  <div class="section-heading reveal">Bộ phận Quan hệ<br/>Nhà đầu tư</div>
+  <div class="ir-grid reveal">
+    <div class="ir-info">
+      <p>Chúng tôi cam kết phản hồi mọi câu hỏi từ cổ đông và nhà đầu tư trong vòng 24 giờ làm việc.</p>
+      <div class="contact-item">
+        <div class="contact-icon">📧</div>
+        <div class="contact-detail">
+          <small>Email IR</small>
+          <a href="mailto:ir@dobtech.vn">ir@dobtech.vn</a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div class="contact-detail">
+          <small>Hotline nhà đầu tư</small>
+          <a href="tel:+842839123456">+84 28 3912 3456</a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🏢</div>
+        <div class="contact-detail">
+          <small>Địa chỉ trụ sở</small>
+          <span style="color:var(--white)">Tầng 28, Tòa nhà Bitexco Financial Tower<br/>2 Hải Triều, Quận 1, TP. Hồ Chí Minh</span>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🕐</div>
+        <div class="contact-detail">
+          <small>Giờ làm việc</small>
+          <span style="color:var(--white)">Thứ Hai – Thứ Sáu · 08:00 – 17:30 ICT</span>
+        </div>
+      </div>
+    </div>
+    <div class="ir-form">
+      <h4>Gửi câu hỏi cho bộ phận IR</h4>
+      <div class="form-group">
+        <label>Họ và tên</label>
+        <input type="text" placeholder="Nguyễn Văn A"/>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="email@example.com"/>
+      </div>
+      <div class="form-group">
+        <label>Loại câu hỏi</label>
+        <select>
+          <option>Thông tin cổ phiếu DOT</option>
+          <option>Báo cáo tài chính</option>
+          <option>Chính sách cổ tức</option>
+          <option>Đại hội cổ đông</option>
+          <option>Đầu tư chiến lược</option>
+          <option>Khác</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Nội dung câu hỏi</label>
+        <textarea placeholder="Câu hỏi hoặc yêu cầu của bạn..."></textarea>
+      </div>
+      <button class="btn-gold" onclick="alert('Cảm ơn bạn! Chúng tôi sẽ phản hồi trong 24 giờ làm việc.')">Gửi câu hỏi →</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="hometech.html" class="logo">
+        <div class="logo-mark">DOB</div>
+        <span class="logo-text">DOB<span>TECH</span></span>
+      </a>
+      <p>Công ty Cổ phần Phát triển Công nghệ DOB — kiến tạo hạ tầng số cho Việt Nam và Đông Nam Á.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Công ty</h5>
+      <ul>
+        <li><a href="aboutt.html">Về chúng tôi</a></li>
+        <li><a href="aboutt.html#team">Ban lãnh đạo</a></li>
+        <li><a href="#">Tuyển dụng</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Giải pháp</h5>
+      <ul>
+        <li><a href="servicest.html#fintech">Fintech</a></li>
+        <li><a href="servicest.html#chip">Chip & Bán dẫn</a></li>
+        <li><a href="servicest.html#ai">Trí tuệ Nhân tạo</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Nhà đầu tư</h5>
+      <ul>
+        <li><a href="#reports">Báo cáo tài chính</a></li>
+        <li><a href="#governance">Quản trị công ty</a></li>
+        <li><a href="#contact">Liên hệ IR</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 DOBTECH. Mã cổ phiếu: <strong style="color:var(--gold)">DOT</strong> — HOSE. Mọi thông tin trên trang chỉ mang tính tham khảo, không phải tư vấn đầu tư.</span>
+    <span><a href="#">Chính sách bảo mật</a> &nbsp;·&nbsp; <a href="#">Công bố thông tin</a></span>
+  </div>
+</footer>
+
+<script>
+const reveals=document.querySelectorAll('.reveal');
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});},{threshold:0.08});
+reveals.forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sản Phẩm Đầu Tư – DOBN CAPITAL</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Mulish:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   PRODUCTS PAGE – SCOPED STYLES
+   ============================================================ */
+.prod-page *, .prod-page *::before, .prod-page *::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --p-cream:   #faf8f4;
+  --p-warm:    #f2ede4;
+  --p-ivory:   #ede8df;
+  --p-navy:    #0d1e3d;
+  --p-navy2:   #162b52;
+  --p-gold:    #a07830;
+  --p-gold-lt: #c9a050;
+  --p-ink:     #1a1a2e;
+  --p-muted:   #7a7a8a;
+  --p-border:  #ddd8ce;
+  --p-green:   #1a6b4a;
+  --p-red:     #a0281e;
+  --p-white:   #ffffff;
+}
+
+.prod-page {
+  font-family: 'Mulish', sans-serif;
+  background: var(--p-cream);
+  color: var(--p-ink);
+  width: 100%;
+}
+
+/* ===== HERO BAND ===== */
+.p-hero {
+  background: var(--p-navy);
+  position: relative;
+  overflow: hidden;
+  padding: 72px 64px 0;
+  min-height: 420px;
+  display: flex;
+  align-items: flex-end;
+}
+
+/* geometric ornament */
+.p-hero-ornament {
+  position: absolute;
+  top: 0; right: 0;
+  width: 520px; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.p-hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 680px;
+  padding-bottom: 56px;
+}
+
+.p-hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--p-gold-lt);
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+.p-hero-eyebrow::before {
+  content: '';
+  width: 28px; height: 1px;
+  background: var(--p-gold-lt);
+}
+
+.p-hero-title {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 54px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.08;
+  margin-bottom: 20px;
+  letter-spacing: -0.5px;
+}
+.p-hero-title em {
+  font-style: italic;
+  color: var(--p-gold-lt);
+}
+
+.p-hero-desc {
+  font-size: 16px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.75;
+  max-width: 520px;
+  margin-bottom: 36px;
+  font-weight: 300;
+}
+
+.p-hero-stats {
+  display: flex;
+  gap: 48px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.p-h-stat-val {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 30px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+.p-h-stat-val sup {
+  font-size: 16px;
+  color: var(--p-gold-lt);
+  vertical-align: super;
+}
+.p-h-stat-lbl {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+/* Bottom tabs */
+.p-hero-tabs {
+  display: flex;
+  gap: 0;
+  position: relative;
+  z-index: 2;
+}
+.p-h-tab {
+  padding: 16px 32px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  border-top: none; border-left: none; border-right: none;
+  background: transparent;
+  font-family: 'Mulish', sans-serif;
+}
+.p-h-tab:hover { color: rgba(255,255,255,0.8); }
+.p-h-tab.active {
+  color: #fff;
+  border-bottom-color: var(--p-gold-lt);
+}
+
+/* ===== BODY WRAP ===== */
+.p-body {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 64px 40px;
+}
+
+/* ===== FILTER BAR ===== */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--p-border);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.filter-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.f-pill {
+  padding: 7px 18px;
+  border-radius: 24px;
+  border: 1px solid var(--p-border);
+  background: var(--p-white);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--p-muted);
+  cursor: pointer;
+  transition: all 0.18s;
+  font-family: 'Mulish', sans-serif;
+  letter-spacing: 0.3px;
+}
+.f-pill:hover  { border-color: var(--p-navy); color: var(--p-navy); }
+.f-pill.active { background: var(--p-navy); border-color: var(--p-navy); color: #fff; }
+
+.filter-sort {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--p-muted);
+}
+.sort-select {
+  padding: 7px 30px 7px 12px;
+  border: 1px solid var(--p-border);
+  border-radius: 6px;
+  background: var(--p-white);
+  font-size: 12px;
+  font-family: 'Mulish', sans-serif;
+  color: var(--p-ink);
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%237a7a8a'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+/* ===== FUND GRID ===== */
+.fund-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 64px;
+}
+@media (max-width: 1100px) { .fund-grid { grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 700px)  { .fund-grid { grid-template-columns: 1fr; } }
+
+/* FUND CARD */
+.fund-card {
+  background: var(--p-white);
+  border: 1px solid var(--p-border);
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.22s, box-shadow 0.22s;
+  position: relative;
+}
+.fund-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 48px rgba(13,30,61,0.12);
+}
+
+.fc-header {
+  padding: 28px 28px 20px;
+  border-bottom: 1px solid var(--p-border);
+  position: relative;
+}
+
+.fc-ribbon {
+  position: absolute;
+  top: 0; right: 28px;
+  padding: 4px 12px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border-radius: 0 0 8px 8px;
+}
+.ribbon-new    { background: #1a6b4a; color: #fff; }
+.ribbon-pop    { background: var(--p-gold); color: #fff; }
+.ribbon-stable { background: var(--p-navy); color: rgba(255,255,255,0.8); }
+
+.fc-icon-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.fc-icon {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+.fc-icon.equity  { background: linear-gradient(135deg, #0d1e3d, #1a4fa0); }
+.fc-icon.bond    { background: linear-gradient(135deg, #2d1b04, #8a5a14); }
+.fc-icon.balance { background: linear-gradient(135deg, #0b3d2e, #1a6b4a); }
+.fc-icon.etf     { background: linear-gradient(135deg, #2d0b3e, #7c1ab5); }
+.fc-icon.money   { background: linear-gradient(135deg, #1a1a2e, #3a3a5e); }
+.fc-icon.intl    { background: linear-gradient(135deg, #0c3045, #0e7490); }
+
+.fc-type-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 4px;
+  margin-bottom: 6px;
+  display: inline-block;
+}
+.badge-equity  { background: rgba(26,79,160,0.1); color: #1a4fa0; }
+.badge-bond    { background: rgba(160,120,48,0.12); color: var(--p-gold); }
+.badge-balance { background: rgba(26,107,74,0.1);  color: var(--p-green); }
+.badge-etf     { background: rgba(124,26,181,0.1); color: #7c1ab5; }
+.badge-money   { background: rgba(13,30,61,0.1);   color: var(--p-navy); }
+.badge-intl    { background: rgba(8,145,178,0.1);  color: #0891b2; }
+
+.fc-name {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--p-ink);
+  line-height: 1.3;
+  margin-bottom: 4px;
+}
+.fc-shortname {
+  font-size: 12px;
+  color: var(--p-muted);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* Performance row */
+.fc-perf-row {
+  display: flex;
+  gap: 0;
+  background: var(--p-cream);
+  border-bottom: 1px solid var(--p-border);
+}
+.fc-perf-cell {
+  flex: 1;
+  padding: 12px 16px;
+  border-right: 1px solid var(--p-border);
+  text-align: center;
+}
+.fc-perf-cell:last-child { border-right: none; }
+.fc-perf-lbl { font-size: 10px; color: var(--p-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; font-weight: 600; }
+.fc-perf-val { font-size: 16px; font-weight: 700; font-family: 'Libre Baskerville', serif; }
+.fc-perf-val.up { color: var(--p-green); }
+.fc-perf-val.dn { color: var(--p-red); }
+.fc-perf-val.nu { color: var(--p-ink); }
+
+/* Mini sparkline */
+.fc-spark {
+  padding: 16px 28px 0;
+  height: 70px;
+  position: relative;
+}
+
+/* Detail section */
+.fc-details {
+  padding: 16px 28px 22px;
+}
+.fc-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  font-size: 13px;
+}
+.fc-detail-row:last-child { border-bottom: none; }
+.fc-d-lbl { color: var(--p-muted); font-weight: 400; }
+.fc-d-val { font-weight: 600; color: var(--p-ink); }
+
+/* Risk meter */
+.risk-bar {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+.risk-seg {
+  width: 16px; height: 5px;
+  border-radius: 2px;
+  background: var(--p-border);
+}
+.risk-seg.filled-low    { background: var(--p-green); }
+.risk-seg.filled-mid    { background: var(--p-gold); }
+.risk-seg.filled-high   { background: var(--p-red); }
+
+/* CTA row */
+.fc-cta {
+  padding: 0 28px 24px;
+  display: flex;
+  gap: 10px;
+}
+.btn-invest {
+  flex: 1;
+  padding: 11px 0;
+  border-radius: 8px;
+  border: none;
+  background: var(--p-navy);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'Mulish', sans-serif;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: background 0.18s;
+}
+.btn-invest:hover { background: var(--p-navy2); }
+.btn-detail {
+  padding: 11px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--p-border);
+  background: transparent;
+  color: var(--p-ink);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Mulish', sans-serif;
+  cursor: pointer;
+  transition: border-color 0.18s;
+}
+.btn-detail:hover { border-color: var(--p-navy); color: var(--p-navy); }
+
+/* Featured card override */
+.fund-card.featured {
+  border-color: var(--p-gold);
+  box-shadow: 0 0 0 1px var(--p-gold);
+}
+.fund-card.featured .btn-invest {
+  background: var(--p-gold);
+}
+.fund-card.featured .btn-invest:hover {
+  background: var(--p-gold-lt);
+}
+
+/* ===== COMPARISON TABLE ===== */
+.compare-section {
+  background: var(--p-white);
+  border: 1px solid var(--p-border);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 64px;
+}
+.compare-header {
+  padding: 28px 36px 24px;
+  border-bottom: 1px solid var(--p-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.compare-title {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--p-ink);
+  margin-bottom: 4px;
+}
+.compare-sub { font-size: 13px; color: var(--p-muted); }
+
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+}
+.compare-wrap { overflow-x: auto; }
+
+.compare-table th {
+  text-align: left;
+  font-size: 11px;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--p-muted);
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--p-border);
+  background: transparent;
+  font-weight: 600;
+}
+.compare-table td {
+  padding: 16px 24px;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  font-size: 14px;
+  color: var(--p-ink);
+  text-align: left;
+}
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table tr:hover td { background: var(--p-cream); }
+
+.perf-up { color: var(--p-green); font-weight: 700; }
+.perf-dn { color: var(--p-red);   font-weight: 700; }
+
+.star-rating { color: var(--p-gold); font-size: 13px; }
+
+/* ===== HOW TO INVEST ===== */
+.how-section {
+  margin-bottom: 64px;
+}
+.how-title {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--p-ink);
+  margin-bottom: 8px;
+}
+.how-sub {
+  font-size: 15px;
+  color: var(--p-muted);
+  margin-bottom: 40px;
+  font-weight: 300;
+}
+
+.steps-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--p-border);
+  border: 1px solid var(--p-border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+@media (max-width: 900px) { .steps-row { grid-template-columns: repeat(2,1fr); } }
+
+.step-card {
+  background: var(--p-white);
+  padding: 32px 24px;
+  position: relative;
+  transition: background 0.18s;
+}
+.step-card:hover { background: var(--p-cream); }
+
+.step-num {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--p-ivory);
+  line-height: 1;
+  margin-bottom: 16px;
+  user-select: none;
+}
+.step-icon {
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  background: var(--p-navy);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  color: #fff;
+  margin-bottom: 16px;
+}
+.step-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--p-ink);
+  margin-bottom: 8px;
+}
+.step-desc { font-size: 13px; color: var(--p-muted); line-height: 1.6; }
+.step-arrow {
+  position: absolute;
+  top: 50%; right: -14px;
+  transform: translateY(-50%);
+  width: 28px; height: 28px;
+  background: var(--p-white);
+  border: 1px solid var(--p-border);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+  color: var(--p-muted);
+  z-index: 2;
+}
+
+/* ===== CTA BANNER ===== */
+.cta-banner {
+  background: var(--p-navy);
+  border-radius: 16px;
+  padding: 56px 64px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 0;
+}
+.cta-banner::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: 100px;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  border: 60px solid rgba(255,255,255,0.04);
+  pointer-events: none;
+}
+.cta-banner::after {
+  content: '';
+  position: absolute;
+  bottom: -80px; right: -20px;
+  width: 240px; height: 240px;
+  border-radius: 50%;
+  border: 50px solid rgba(201,160,80,0.08);
+  pointer-events: none;
+}
+.cta-left { position: relative; z-index: 2; }
+.cta-kicker {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--p-gold-lt);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.cta-title {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+.cta-desc {
+  font-size: 15px;
+  color: rgba(255,255,255,0.5);
+  font-weight: 300;
+  max-width: 420px;
+  line-height: 1.7;
+}
+.cta-right {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+}
+.btn-cta-primary {
+  padding: 14px 36px;
+  border-radius: 8px;
+  border: none;
+  background: var(--p-gold);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Mulish', sans-serif;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: background 0.18s;
+  white-space: nowrap;
+}
+.btn-cta-primary:hover { background: var(--p-gold-lt); }
+.btn-cta-outline {
+  padding: 13px 36px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: transparent;
+  color: rgba(255,255,255,0.8);
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'Mulish', sans-serif;
+  cursor: pointer;
+  transition: border-color 0.18s;
+  white-space: nowrap;
+  text-align: center;
+}
+.btn-cta-outline:hover { border-color: rgba(255,255,255,0.6); color: #fff; }
+
+/* info bar */
+.p-info-bar {
+  background: var(--p-ink);
+  padding: 16px 64px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.pib-note { font-size: 12px; color: rgba(255,255,255,0.35); }
+.pib-links { display: flex; gap: 20px; }
+.pib-link  { font-size: 12px; color: rgba(255,255,255,0.38); text-decoration: none; transition: color 0.15s; }
+.pib-link:hover { color: var(--p-gold-lt); }
+
+/* section label shared */
+.p-section-label {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 32px;
+}
+.p-sl-text {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--p-navy);
+  padding-bottom: 5px;
+  border-bottom: 2px solid var(--p-gold);
+  white-space: nowrap;
+}
+.p-sl-line { flex: 1; height: 1px; background: var(--p-border); }
+</style>
+</head>
+<body>
+
+<!-- ========== HEADER (giữ nguyên từ gốc) ========== -->
+<header>
+  <div class="logo">
+    <img src="DOBN/logo.jpg" alt="DOBN Capital logo">
+  </div>
+  <nav>
+    <a href="index.html"><i class="fas fa-home"></i> Homepage</a>
+    <a href="about.html"><i class="fas fa-building"></i> About Us</a>
+    <a href="products.html" class="active"><i class="fas fa-briefcase"></i> Products</a>
+    <a href="customer.html"><i class="fas fa-user-tie"></i> Services</a>
+    <a href="stocks.html"><i class="fas fa-chart-line"></i> Stock</a>
+     <a href="shareholderc.html"><i class="fas fa-handshake"></i> Investor Relations</a>
+    <a href="esg.html"><i class="fas fa-leaf"></i> ESG</a>
+    <a href="news.html"><i class="fas fa-newspaper"></i> News</a>
+    <a href="support.html"><i class="fas fa-headset"></i> Support</a>
+  </nav>
+  <div class="auth-buttons">
+    <button class="btn-login">Đăng Nhập</button>
+    <button class="btn-register">Mở Tài Khoản</button>
+  </div>
+</header>
+
+<!-- ========== PRODUCTS PAGE ========== -->
+<div class="wrapper" style="border-radius:0;margin:0;width:100%;">
+<div class="prod-page">
+
+  <!-- HERO -->
+  <div class="p-hero">
+    <svg class="p-hero-ornament" viewBox="0 0 520 420" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" aria-hidden="true">
+      <!-- geometric grid lines -->
+      <line x1="260" y1="0" x2="520" y2="420" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+      <line x1="130" y1="0" x2="520" y2="560" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+      <line x1="390" y1="0" x2="520" y2="280" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+      <!-- circle rings -->
+      <circle cx="420" cy="160" r="140" fill="none" stroke="rgba(201,160,80,0.08)" stroke-width="1"/>
+      <circle cx="420" cy="160" r="100" fill="none" stroke="rgba(201,160,80,0.06)" stroke-width="1"/>
+      <circle cx="420" cy="160" r="60"  fill="none" stroke="rgba(201,160,80,0.1)"  stroke-width="1"/>
+      <!-- chart decoration -->
+      <polyline points="80,360 160,300 240,320 320,240 400,200 480,140 520,120"
+        fill="none" stroke="rgba(201,160,80,0.18)" stroke-width="2"/>
+      <polygon  points="80,360 160,300 240,320 320,240 400,200 480,140 520,120 520,420 80,420"
+        fill="rgba(201,160,80,0.04)"/>
+    </svg>
+
+    <div class="p-hero-content">
+      <div class="p-hero-eyebrow">Danh mục sản phẩm 2026</div>
+      <h1 class="p-hero-title">Giải pháp đầu tư<br><em>được cá nhân hóa</em></h1>
+      <p class="p-hero-desc">Từ quỹ cổ phiếu tăng trưởng đến danh mục thu nhập cố định — DOBN Capital cung cấp đầy đủ công cụ để bạn đạt được mục tiêu tài chính dài hạn.</p>
+      <div class="p-hero-stats">
+        <div>
+          <div class="p-h-stat-val">6<sup>+</sup></div>
+          <div class="p-h-stat-lbl">Sản phẩm quỹ</div>
+        </div>
+        <div>
+          <div class="p-h-stat-val">12<sup>T</sup></div>
+          <div class="p-h-stat-lbl">Tổng tài sản quản lý</div>
+        </div>
+        <div>
+          <div class="p-h-stat-val">18.4<sup>%</sup></div>
+          <div class="p-h-stat-lbl">Lợi nhuận YTD 2026</div>
+        </div>
+        <div>
+          <div class="p-h-stat-val">4,200<sup>+</sup></div>
+          <div class="p-h-stat-lbl">Nhà đầu tư</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-hero-tabs">
+      <button class="p-h-tab active" onclick="switchTab('all',this)">Tất Cả Quỹ</button>
+      <button class="p-h-tab" onclick="switchTab('equity',this)">Cổ Phiếu</button>
+      <button class="p-h-tab" onclick="switchTab('bond',this)">Trái Phiếu</button>
+      <button class="p-h-tab" onclick="switchTab('balance',this)">Cân Bằng</button>
+      <button class="p-h-tab" onclick="switchTab('specialty',this)">Chuyên Biệt</button>
+    </div>
+  </div><!-- /hero -->
+
+  <!-- PAGE BODY -->
+  <div class="p-body">
+
+    <!-- FILTER BAR -->
+    <div class="filter-bar">
+      <div class="filter-pills">
+        <button class="f-pill active" onclick="filterFund('all',this)">Tất Cả</button>
+        <button class="f-pill" onclick="filterFund('equity',this)">Cổ Phiếu</button>
+        <button class="f-pill" onclick="filterFund('bond',this)">Trái Phiếu</button>
+        <button class="f-pill" onclick="filterFund('balance',this)">Cân Bằng</button>
+        <button class="f-pill" onclick="filterFund('etf',this)">ETF</button>
+        <button class="f-pill" onclick="filterFund('money',this)">Tiền Tệ</button>
+        <button class="f-pill" onclick="filterFund('intl',this)">Quốc Tế</button>
+      </div>
+      <div class="filter-sort">
+        <span>Sắp xếp theo:</span>
+        <select class="sort-select">
+          <option>Hiệu suất cao nhất</option>
+          <option>Rủi ro thấp nhất</option>
+          <option>Phổ biến nhất</option>
+          <option>Mới nhất</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- FUND GRID -->
+    <div class="fund-grid" id="fund-grid">
+
+      <!-- CARD 1: DOBN Equity Growth -->
+      <div class="fund-card featured" data-type="equity">
+        <div class="fc-header">
+          <div class="fc-ribbon ribbon-pop">Phổ biến</div>
+          <div class="fc-icon-row">
+            <div class="fc-icon equity">📈</div>
+            <div>
+              <span class="fc-type-badge badge-equity">Cổ Phiếu</span>
+              <div class="fc-name">DOBN Equity Growth Fund</div>
+              <div class="fc-shortname">DOBN-EGF · Thành lập 2019</div>
+            </div>
+          </div>
+        </div>
+        <div class="fc-perf-row">
+          <div class="fc-perf-cell">
+            <div class="fc-perf-lbl">YTD</div>
+            <div class="fc-perf-val up">+18.4%</div>
+          </div>
+          <div class="fc-perf-cell">
+            <div class="fc-perf-lbl">1 Năm</div>
+            <div class="fc-perf-val up">+24.7%</div>
+          </div>
+          <div class="fc-perf-cell">
+            <div class="fc-perf-lbl">3 Năm</div>
+            <div class="fc-perf-val up">+67.2%</div>
+          </div>
+        </div>
+        <div class="fc-spark">
+          <svg width="100%" height="54" viewBox="0 0 280 54" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#1a6b4a" stop-opacity="0.25"/>
+                <stop offset="100%" stop-color="#1a6b4a" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <polygon points="0,42 40,38 80,35 120,28 160,22 200,18 240,10 280,4 280,54 0,54" fill="url(#g1)"/>
+            <polyline points="0,42 40,38 80,35 120,28 160,22 200,18 240,10 280,4"
+              fill="none" stroke="#1a6b4a" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="fc-details">
+          <div class="fc-detail-row">
+            <span class="fc-d-lbl">NAV hiện tại</span>
+            <span class="fc-d-val">24,850 VNĐ</span>
+          </div>
+          <div class="fc-detail-row">
+            <span class="fc-d-lbl">Đầu tư tối thiểu</span>
+            <span class="fc-d-val">1,000,000 VNĐ</span>
+          </div>
+          <div class="fc-detail-row">
+            <span class="fc-d-lbl">Phí quản lý</span>
+            <span class="fc-d-val">1.5% / năm</span>
+          </div>
+          <div class="fc-detail-row">
+            <span class="fc-d-lbl">Mức độ rủi ro</span>
+            <div class="risk-bar">
+              <div class="risk-seg filled-high"></div>
+              <div class="risk-seg filled-high"></div>
+              <div class="risk-seg filled-high"></div>
+              <div class="risk-seg filled-mid"></div>
+              <div class="risk-seg"></div>
+            </div>
+          </div>
+        </div>
+        <div class="fc-cta">
+          <button class="btn-invest">Đầu Tư Ngay</button>
+          <button class="btn-detail"><i class="fas fa-file-alt"></i></button>
+        </div>
+      </div>
+
+      <!-- CARD 2: Fixed Income -->
+      <div class="fund-card" data-type="bond">
+        <div class="fc-header">
+          <div class="fc-ribbon ribbon-stable">Ổn Định</div>
+          <div class="fc-icon-row">
+            <div class="fc-icon bond">🏦</div>
+            <div>
+              <span class="fc-type-badge badge-bond">Trái Phiếu</span>
+              <div class="fc-name">DOBN Fixed Income Fund</div>
+              <div class="fc-shortname">DOBN-FIF · Thành lập 2018</div>
+            </div>
+          </div>
+        </div>
+        <div class="fc-perf-row">
+          <div class="fc-perf-cell">
+            <div class="fc-perf-lbl">YTD</div>
+            <div class="fc-perf-val up">+8.2%</div>
+          </div>
+          <div class="fc-perf-cell">
+            <div class="fc-perf-lbl">1 Năm</div>
+            <div class="fc-perf-val up">+9.1%</div>
+          </div>
+          <div class="fc-perf-cell">
+            <div class="fc-perf-lbl">3 Năm</div>
+            <div class="fc-perf-val up">+28.4%</div>
+          </div>
+        </div>
+        <div class="fc-spark">
+          <svg width="100%" height="54" viewBox="0 0 280 54" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#a07830" stop-opacity="0.2"/>
+                <stop offset="100%" stop-color="#a07830" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <polygon points="0,44 40,42 80,40 120,36 160,33 200,30 240,26 280,22 280,54 0,54" fill="url(#g2)"/>
+            <polyline points="0,44 40,42 80,40 120,36 160,33 200,30 240,26 280,22"
+              fill="none" stroke="#a07830" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="fc-details">
+          <div class="fc-detail-row">
+            <span class="fc-d-lbl">NAV hiện tại</span>
+            <span class="fc-d-val">12,340 VNĐ</span>
+          </div>
+          <div class="fc-detail-row">
+            <span class="fc-d-lbl">Đầu tư tối thiểu</span>
+            <span class="fc-d-val">500,000 VNĐ</span>
+          </div>
+          <div class="fc-detail-row">
+            <span class="fc-d-lbl">Phí quản lý</span>
+            <span class="fc-d-val">0.8% / năm</span>
+          </div>
+          <div class="fc-detail-row">
+            <span class="fc-d-lbl">Mức độ rủi ro</span>
+            <div class="risk-bar">
+              <div class="risk-seg filled-low"></div>
+              <div class="risk-seg filled-low"></div>
+              <div class="risk-seg"></div>
+              <div class="risk-seg"></div>
+              <div class="risk-seg"></div>
+            </div>
+          </div>
+        </div>
+        <div class="fc-cta">
+          <button class="btn-invest">Đầu Tư Ngay</button>
+          <button class="btn-detail"><i class="fas fa-file-alt"></i></button>
+        </div>
+      </div>
+
+      <!-- CARD 3: Balanced -->
+      <div class="fund-card" data-type="balance">
+        <div class="fc-header">
+          <div class="fc-icon-row">
+            <div class="fc-icon balance">⚖️</div>
+            <div>
+              <span class="fc-type-badge badge-balance">Cân Bằng</span>
+              <div class="fc-name">DOBN Balanced Growth Fund</div>
+              <div class="fc-shortname">DOBN-BGF · Thành lập 2020</div>
+            </div>
+          </div>
+        </div>
+        <div class="fc-perf-row">
+          <div class="fc-perf-cell">
+            <div class="fc-perf-lbl">YTD</div>
+            <div class="fc-perf-val up">+13.1%</div>
+          </div>
+          <div class="fc-perf-cell">
+            <div class="fc-perf-lbl">1 Năm</div>
+            <div class="fc-perf-val up">+16.8%</div>
+          </div>
+          <div class="fc-perf-cell">
+            <div class="fc-perf-lbl">3 Năm</div>
+            <div class="fc-perf-val up">+48.5%</div>
+          </div>
+        </div>
+        <div class="fc-spark">
+          <svg width="100%" height="54" viewBox="0 0 280 54" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="g3" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#1a6b4a" stop-opacity="0.18"/>
+                <stop offset="100%" stop-color="#1a6b4a" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <polygon points="0,46 40,42 80,44 120,36 160,30 200,24 240,16 280,10 280,54 0,54" fill="url(#g3)"/>
+            <polyline points="0,46 40,42 80,44 120,36 160,30 200,24 240,16 280,10"
+              fill="none" stroke="#1a6b4a" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="fc-details">
+          <div class="fc-detail-row">
+            <span class="fc-d-lbl">NAV hiện tại</span>
+            <span class="fc-d-val">18,620 VNĐ</span>
+          </div>
+          <div class="fc-detail-row">
+            <span class="fc-d-lbl">Đầu tư tối thiểu</span>
+            <span class="fc-d-val">2,000,000 VNĐ</span>
+          </div>
+          <div class="fc-detail-row">
+            <span class="fc-d-lbl">Phí quản lý</span>
+            <span class="fc-d-val">1.2% / năm</span>
+          </div>
+          <div class="fc-detail-row">
+            <span class="fc-d-lbl">Mức độ rủi ro</span>
+            <div class="risk-bar">
+              <div class="risk-seg filled-mid"></div>
+              <div class="risk-seg filled-mid"></div>
+              <div class="risk-seg filled-mid"></div>
+              <div class="risk-seg"></div>
+              <div class="risk-seg"></div>
+            </div>
+          </div>
+        </div>
+        <div class="fc-cta">
+          <button class="btn-invest">Đầu Tư Ngay</button>
+          <button class="btn-detail"><i class="fas fa-file-alt"></i></button>
+        </div>
+      </div>
+
+      <!-- CARD 4: ETF -->
+      <div class="fund-card" data-type="etf">
+        <div class="fc-header">
+          <div class="fc-ribbon ribbon-new">Mới Ra Mắt</div>
+          <div class="fc-icon-row">
+            <div class="fc-icon etf">🔮</div>
+            <div>
+              <span class="fc-type-badge badge-etf">ETF</span>
+              <div class="fc-name">DOBN VN30 ESG ETF</div>
+              <div class="fc-shortname">DOBN-ETF · Ra mắt 2025</div>
+            </div>
+          </div>
+        </div>
+        <div class="fc-perf-row">
+          <div class="fc-perf-cell">
+            <div class="fc-perf-lbl">YTD</div>
+            <div class="fc-perf-val up">+15.9%</div>
+          </div>
+          <div class="fc-perf-cell">
+            <div class="fc-perf-lbl">6 Tháng</div>
+            <div class="fc-perf-val up">+11.2%</div>
+          </div>
+          <div class="fc-perf-cell">
+            <div class="fc-perf-lbl">Tracking</div>
+            <div class="fc-perf-val nu">VN30</div>
+          </div>
+        </div>
+        <div class="fc-spark">
+          <svg width="100%" height="54" viewBox="0 0 280 54" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="g4" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#7c1ab5" stop-opacity="0.2"/>
+                <stop offset="100%" stop-color="#7c1ab5" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <polygon points="0,48 40,44 80,46 120,38 160,28 200,20 240,14 280,8 280,54 0,54" fill="url(#g4)"/>
+            <polyline points="0,48 40,44 80,46 120,38 160,28 200,20 240,14 280,8"
+              fill="none" stroke="#7c1ab5" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="fc-details">
+          <div class="fc-detail-row">
+            <span class="fc-d-lbl">Giá ETF</span>
+            <span class="fc-d-val">16,420 VNĐ</span>
+          </div>
+          <div class="fc-detail-row">
+            <span class="fc-d-lbl">Lô tối thiểu</span>
+            <span class="fc-d-val">10 chứng chỉ</span>
+          </div>
+          <div class="fc-detail-row">
+            <span class="fc-d-lbl">Phí quản lý</span>
+            <span class="fc-d-val">0.45% / năm</span>
+          </div>
+          <div class="fc-detail-row">
+            <span class="fc-d-lbl">Mức độ rủi ro</span>
+            <div class="risk-bar">
+              <div class="risk-seg filled-high"></div>
+              <div class="risk-seg filled-high"></div>
+              <div class="risk-seg filled-mid"></div>
+              <div class="risk-seg"></div>
+              <div class="risk-seg"></div>
+            </div>
+          </div>
+        </div>
+        <div class="fc-cta">
+          <button class="btn-invest">Đầu Tư Ngay</button>
+          <button class="btn-detail"><i class="fas fa-file-alt"></i></button>
+        </div>
+      </div>
+
+      <!-- CARD 5: Money Market -->
+      <div class="fund-card" data-type="money">
+        <div class="fc-header">
+          <div class="fc-icon-row">
+            <div class="fc-icon money">💵</div>
+            <div>
+              <span class="fc-type-badge badge-money">Tiền Tệ</span>
+              <div class="fc-name">DOBN Money Market Fund</div>
+              <div class="fc-shortname">DOBN-MMF · Thành lập 2017</div>
+            </div>
+          </div>
+        </div>
+        <div class="fc-perf-row">
+          <div class="fc-perf-cell">
+            <div class="fc-perf-lbl">YTD</div>
+            <div class="fc-perf-val up">+5.8%</div>
+          </div>
+          <div class="fc-perf-cell">
+            <div class="fc-perf-lbl">1 Năm</div>
+            <div class="fc-perf-val up">+6.2%</div>
+          </div>
+          <div class="fc-perf-cell">
+            <div class="fc-perf-lbl">Lãi suất</div>
+            <div class="fc-perf-val nu">~5.9%</div>
+          </div>
+        </div>
+        <div class="fc-spark">
+          <svg width="100%" height="54" viewBox="0 0 280 54" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="g5" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#0d1e3d" stop-opacity="0.15"/>
+                <stop offset="100%" stop-color="#0d1e3d" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <polygon points="0,48 40,46 80,46 120,44 160,42 200,40 240,38 280,36 280,54 0,54" fill="url(#g5)"/>
+            <polyline points="0,48 40,46 80,46 120,44 160,42 200,40 240,38 280,36"
+              fill="none" stroke="#0d1e3d" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="fc-details">
+          <div class="fc-detail-row">
+            <span class="fc-d-lbl">NAV hiện tại</span>
+            <span class="fc-d-val">10,058 VNĐ</span>
+          </div>
+          <div class="fc-detail-row">
+            <span class="fc-d-lbl">Đầu tư tối thiểu</span>
+            <span class="fc-d-val">100,000 VNĐ</span>
+          </div>
+          <div class="fc-detail-row">
+            <span class="fc-d-lbl">Phí quản lý</span>
+            <span class="fc-d-val">0.3% / năm</span>
+          </div>
+          <div class="fc-detail-row">
+            <span class="fc-d-lbl">Mức độ rủi ro</span>
+            <div class="risk-bar">
+              <div class="risk-seg filled-low"></div>
+              <div class="risk-seg"></div>
+              <div class="risk-seg"></div>
+              <div class="risk-seg"></div>
+              <div class="risk-seg"></div>
+            </div>
+          </div>
+        </div>
+        <div class="fc-cta">
+          <button class="btn-invest">Đầu Tư Ngay</button>
+          <button class="btn-detail"><i class="fas fa-file-alt"></i></button>
+        </div>
+      </div>
+
+      <!-- CARD 6: International -->
+      <div class="fund-card" data-type="intl">
+        <div class="fc-header">
+          <div class="fc-ribbon ribbon-new">Mới Ra Mắt</div>
+          <div class="fc-icon-row">
+            <div class="fc-icon intl">🌏</div>
+            <div>
+              <span class="fc-type-badge badge-intl">Quốc Tế</span>
+              <div class="fc-name">DOBN ASEAN Select Fund</div>
+              <div class="fc-shortname">DOBN-ASF · Ra mắt 2026</div>
+            </div>
+          </div>
+        </div>
+        <div class="fc-perf-row">
+          <div class="fc-perf-cell">
+            <div class="fc-perf-lbl">Kể từ đầu</div>
+            <div class="fc-perf-val up">+7.4%</div>
+          </div>
+          <div class="fc-perf-cell">
+            <div class="fc-perf-lbl">3 Tháng</div>
+            <div class="fc-perf-val up">+4.1%</div>
+          </div>
+          <div class="fc-perf-cell">
+            <div class="fc-perf-lbl">Thị trường</div>
+            <div class="fc-perf-val nu">6 QG</div>
+          </div>
+        </div>
+        <div class="fc-spark">
+          <svg width="100%" height="54" viewBox="0 0 280 54" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="g6" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#0891b2" stop-opacity="0.2"/>
+                <stop offset="100%" stop-color="#0891b2" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <polygon points="0,50 40,48 80,46 120,44 160,38 200,30 240,22 280,16 280,54 0,54" fill="url(#g6)"/>
+            <polyline points="0,50 40,48 80,46 120,44 160,38 200,30 240,22 280,16"
+              fill="none" stroke="#0891b2" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="fc-details">
+          <div class="fc-detail-row">
+            <span class="fc-d-lbl">NAV hiện tại</span>
+            <span class="fc-d-val">10,740 VNĐ</span>
+          </div>
+          <div class="fc-detail-row">
+            <span class="fc-d-lbl">Đầu tư tối thiểu</span>
+            <span class="fc-d-val">5,000,000 VNĐ</span>
+          </div>
+          <div class="fc-detail-row">
+            <span class="fc-d-lbl">Phí quản lý</span>
+            <span class="fc-d-val">1.8% / năm</span>
+          </div>
+          <div class="fc-detail-row">
+            <span class="fc-d-lbl">Mức độ rủi ro</span>
+            <div class="risk-bar">
+              <div class="risk-seg filled-high"></div>
+              <div class="risk-seg filled-high"></div>
+              <div class="risk-seg filled-high"></div>
+              <div class="risk-seg filled-mid"></div>
+              <div class="risk-seg"></div>
+            </div>
+          </div>
+        </div>
+        <div class="fc-cta">
+          <button class="btn-invest">Đầu Tư Ngay</button>
+          <button class="btn-detail"><i class="fas fa-file-alt"></i></button>
+        </div>
+      </div>
+
+    </div><!-- /fund-grid -->
+
+    <!-- COMPARISON TABLE -->
+    <div class="p-section-label">
+      <div class="p-sl-text">So Sánh Tất Cả Quỹ</div>
+      <div class="p-sl-line"></div>
+    </div>
+    <div class="compare-section">
+      <div class="compare-header">
+        <div>
+          <div class="compare-title">Bảng so sánh hiệu suất</div>
+          <div class="compare-sub">Cập nhật 31/05/2026 · Lợi nhuận chưa bao gồm phí</div>
+        </div>
+        <button class="btn-detail" style="padding:9px 18px;font-size:12px;font-weight:700;">
+          <i class="fas fa-download" style="margin-right:6px;"></i>Tải PDF
+        </button>
+      </div>
+      <div class="compare-wrap">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>Quỹ</th>
+              <th>Loại</th>
+              <th>YTD</th>
+              <th>1 Năm</th>
+              <th>3 Năm</th>
+              <th>Đầu tư tối thiểu</th>
+              <th>Phí QL</th>
+              <th>Rủi ro</th>
+              <th>Xếp hạng</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-weight:700;">DOBN Equity Growth</td>
+              <td><span class="fc-type-badge badge-equity" style="font-size:10px;">Cổ Phiếu</span></td>
+              <td class="perf-up">+18.4%</td>
+              <td class="perf-up">+24.7%</td>
+              <td class="perf-up">+67.2%</td>
+              <td>1,000,000 ₫</td>
+              <td>1.5%</td>
+              <td>🟡🟡🟡🔴🔴</td>
+              <td><span class="star-rating">★★★★★</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight:700;">DOBN VN30 ESG ETF</td>
+              <td><span class="fc-type-badge badge-etf" style="font-size:10px;">ETF</span></td>
+              <td class="perf-up">+15.9%</td>
+              <td class="perf-up">—</td>
+              <td class="perf-up">—</td>
+              <td>10 chứng chỉ</td>
+              <td>0.45%</td>
+              <td>🟡🟡🟡⚪⚪</td>
+              <td><span class="star-rating">★★★★</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight:700;">DOBN Balanced Growth</td>
+              <td><span class="fc-type-badge badge-balance" style="font-size:10px;">Cân Bằng</span></td>
+              <td class="perf-up">+13.1%</td>
+              <td class="perf-up">+16.8%</td>
+              <td class="perf-up">+48.5%</td>
+              <td>2,000,000 ₫</td>
+              <td>1.2%</td>
+              <td>🟡🟡🟡⚪⚪</td>
+              <td><span class="star-rating">★★★★★</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight:700;">DOBN ASEAN Select</td>
+              <td><span class="fc-type-badge badge-intl" style="font-size:10px;">Quốc Tế</span></td>
+              <td class="perf-up">+7.4%</td>
+              <td class="perf-up">—</td>
+              <td class="perf-up">—</td>
+              <td>5,000,000 ₫</td>
+              <td>1.8%</td>
+              <td>🟡🟡🟡🔴⚪</td>
+              <td><span class="star-rating">★★★</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight:700;">DOBN Fixed Income</td>
+              <td><span class="fc-type-badge badge-bond" style="font-size:10px;">Trái Phiếu</span></td>
+              <td class="perf-up">+8.2%</td>
+              <td class="perf-up">+9.1%</td>
+              <td class="perf-up">+28.4%</td>
+              <td>500,000 ₫</td>
+              <td>0.8%</td>
+              <td>🟢🟢⚪⚪⚪</td>
+              <td><span class="star-rating">★★★★</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight:700;">DOBN Money Market</td>
+              <td><span class="fc-type-badge badge-money" style="font-size:10px;">Tiền Tệ</span></td>
+              <td class="perf-up">+5.8%</td>
+              <td class="perf-up">+6.2%</td>
+              <td class="perf-up">+18.9%</td>
+              <td>100,000 ₫</td>
+              <td>0.3%</td>
+              <td>🟢⚪⚪⚪⚪</td>
+              <td><span class="star-rating">★★★★</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div><!-- /compare -->
+
+    <!-- HOW TO INVEST -->
+    <div class="how-section">
+      <div class="p-section-label">
+        <div class="p-sl-text">Cách Thức Đầu Tư</div>
+        <div class="p-sl-line"></div>
+      </div>
+      <h2 class="how-title">Bắt đầu chỉ trong 4 bước</h2>
+      <p class="how-sub">Quy trình đơn giản, minh bạch — từ đăng ký đến sở hữu chứng chỉ quỹ trong vòng 24 giờ.</p>
+      <div class="steps-row">
+        <div class="step-card" style="position:relative;">
+          <div class="step-num">01</div>
+          <div class="step-icon"><i class="fas fa-user-plus"></i></div>
+          <div class="step-title">Mở tài khoản</div>
+          <div class="step-desc">Đăng ký trực tuyến, xác thực eKYC qua CCCD — hoàn tất trong 10 phút không cần đến quầy.</div>
+          <div class="step-arrow">›</div>
+        </div>
+        <div class="step-card" style="position:relative;">
+          <div class="step-num">02</div>
+          <div class="step-icon"><i class="fas fa-search-dollar"></i></div>
+          <div class="step-title">Chọn sản phẩm</div>
+          <div class="step-desc">Sử dụng bộ lọc thông minh để tìm quỹ phù hợp với mục tiêu, khẩu vị rủi ro và thời hạn đầu tư của bạn.</div>
+          <div class="step-arrow">›</div>
+        </div>
+        <div class="step-card" style="position:relative;">
+          <div class="step-num">03</div>
+          <div class="step-icon"><i class="fas fa-credit-card"></i></div>
+          <div class="step-title">Nạp tiền</div>
+          <div class="step-desc">Chuyển khoản qua 40+ ngân hàng, ví điện tử hoặc QR Pay — xử lý tức thì, không phí nạp.</div>
+          <div class="step-arrow">›</div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">04</div>
+          <div class="step-icon" style="background: var(--p-gold);"><i class="fas fa-chart-line"></i></div>
+          <div class="step-title">Theo dõi & sinh lời</div>
+          <div class="step-desc">Xem NAV cập nhật hàng ngày, báo cáo hiệu suất định kỳ và tái cân bằng danh mục qua app DOBN.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA BANNER -->
+    <div class="cta-banner">
+      <div class="cta-left">
+        <div class="cta-kicker">Bắt đầu hôm nay</div>
+        <div class="cta-title">Mở tài khoản miễn phí<br>trong 10 phút</div>
+        <div class="cta-desc">Đầu tư từ 100,000 VNĐ · Không phí mở tài khoản · Hoàn tiền 0.5% giao dịch đầu tiên</div>
+      </div>
+      <div class="cta-right">
+        <button class="btn-cta-primary">Mở Tài Khoản Ngay</button>
+        <button class="btn-cta-outline">Tư vấn miễn phí</button>
+      </div>
+    </div>
+
+  </div><!-- /p-body -->
+
+  <!-- INFO BAR -->
+  <div class="p-info-bar">
+    <div class="pib-note">© 2026 DOBN Capital. Đầu tư có rủi ro, lợi nhuận quá khứ không đảm bảo lợi nhuận tương lai. Được cấp phép bởi UBCKNN.</div>
+    <div class="pib-links">
+      <a class="pib-link" href="#">Bản cáo bạch</a>
+      <a class="pib-link" href="#">Quy chế quỹ</a>
+      <a class="pib-link" href="#">Chính sách phí</a>
+      <a class="pib-link" href="#">Liên hệ</a>
+    </div>
+  </div>
+
+</div><!-- /prod-page -->
+</div><!-- /wrapper -->
+
+<!-- ========== FOOTER (giữ nguyên từ gốc) ========== -->
+<footer>
+  <p>© 2026 DOBN CAPITAL - Demo Website</p>
+</footer>
+
+<script>
+/* ---- Hero tab switch ---- */
+function switchTab(type, btn) {
+  document.querySelectorAll('.p-h-tab').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  if (type !== 'specialty') filterFund(type === 'all' ? 'all' : type, null);
+}
+
+/* ---- Filter pills + fund cards ---- */
+function filterFund(type, btn) {
+  if (btn) {
+    document.querySelectorAll('.f-pill').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+  }
+  var cards = document.querySelectorAll('#fund-grid .fund-card');
+  cards.forEach(function(c){
+    if (type === 'all' || c.dataset.type === type) {
+      c.style.display = '';
+      c.style.animation = 'fadeIn 0.3s ease';
+    } else {
+      c.style.display = 'none';
+    }
+  });
+}
+
+/* ---- Pagination visual ---- */
+document.querySelectorAll('.pg-btn:not(.arrow)').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('.pg-btn').forEach(function(b){ b.classList.remove('active'); });
+    this.classList.add('active');
+  });
+});
+
+/* ---- Hover card animate sparklines ---- */
+document.querySelectorAll('.fund-card').forEach(function(card){
+  card.addEventListener('mouseenter', function(){
+    var poly = card.querySelector('polyline');
+    if (poly) poly.style.transition = 'stroke 0.3s';
+  });
+});
+</script>
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VVRTLD2GMN"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-VVRTLD2GMN');
+</script>
+
+</body>
+</html>

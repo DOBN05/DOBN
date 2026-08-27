@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Báo cáo AI | DOBN Capital</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  :root{
+    --navy:#04045d;
+    --gold:#c4922a;
+    --ink:#1a1a2e;
+    --muted:#667085;
+    --line:#e5e7eb;
+    --bg:#f7f7fb;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:Arial,'Be Vietnam Pro',sans-serif;background:var(--bg);color:var(--ink);}
+
+  .rp-header{
+    background:var(--navy);color:#fff;padding:22px 24px;display:flex;
+    align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+  }
+  .rp-brand{font-weight:700;font-size:1.1rem;letter-spacing:.02em;}
+  .rp-brand span{color:var(--gold);}
+  .rp-back{color:#fff;text-decoration:none;font-size:.85rem;opacity:.85;}
+  .rp-back:hover{opacity:1;text-decoration:underline;}
+
+  .rp-wrap{max-width:860px;margin:0 auto;padding:28px 20px 60px;}
+
+  .rp-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:24px;margin-bottom:20px;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+
+  .rp-title-row{display:flex;align-items:center;gap:14px;margin-bottom:6px;}
+  .rp-logo{width:52px;height:52px;border-radius:10px;object-fit:contain;border:1px solid var(--line);background:#fff;}
+  .rp-code{font-size:1.6rem;font-weight:800;color:var(--navy);}
+  .rp-name{color:var(--muted);font-size:.95rem;margin-top:2px;}
+
+  .rp-badge{display:inline-flex;align-items:center;gap:6px;background:#fff7e6;border:1px solid var(--gold);
+    color:#8a6314;font-size:.72rem;padding:3px 10px;border-radius:999px;margin-top:8px;}
+
+  .rp-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-top:18px;}
+  .rp-metric{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;text-align:center;}
+  .rp-metric .lbl{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;}
+  .rp-metric .val{font-size:1.05rem;font-weight:700;color:var(--navy);margin-top:2px;}
+
+  .rp-section h2{font-size:1rem;color:var(--navy);border-left:3px solid var(--gold);padding-left:10px;margin:0 0 10px;}
+  .rp-section p{line-height:1.7;font-size:.92rem;color:#333;margin:0;}
+
+  .rp-disclaimer{font-size:.75rem;color:var(--muted);border-top:1px dashed var(--line);padding-top:14px;margin-top:6px;}
+
+  .rp-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;}
+  .rp-btn{
+    border:none;border-radius:8px;padding:10px 18px;font-size:.85rem;font-weight:600;cursor:pointer;
+    display:inline-flex;align-items:center;gap:8px;text-decoration:none;
+  }
+  .rp-btn-primary{background:var(--navy);color:#fff;}
+  .rp-btn-primary:hover{background:#06066e;}
+  .rp-btn-outline{background:#fff;color:var(--navy);border:1px solid var(--navy);}
+  .rp-btn-outline:hover{background:var(--bg);}
+  .rp-btn:disabled{opacity:.5;cursor:not-allowed;}
+
+  .rp-state{text-align:center;padding:80px 20px;color:var(--muted);}
+  .rp-state i{font-size:1.6rem;margin-bottom:10px;display:block;}
+  .rp-error{color:#b42318;}
+
+  .rp-skeleton{height:14px;background:linear-gradient(90deg,#eee,#f5f5f5,#eee);background-size:200% 100%;
+    animation:shimmer 1.4s infinite;border-radius:4px;margin:6px 0;}
+  @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+</style>
+</head>
+<body>
+
+<div class="rp-header">
+  <div class="rp-brand">DOBN <span>CAPITAL</span> — Báo cáo AI</div>
+  <a href="customer.html" class="rp-back"><i class="fas fa-arrow-left"></i> Quay lại</a>
+</div>
+
+<div class="rp-wrap">
+
+  <div id="loadingState" class="rp-state">
+    <i class="fas fa-spinner fa-spin"></i>
+    Đang lấy dữ liệu &amp; tạo báo cáo phân tích...
+  </div>
+
+  <div id="errorState" class="rp-state rp-error" style="display:none">
+    <i class="fas fa-triangle-exclamation"></i>
+    <p id="errorMsg">Không thể tạo báo cáo.</p>
+    <p style="font-size:.8rem;margin-top:8px">
+      Kiểm tra backend đã chạy chưa (<code>uvicorn main:app --port 8000</code>),
+      hoặc thử lại mã khác.
+    </p>
+  </div>
+
+  <div id="reportContent" style="display:none">
+    <div class="rp-card" id="pdfArea">
+      <div class="rp-title-row">
+        <img id="rpLogo" class="rp-logo" src="" onerror="this.style.display='none'">
+        <div>
+          <div class="rp-code" id="rpCode">—</div>
+          <div class="rp-name" id="rpName">—</div>
+        </div>
+      </div>
+      <div id="rpAiBadge" class="rp-badge" style="display:none">
+        <i class="fas fa-sparkles"></i> Phân tích tự động bởi AI, dựa trên dữ liệu tài chính mới nhất
+      </div>
+
+      <div class="rp-metrics" id="rpMetrics"></div>
+
+      <div style="margin-top:22px;display:flex;flex-direction:column;gap:18px">
+        <div class="rp-section">
+          <h2>Tổng quan doanh nghiệp</h2>
+          <p id="rpOverview">—</p>
+        </div>
+        <div class="rp-section">
+          <h2>Sức khỏe tài chính</h2>
+          <p id="rpFinancial">—</p>
+        </div>
+        <div class="rp-section">
+          <h2>Nhận định định giá</h2>
+          <p id="rpValuation">—</p>
+        </div>
+        <div class="rp-section">
+          <h2>Rủi ro cần lưu ý</h2>
+          <p id="rpRisks">—</p>
+        </div>
+        <div class="rp-section">
+          <h2>Tổng kết</h2>
+          <p id="rpOutlook">—</p>
+        </div>
+      </div>
+
+      <p class="rp-disclaimer">
+        Báo cáo này được tạo tự động dựa trên dữ liệu tài chính công khai và mô hình AI,
+        chỉ mang tính chất tham khảo, KHÔNG phải khuyến nghị đầu tư chính thức từ DOBN Capital.
+        Nhà đầu tư cần tự đánh giá và chịu trách nhiệm với quyết định của mình.
+      </p>
+    </div>
+
+    <div class="rp-actions">
+      <button class="rp-btn rp-btn-primary" id="btnDownload" onclick="downloadReportPDF()">
+        <i class="fas fa-download"></i> Tải PDF
+      </button>
+      <a class="rp-btn rp-btn-outline" href="javascript:location.reload()">
+        <i class="fas fa-rotate"></i> Làm mới báo cáo
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const API_BASE = window.DOBN_API_BASE || "http://localhost:8000";
+
+function getCodeFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  return (params.get("code") || "").toUpperCase().trim();
+}
+
+function fmtMetric(val) {
+  if (val === null || val === undefined || Number.isNaN(val)) return "—";
+  if (typeof val === "number") {
+    return val >= 1000 ? val.toLocaleString("vi-VN") : val.toFixed(2);
+  }
+  return String(val);
+}
+
+async function loadReport() {
+  const code = getCodeFromURL();
+  if (!code) {
+    showError("Thiếu mã cổ phiếu trong URL. Ví dụ: report.html?code=VCB");
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_BASE}/api/report/${code}`);
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.detail || `Backend trả lỗi ${res.status}`);
+    }
+    const data = await res.json();
+    renderReport(code, data);
+  } catch (err) {
+    showError(err.message || "Không thể kết nối tới backend.");
+  }
+}
+
+function showError(msg) {
+  document.getElementById("loadingState").style.display = "none";
+  document.getElementById("errorState").style.display = "block";
+  document.getElementById("errorMsg").textContent = msg;
+}
+
+function renderReport(code, data) {
+  document.getElementById("loadingState").style.display = "none";
+  document.getElementById("reportContent").style.display = "block";
+
+  document.getElementById("rpCode").textContent = data.symbol || code;
+  document.getElementById("rpName").textContent =
+    (data.raw_data?.overview?.company_name) || (data.raw_data?.overview?.companyName) || "";
+  document.getElementById("rpLogo").src = `logo/${code}.png`;
+  document.getElementById("rpLogo").onerror = function() {
+    this.onerror = null;
+    this.src = "logo/default.png";
+  };
+
+  if (data.ai_generated) {
+    document.getElementById("rpAiBadge").style.display = "inline-flex";
+  }
+
+  document.getElementById("rpOverview").textContent = data.company_overview || "Không có dữ liệu.";
+  document.getElementById("rpFinancial").textContent = data.financial_health || "Không có dữ liệu.";
+  document.getElementById("rpValuation").textContent = data.valuation_commentary || "Không có dữ liệu.";
+  document.getElementById("rpRisks").textContent = data.risks || "Không có dữ liệu.";
+  document.getElementById("rpOutlook").textContent = data.outlook_note || "Không có dữ liệu.";
+
+  const metrics = data.key_metrics || {};
+  const labels = { pe: "P/E", pb: "P/B", roe: "ROE", roa: "ROA", eps: "EPS", last_price: "Giá gần nhất" };
+  const metricsEl = document.getElementById("rpMetrics");
+  metricsEl.innerHTML = "";
+  Object.entries(labels).forEach(([key, label]) => {
+    if (!(key in metrics)) return;
+    metricsEl.innerHTML += `
+      <div class="rp-metric">
+        <div class="lbl">${label}</div>
+        <div class="val">${fmtMetric(metrics[key])}</div>
+      </div>`;
+  });
+}
+
+async function downloadReportPDF() {
+  const { jsPDF } = window.jspdf;
+  const el = document.getElementById("pdfArea");
+  const btn = document.getElementById("btnDownload");
+  const original = btn.innerHTML;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang tạo PDF...';
+  btn.disabled = true;
+
+  try {
+    const canvas = await html2canvas(el, { scale: 2, useCORS: true, backgroundColor: "#ffffff" });
+    const pdf = new jsPDF("p", "mm", "a4");
+    const W = pdf.internal.pageSize.getWidth();
+    const H = (canvas.height * W) / canvas.width;
+    pdf.addImage(canvas.toDataURL("image/png"), "PNG", 0, 0, W, H);
+    const code = getCodeFromURL();
+    pdf.save(`DOBN_Capital_BaoCao_${code}.pdf`);
+  } catch (err) {
+    alert("Không tạo được PDF: " + err.message);
+  } finally {
+    btn.innerHTML = original;
+    btn.disabled = false;
+  }
+}
+
+loadReport();
+</script>
+</body>
+</html>

@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stock Center — DOBN CAPITAL</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Sora:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+
+<style>
+:root{
+  --ink:#09131e; --ink2:#152234;
+  --navy:#04045d; --navy2:#0a0a8a;
+  --gold:#c4922a; --gold2:#e0b55a;
+  --cream:#f7f3ec; --cream2:#ede8df;
+  --mist:#8596a8; --white:#fff;
+  --green:#16a34a; --red:#dc2626;
+  --ff-d:'Cormorant Garamond',Georgia,serif;
+  --ff-b:'Sora',sans-serif;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --r:12px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--ff-b);background:var(--cream);color:var(--ink);font-weight:300;overflow-x:hidden}
+
+/* ═══ HERO */
+.sk-hero{
+  background:linear-gradient(135deg,var(--ink) 0%,var(--ink2) 55%,#1c3060 100%);
+  padding:70px 40px 56px;
+  text-align:center;position:relative;overflow:hidden;
+}
+.sk-hero::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(196,146,42,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(196,146,42,.05) 1px,transparent 1px);
+  background-size:48px 48px;
+}
+.sk-hero::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 65% 70% at 50% 0%,rgba(196,146,42,.13),transparent);
+}
+.sk-hero .bc{font-size:10.5px;letter-spacing:3.5px;text-transform:uppercase;color:var(--gold);margin-bottom:18px;position:relative;z-index:1;}
+.sk-hero h1{font-family:var(--ff-d);font-size:clamp(2.4rem,4.5vw,4.2rem);font-weight:300;color:var(--white);line-height:1.08;margin-bottom:12px;position:relative;z-index:1;}
+.sk-hero h1 em{font-style:italic;color:var(--gold2);}
+.sk-hero p{font-size:.88rem;color:rgba(255,255,255,.5);letter-spacing:2px;text-transform:uppercase;position:relative;z-index:1;}
+.data-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(196,146,42,.15);border:1px solid rgba(196,146,42,.3);color:var(--gold2);border-radius:50px;padding:5px 14px;font-size:.72rem;font-weight:600;letter-spacing:1px;margin-top:20px;position:relative;z-index:1;}
+
+/* ═══ TAB SWITCHER */
+.tab-switcher{background:var(--white);border-bottom:1px solid rgba(9,19,30,.08);display:flex;justify-content:center;position:sticky;top:0;z-index:50;box-shadow:0 2px 12px rgba(9,19,30,.07);}
+.tsw-btn{display:flex;align-items:center;gap:10px;padding:18px 48px;font-family:var(--ff-b);font-size:.85rem;font-weight:500;color:var(--mist);border:none;background:transparent;cursor:pointer;border-bottom:3px solid transparent;transition:color .25s,border-color .25s,background .25s;letter-spacing:.5px;}
+.tsw-btn i{font-size:16px;transition:color .25s;}
+.tsw-btn:hover{color:var(--navy);background:var(--cream);}
+.tsw-btn.active{color:var(--navy);border-bottom-color:var(--gold);font-weight:600;}
+.tsw-btn.active i{color:var(--gold);}
+.tsw-count{background:rgba(196,146,42,.12);color:var(--gold);border-radius:50px;padding:2px 8px;font-size:.68rem;font-weight:700;}
+
+/* ═══ PANEL */
+.panel{display:none;padding:48px 40px;background:var(--cream);min-height:600px;}
+.panel.active{display:block;}
+.panel-inner{max-width:1200px;margin:0 auto;}
+.panel-head{margin-bottom:36px;}
+.panel-head .pt{display:inline-flex;align-items:center;gap:10px;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:10px;}
+.panel-head .pt::before{content:'';width:20px;height:1px;background:var(--gold);}
+.panel-head h2{font-family:var(--ff-d);font-size:clamp(1.8rem,3vw,2.6rem);font-weight:300;color:var(--ink);line-height:1.15;}
+.panel-head h2 em{font-style:italic;color:var(--gold);}
+
+/* ═══ FILTER BAR */
+.filter-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px;}
+.filter-chip{display:flex;align-items:center;gap:7px;padding:8px 18px;border-radius:50px;border:1.5px solid rgba(9,19,30,.12);background:var(--white);font-size:.78rem;font-weight:500;color:var(--mist);cursor:pointer;transition:all .2s;white-space:nowrap;}
+.filter-chip:hover{border-color:var(--navy);color:var(--navy);}
+.filter-chip.active{background:var(--navy);border-color:var(--navy);color:var(--white);}
+.fc-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.xbadge{display:inline-flex;align-items:center;gap:4px;margin-top:8px;padding:3px 10px;border-radius:50px;font-size:.6rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+.xbadge-HOSE{background:rgba(4,4,93,.08);color:var(--navy);border:1px solid rgba(4,4,93,.18);}
+.xbadge-HNX {background:rgba(196,146,42,.12);color:#7a4e0a;border:1px solid rgba(196,146,42,.28);}
+.xbadge-UPCOM{background:rgba(100,116,139,.1);color:#475569;border:1px solid rgba(100,116,139,.22);}
+.chip-hose.active{background:var(--navy);border-color:var(--navy);}
+.chip-hnx.active{background:#92580a;border-color:#92580a;}
+.chip-upcom.active{background:#475569;border-color:#475569;}
+.search-box{display:flex;align-items:center;gap:8px;background:var(--white);border:1.5px solid rgba(9,19,30,.12);border-radius:50px;padding:8px 18px;margin-left:auto;transition:border-color .2s;}
+.search-box:focus-within{border-color:var(--gold);}
+.search-box i{color:var(--mist);font-size:13px;}
+.search-box input{border:none;outline:none;background:transparent;font-family:var(--ff-b);font-size:.82rem;color:var(--ink);width:170px;}
+.search-box input::placeholder{color:var(--mist);}
+.grid-count{font-size:.75rem;color:var(--mist);margin-bottom:16px;}
+.grid-count strong{color:var(--navy);}
+
+/* ═══ COMPANY CARDS */
+.company-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px;}
+.company-card{background:var(--white);border:1px solid rgba(9,19,30,.08);border-radius:var(--r);padding:22px 14px;text-align:center;cursor:pointer;transition:transform .25s var(--ease),box-shadow .25s,border-color .25s;text-decoration:none;color:var(--ink);display:block;position:relative;overflow:hidden;}
+.company-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--gold),var(--gold2));transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease);}
+.company-card:hover{transform:translateY(-5px);box-shadow:0 12px 32px rgba(9,19,30,.11);border-color:rgba(196,146,42,.35);}
+.company-card:hover::before{transform:scaleX(1);}
+.company-card img{width:56px;height:56px;object-fit:contain;margin:0 auto 12px;display:block;}
+.cc-code{font-family:var(--ff-d);font-size:1.25rem;font-weight:700;color:var(--navy);}
+.cc-name{font-size:.68rem;color:var(--mist);margin-top:4px;line-height:1.45;}
+
+/* ═══ PRICE PANEL */
+.controls-card{background:var(--white);border:1px solid rgba(9,19,30,.08);border-radius:var(--r);padding:28px 32px;box-shadow:0 2px 12px rgba(9,19,30,.05);display:flex;gap:20px;flex-wrap:wrap;align-items:flex-end;margin-bottom:28px;}
+.ctrl-group{display:flex;flex-direction:column;gap:6px;}
+.ctrl-group label{font-size:.68rem;letter-spacing:1.8px;text-transform:uppercase;color:var(--mist);font-weight:500;}
+.ctrl-group select,.ctrl-group input{padding:11px 14px;border:1.5px solid rgba(9,19,30,.12);border-radius:8px;font-family:var(--ff-b);font-size:.88rem;color:var(--ink);background:var(--cream);outline:none;transition:border-color .2s,background .2s;-webkit-appearance:none;}
+.ctrl-group select:focus,.ctrl-group input:focus{border-color:var(--gold);background:var(--white);}
+.ctrl-group select{min-width:220px;}
+.ctrl-group input[type=date]{min-width:148px;}
+.btn-fetch{display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--navy),var(--navy2));color:var(--white);border:none;border-radius:8px;padding:12px 28px;font-family:var(--ff-b);font-size:.85rem;font-weight:600;letter-spacing:.5px;cursor:pointer;box-shadow:0 4px 14px rgba(4,4,93,.2);transition:transform .2s,box-shadow .2s;align-self:flex-end;}
+.btn-fetch:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(4,4,93,.3);}
+.btn-fetch:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+
+/* Data notice */
+.data-notice{display:flex;align-items:center;gap:10px;background:rgba(196,146,42,.07);border:1px solid rgba(196,146,42,.2);border-radius:8px;padding:10px 16px;font-size:.78rem;color:#7a4e0a;margin-bottom:20px;}
+.data-notice i{color:var(--gold);flex-shrink:0;}
+
+.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
+.stat-chip{background:var(--white);border:1px solid rgba(9,19,30,.07);border-radius:var(--r);padding:18px 20px;box-shadow:0 2px 8px rgba(9,19,30,.05);position:relative;overflow:hidden;}
+.stat-chip::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--gold),var(--gold2));}
+.sc-label{font-size:.67rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--mist);font-weight:500;margin-bottom:8px;}
+.sc-val{font-family:var(--ff-d);font-size:1.8rem;font-weight:400;color:var(--ink);line-height:1;}
+.sc-val.up{color:var(--green);}
+.sc-val.dn{color:var(--red);}
+
+.chart-card{background:var(--white);border:1px solid rgba(9,19,30,.07);border-radius:var(--r);padding:28px 32px;box-shadow:0 2px 12px rgba(9,19,30,.05);position:relative;overflow:hidden;}
+.chart-card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;}
+.chart-card-head h3{font-family:var(--ff-d);font-size:1.4rem;font-weight:600;color:var(--ink);}
+.chart-period-tag{font-size:.72rem;font-weight:500;letter-spacing:1px;color:var(--mist);border:1px solid rgba(9,19,30,.1);padding:4px 12px;border-radius:50px;display:flex;align-items:center;gap:6px;}
+
+.loading-overlay{position:absolute;inset:0;background:rgba(247,243,236,.88);border-radius:var(--r);display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;z-index:10;backdrop-filter:blur(3px);}
+.spinner{width:36px;height:36px;border:3px solid rgba(196,146,42,.2);border-top-color:var(--gold);border-radius:50%;animation:spin .75s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-overlay p{font-size:.8rem;color:var(--navy);font-weight:500;letter-spacing:.5px;}
+
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:72px 20px;gap:14px;color:var(--mist);}
+.es-icon{width:72px;height:72px;border-radius:50%;background:rgba(9,19,30,.04);display:flex;align-items:center;justify-content:center;font-size:28px;color:rgba(9,19,30,.2);}
+.empty-state p{font-size:.88rem;text-align:center;line-height:1.6;}
+.empty-state strong{color:var(--navy);}
+
+/* ═══ RESPONSIVE */
+@media(max-width:900px){
+  .panel{padding:32px 20px;}
+  .controls-card{flex-direction:column;}
+  .stat-strip{grid-template-columns:1fr 1fr;}
+  .company-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));}
+}
+@media(max-width:600px){
+  .tab-switcher{overflow-x:auto;}
+  .tsw-btn{padding:16px 20px;font-size:.78rem;}
+  .filter-bar{gap:8px;}
+  .search-box input{width:110px;}
+  .stat-strip{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo"><img src="DOBN/logo.jpg"></div>
+  <nav>
+    <a href="index.html"><i class="fas fa-home"></i> Homepage</a>
+    <a href="about.html"><i class="fas fa-building"></i> About Us</a>
+    <a href="products.html"><i class="fas fa-briefcase"></i> Products</a>
+    <a href="customer.html" class="highlight-nav"><i class="fas fa-user-tie"></i> Services</a>
+    <a href="stocks.html" class="active"><i class="fas fa-chart-line"></i> Stock</a>
+    <a href="esg.html"><i class="fas fa-leaf"></i> ESG</a>
+    <a href="news.html"><i class="fas fa-newspaper"></i> News</a>
+    <a href="support.html"><i class="fas fa-headset"></i> Support</a>
+  </nav>
+  <div class="auth-buttons">
+    <button class="btn-login">Đăng Nhập</button>
+    <button class="btn-register">Mở Tài Khoản</button>
+  </div>
+</header>
+
+<!-- Google tag -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VVRTLD2GMN"></script>
+<script>
+  window.dataLayer=window.dataLayer||[];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-VVRTLD2GMN');
+</script>
+
+<!-- HERO -->
+<section class="sk-hero">
+  <p class="bc"><i class="fas fa-home"></i> &nbsp;Trang Chủ &nbsp;/&nbsp; Stock Center</p>
+  <h1>Stock <em>Center</em></h1>
+  <p>Analysis Report &nbsp;·&nbsp; Price Data</p>
+  <div><div class="data-badge"><i class="fas fa-database"></i>&nbsp; Dữ liệu nội bộ — VCI / vnstock · 2021–2026</div></div>
+</section>
+
+<!-- TAB SWITCHER -->
+<div class="tab-switcher">
+  <button class="tsw-btn active" id="tabAnalysis" onclick="switchTab('analysis')">
+    <i class="fas fa-file-chart-column"></i>
+    Analysis Report
+    <span class="tsw-count" id="countBadge">—</span>
+  </button>
+  <button class="tsw-btn" id="tabPrice" onclick="switchTab('price')">
+    <i class="fas fa-chart-line"></i>
+    Stock Price
+    <span style="font-size:.72rem;color:var(--mist);margin-left:4px">Biểu đồ theo ngày / tuần / tháng</span>
+  </button>
+</div>
+
+<!-- PANEL 1: ANALYSIS -->
+<div class="panel active" id="panelAnalysis">
+  <div class="panel-inner">
+    <div class="panel-head">
+      <div class="pt"><i class="fas fa-file-chart-column"></i> Báo Cáo Phân Tích</div>
+      <h2>Danh sách <em>cổ phiếu</em> được phân tích</h2>
+    </div>
+
+    <div class="filter-bar">
+      <div class="filter-chip active" onclick="filterCards('all',this)">
+        <i class="fas fa-th" style="font-size:11px"></i> Tất cả
+      </div>
+      <div class="filter-chip chip-hose" onclick="filterCards('HOSE',this)">
+        <span class="fc-dot" style="background:var(--navy)"></span> HOSE
+      </div>
+      <div class="filter-chip chip-hnx" onclick="filterCards('HNX',this)">
+        <span class="fc-dot" style="background:#92580a"></span> HNX
+      </div>
+      <div class="filter-chip chip-upcom" onclick="filterCards('UPCOM',this)">
+        <span class="fc-dot" style="background:#475569"></span> UPCOM
+      </div>
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchInput" placeholder="Tìm mã / tên công ty..." oninput="searchCards()">
+      </div>
+    </div>
+
+    <div class="grid-count">Hiển thị <strong id="gridCount">0</strong> công ty</div>
+    <div class="company-grid" id="companyGrid"></div>
+  </div>
+</div>
+
+<!-- PANEL 2: STOCK PRICE -->
+<div class="panel" id="panelPrice">
+  <div class="panel-inner">
+    <div class="panel-head">
+      <div class="pt"><i class="fas fa-chart-line"></i> Biểu Đồ Giá</div>
+      <h2>Dữ liệu giá <em>đóng cửa</em> theo kỳ</h2>
+    </div>
+
+    <!-- Notice -->
+    <div class="data-notice">
+      <i class="fas fa-info-circle"></i>
+      Dữ liệu từ file nội bộ (VCI / vnstock) — phạm vi <strong>2021–06/2026</strong> · 39 mã cổ phiếu · Cập nhật thủ công
+    </div>
+
+    <div class="controls-card">
+      <div class="ctrl-group">
+        <label>Mã Cổ Phiếu</label>
+        <select id="stockSelect"><option value="">— Chọn công ty —</option></select>
+      </div>
+      <div class="ctrl-group">
+        <label>Từ Ngày</label>
+        <input type="date" id="fromDate">
+      </div>
+      <div class="ctrl-group">
+        <label>Đến Ngày</label>
+        <input type="date" id="toDate">
+      </div>
+      <div class="ctrl-group">
+        <label>Độ Phân Giải</label>
+        <select id="resolutionSelect" style="min-width:150px">
+          <option value="D">Theo ngày</option>
+          <option value="W">Theo tuần</option>
+          <option value="M">Theo tháng</option>
+        </select>
+      </div>
+      <button class="btn-fetch" id="fetchBtn" onclick="fetchStockData()">
+        <i class="fas fa-chart-area"></i> Xem Biểu Đồ
+      </button>
+    </div>
+
+    <div class="stat-strip" id="statRow" style="display:none">
+      <div class="stat-chip"><div class="sc-label">Giá Mới Nhất</div><div class="sc-val" id="statLast">—</div></div>
+      <div class="stat-chip"><div class="sc-label">Cao Nhất (kỳ)</div><div class="sc-val up" id="statHigh">—</div></div>
+      <div class="stat-chip"><div class="sc-label">Thấp Nhất (kỳ)</div><div class="sc-val dn" id="statLow">—</div></div>
+      <div class="stat-chip"><div class="sc-label">Thay Đổi</div><div class="sc-val" id="statChange">—</div></div>
+    </div>
+
+    <div class="chart-card">
+      <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <p>Đang tải dữ liệu...</p>
+      </div>
+      <div id="emptyState" class="empty-state">
+        <div class="es-icon"><i class="fas fa-chart-area"></i></div>
+        <p>Chọn mã cổ phiếu và khoảng thời gian,<br>sau đó nhấn <strong>Xem Biểu Đồ</strong></p>
+      </div>
+      <div id="chartArea" style="display:none">
+        <div class="chart-card-head">
+          <h3 id="chartTitle">—</h3>
+          <div class="chart-period-tag" id="chartPeriod"><i class="fas fa-calendar-alt"></i> —</div>
+        </div>
+        <canvas id="priceChart" height="95"></canvas>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer><p>© 2026 DOBN CAPITAL - Demo Website</p></footer>
+
+<!-- ═══════════════════ SCRIPTS ═══════════════════ -->
+<script>
+  // Đổi URL này khi deploy backend lên server thật
+  window.DOBN_API_BASE = "http://localhost:8000";
+</script>
+<script src="js/recommendation.js"></script>
+<script src="js/stock_data.js"></script>
+<script>
+
+const API_BASE = window.DOBN_API_BASE || "http://localhost:8000";
+
+/* ─── Tab switch ─── */
+function switchTab(tab) {
+  ['Analysis','Price'].forEach(t => {
+    document.getElementById('tab'+t).classList.toggle('active', t.toLowerCase()===tab);
+    document.getElementById('panel'+t).classList.toggle('active', t.toLowerCase()===tab);
+  });
+}
+
+/* ─── Build Analysis Grid — lấy toàn thị trường từ API, fallback pool 39 mã ─── */
+let allCards = [];
+
+async function buildGrid() {
+  let list = [];
+  try {
+    const res = await fetch(`${API_BASE}/api/stocks?limit=2000`);
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) {
+        list = data.map(s => ({
+          code: s.code,
+          name: s.name || s.code,
+          exchange: s.exchange || '',
+        }));
+      }
+    }
+  } catch (err) {
+    console.warn('[DOBN] Không gọi được /api/stocks, dùng pool tĩnh 39 mã:', err.message);
+  }
+
+  if (list.length === 0) {
+    // Fallback: cache backend rỗng hoặc chưa bật server -> dùng pool cũ
+    list = EXPANDED_STOCK_POOL.map(s => ({ code: s.code, name: s.name, exchange: s.exchange }));
+  }
+
+  const sorted = list.sort((a,b) => a.code.localeCompare(b.code));
+  allCards = sorted;
+  document.getElementById('countBadge').textContent = sorted.length;
+  renderCards(sorted);
+}
+
+const EXCHANGE_BADGE = {
+  HOSE:  '<span class="xbadge xbadge-HOSE">HOSE</span>',
+  HNX:   '<span class="xbadge xbadge-HNX">HNX</span>',
+  UPCOM: '<span class="xbadge xbadge-UPCOM">UPCOM</span>',
+};
+
+function renderCards(list) {
+  const grid = document.getElementById('companyGrid');
+  grid.innerHTML = '';
+  document.getElementById('gridCount').textContent = list.length;
+  if (list.length === 0) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:48px;color:var(--mist);font-size:.88rem">Không tìm thấy kết quả phù hợp.</div>`;
+    return;
+  }
+  list.forEach(stock => {
+    const ex    = (stock.exchange || '').toUpperCase().trim();
+    const badge = EXCHANGE_BADGE[ex] || '';
+    const a = document.createElement('a');
+    a.href        = `report.html?code=${stock.code}`;
+    a.target      = '_blank';
+    a.className   = 'company-card';
+    a.dataset.exchange = ex;
+    a.innerHTML = `
+      <img src="logo/${stock.code}.png" onerror="this.src='logo/default.png'" alt="${stock.code}">
+      <div class="cc-code">${stock.code}</div>
+      <div class="cc-name">${stock.name}</div>
+      ${badge}
+    `;
+    grid.appendChild(a);
+  });
+}
+
+function filterCards(exchange, el) {
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const filtered = allCards.filter(s => {
+    const ex          = (s.exchange || '').toUpperCase().trim();
+    const matchEx     = exchange === 'all' || ex === exchange;
+    const matchSearch = q === '' || (s.code + s.name).toLowerCase().includes(q);
+    return matchEx && matchSearch;
+  });
+  renderCards(filtered);
+}
+
+function searchCards() {
+  const activeChip = document.querySelector('.filter-chip.active');
+  const label = activeChip?.innerText.trim() || '';
+  const exMap  = {'Tất cả':'all','HOSE':'HOSE','HNX':'HNX','UPCOM':'UPCOM'};
+  const ex     = exMap[label] || 'all';
+  filterCards(ex, activeChip);
+}
+
+/* ─── Build stock select — full market, fallback pool 39 mã ─── */
+function buildSelect() {
+  const sel    = document.getElementById('stockSelect');
+  sel.innerHTML = '<option value="">— Chọn mã cổ phiếu —</option>';
+  const sorted = [...allCards].sort((a,b) => a.code.localeCompare(b.code));
+  sorted.forEach(s => {
+    const o    = document.createElement('option');
+    o.value    = s.code;
+    const ex   = (s.exchange || '').toUpperCase().trim();
+    o.textContent = `${s.code} — ${s.name}${ex ? ' ('+ex+')' : ''}`;
+    sel.appendChild(o);
+  });
+}
+
+/* ─── Lấy dữ liệu giá SỐNG cho mã ngoài pool tĩnh (toàn thị trường) ─── */
+async function fetchLiveBars(ticker, resolution) {
+  const res = await fetch(`${API_BASE}/api/stock/${ticker}`);
+  if (!res.ok) return null;
+  const data = await res.json();
+  const raw = data.price_history || [];
+  if (raw.length === 0) return null;
+
+  const sample = raw[0];
+  const dateKey = Object.keys(sample).find(k =>
+    ['time','date','tradingdate'].includes(k.toLowerCase())
+  ) || Object.keys(sample)[0];
+  const closeKey = Object.keys(sample).find(k =>
+    k.toLowerCase().includes('close')
+  ) || Object.keys(sample)[1];
+
+  let daily = raw
+    .map(r => ({ date: String(r[dateKey]).slice(0, 10), close: Number(r[closeKey]) }))
+    .filter(r => !Number.isNaN(r.close))
+    .sort((a, b) => a.date.localeCompare(b.date));
+
+  if (resolution === 'D') return daily;
+
+  // Gộp theo tuần/tháng: giữ giá đóng cửa của phiên cuối mỗi kỳ
+  const groups = {};
+  daily.forEach(r => {
+    const d = new Date(r.date + 'T00:00:00');
+    let key;
+    if (resolution === 'W') {
+      const onejan = new Date(d.getFullYear(), 0, 1);
+      const week = Math.ceil(((d - onejan) / 86400000 + onejan.getDay() + 1) / 7);
+      key = `${d.getFullYear()}-W${week}`;
+    } else {
+      key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+    }
+    groups[key] = r; // daily đã sort tăng dần -> bản ghi cuối cùng ghi đè là đúng
+  });
+  return Object.values(groups).sort((a, b) => a.date.localeCompare(b.date));
+}
+
+/* ─── Draw chart: pool tĩnh (nhanh) hoặc live toàn thị trường ─── */
+let priceChart = null;
+
+async function fetchStockData() {
+  const ticker = document.getElementById('stockSelect').value;
+  if (!ticker) { alert('Vui lòng chọn mã cổ phiếu!'); return; }
+
+  const from = document.getElementById('fromDate').value;
+  const to   = document.getElementById('toDate').value;
+  if (!from || !to) { alert('Vui lòng chọn khoảng thời gian!'); return; }
+
+  const resSel = document.getElementById('resolutionSelect').value; // D / W / M
+
+  document.getElementById('loadingOverlay').style.display = 'flex';
+  document.getElementById('emptyState').style.display     = 'none';
+  document.getElementById('chartArea').style.display      = 'none';
+  document.getElementById('statRow').style.display        = 'none';
+  document.getElementById('fetchBtn').disabled             = true;
+
+  try {
+    const datasetKey = resSel === 'M' ? 'monthly' : resSel === 'W' ? 'weekly' : 'daily';
+    let bars = STOCK_DATA[datasetKey]?.[ticker];
+    let isLiveData = false;
+
+    if (!bars || bars.length === 0) {
+      // Không có trong dữ liệu tĩnh (mã ngoài 39 mã cũ) -> lấy live từ backend
+      bars = await fetchLiveBars(ticker, resSel);
+      isLiveData = true;
+    }
+
+    if (!bars || bars.length === 0) {
+      throw new Error(`Không có dữ liệu cho mã ${ticker}. Kiểm tra backend đã bật chưa.`);
+    }
+
+    const filteredBars = bars.filter(b => b.date >= from && b.date <= to);
+    if (filteredBars.length === 0) {
+      throw new Error(`Không có dữ liệu từ ${from} đến ${to} cho mã ${ticker}.`);
+    }
+
+    const closes    = filteredBars.map(b => b.close);
+    const labels    = filteredBars.map(b => {
+      const d = new Date(b.date + 'T00:00:00');
+      return resSel === 'M'
+        ? d.toLocaleDateString('vi-VN', { month: 'short', year: 'numeric' })
+        : d.toLocaleDateString('vi-VN');
+    });
+
+    const maxC   = Math.max(...closes);
+    const minC   = Math.min(...closes);
+    const lastC  = closes[closes.length - 1];
+    const firstC = closes[0];
+    const change = ((lastC - firstC) / firstC * 100).toFixed(2);
+
+    // Dữ liệu tĩnh cũ lưu theo đơn vị nghìn VND, dữ liệu live trả về VND thật
+    const fmt = isLiveData
+      ? v => v.toLocaleString('vi-VN') + ' ₫'
+      : v => (v * 1000).toLocaleString('vi-VN') + ' ₫';
+
+    document.getElementById('statLast').textContent  = fmt(lastC);
+    document.getElementById('statHigh').textContent  = fmt(maxC);
+    document.getElementById('statLow').textContent   = fmt(minC);
+    const chEl = document.getElementById('statChange');
+    chEl.textContent = (change >= 0 ? '+' : '') + change + '%';
+    chEl.className   = 'sc-val ' + (change >= 0 ? 'up' : 'dn');
+    document.getElementById('statRow').style.display = 'grid';
+
+    const stockMeta = allCards.find(s => s.code === ticker);
+    document.getElementById('chartTitle').textContent =
+      `${ticker}${stockMeta ? ' — ' + stockMeta.name : ''}`;
+    document.getElementById('chartPeriod').innerHTML =
+      `<i class="fas fa-calendar-alt"></i> ${new Date(from+'T00:00:00').toLocaleDateString('vi-VN')} – ${new Date(to+'T00:00:00').toLocaleDateString('vi-VN')} · ${filteredBars.length} điểm dữ liệu${isLiveData ? ' · dữ liệu sống' : ''}`;
+
+    const isUp      = lastC >= firstC;
+    const lineColor = isUp ? '#16a34a' : '#dc2626';
+
+    if (priceChart) priceChart.destroy();
+    const ctx  = document.getElementById('priceChart').getContext('2d');
+    const grad = ctx.createLinearGradient(0, 0, 0, 400);
+    grad.addColorStop(0, isUp ? 'rgba(22,163,74,.13)' : 'rgba(220,38,38,.13)');
+    grad.addColorStop(1, 'rgba(255,255,255,0)');
+
+    priceChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [{
+          label: `Giá đóng cửa (${isLiveData ? 'VND' : 'nghìn VND'})`,
+          data: closes,
+          borderColor: lineColor,
+          backgroundColor: grad,
+          borderWidth: 2,
+          pointRadius: filteredBars.length > 100 ? 0 : 3,
+          pointBackgroundColor: lineColor,
+          pointHoverRadius: 5,
+          fill: true,
+          tension: .35,
+        }]
+      },
+      options: {
+        responsive: true,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: 'rgba(9,19,30,.85)',
+            titleColor: 'rgba(255,255,255,.5)',
+            bodyColor: '#fff',
+            padding: 12, cornerRadius: 8,
+            callbacks: { label: c => `  ${fmt(c.parsed.y)}` }
+          }
+        },
+        scales: {
+          x: {
+            ticks: { maxTicksLimit: 10, color: '#8596a8', font: { size: 10 } },
+            grid:  { color: 'rgba(9,19,30,.04)' }
+          },
+          y: {
+            ticks: { color: '#8596a8', font: { size: 10 }, callback: v => fmt(v).replace(' ₫','') },
+            grid: { color: 'rgba(9,19,30,.06)' }
+          }
+        }
+      }
+    });
+
+    document.getElementById('chartArea').style.display = 'block';
+
+  } catch (err) {
+    alert('⚠️ ' + err.message);
+    document.getElementById('emptyState').style.display = 'flex';
+  } finally {
+    document.getElementById('loadingOverlay').style.display = 'none';
+    document.getElementById('fetchBtn').disabled = false;
+  }
+}
+
+/* ─── Init ─── */
+window.addEventListener('DOMContentLoaded', async () => {
+  await buildGrid();   // load xong danh sách toàn thị trường (hoặc fallback) trước
+  buildSelect();        // rồi mới build dropdown từ allCards
+  setDefaultDates();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quan hệ Nhà đầu tư – DOB Bank (DBB)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy:       #04045d;
+      --navy2:      #07078a;
+      --gold:       #c9a84c;
+      --gold-light: #e8c96e;
+      --cream:      #f7f5ef;
+      --white:      #ffffff;
+      --gray:       #f0eff9;
+      --text:       #1a1a3e;
+      --muted:      #6b6b9a;
+      --green:      #0d7a3e;
+      --green-bg:   #e8f5ee;
+      --red:        #9b1111;
+      --red-bg:     #fceaea;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Be Vietnam Pro', sans-serif; background: var(--white); color: var(--text); overflow-x: hidden; }
+
+    /* ── TOPBAR ── */
+    .topbar { background: var(--navy); color: rgba(255,255,255,.6); font-size: .72rem; padding: .45rem 0; }
+    .topbar-inner { max-width: 1280px; margin: auto; padding: 0 2rem; display: flex; justify-content: space-between; }
+    .topbar a { color: inherit; text-decoration: none; } .topbar a:hover { color: var(--gold-light); }
+    .topbar-links { display: flex; gap: 1.4rem; }
+
+    /* ── NAVBAR ── */
+    nav { position: sticky; top: 0; z-index: 100; background: var(--white); box-shadow: 0 2px 20px rgba(4,4,93,.1); border-bottom: 3px solid var(--gold); }
+    .nav-inner { max-width: 1280px; margin: auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 72px; }
+    .logo-wrap { display: flex; align-items: center; gap: .9rem; text-decoration: none; }
+    .logo-wrap img { height: 46px; object-fit: contain; }
+    .logo-name { font-family: 'Playfair Display', serif; font-size: 1.55rem; font-weight: 700; color: var(--navy); }
+    .logo-sub { font-size: .62rem; color: var(--gold); letter-spacing: .14em; text-transform: uppercase; font-weight: 600; }
+    .nav-menu { display: flex; align-items: center; gap: .15rem; }
+    .nav-item { position: relative; }
+    .nav-link { display: block; padding: .55rem 1rem; font-size: .82rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--navy); text-decoration: none; border-radius: 4px; transition: background .2s, color .2s; }
+    .nav-link:hover { background: var(--gray); } .nav-link.active { color: var(--gold); }
+    .dropdown { position: absolute; top: calc(100% + 8px); left: 0; background: var(--white); border-top: 3px solid var(--gold); box-shadow: 0 12px 40px rgba(4,4,93,.15); min-width: 220px; border-radius: 0 0 8px 8px; opacity: 0; pointer-events: none; transform: translateY(-8px); transition: all .22s ease; z-index: 200; }
+    .nav-item:hover .dropdown { opacity: 1; pointer-events: auto; transform: none; }
+    .dropdown a { display: block; padding: .7rem 1.2rem; font-size: .8rem; color: var(--text); text-decoration: none; font-weight: 500; border-bottom: 1px solid var(--gray); transition: background .15s, padding-left .15s; }
+    .dropdown a:last-child { border-bottom: none; } .dropdown a:hover { background: var(--gray); padding-left: 1.6rem; }
+    .nav-cta { background: var(--navy); color: var(--white) !important; border-radius: 4px; padding: .55rem 1.3rem !important; }
+    .nav-cta:hover { background: var(--navy2) !important; }
+
+    /* ── PAGE HERO ── */
+    .page-hero { background: var(--navy); position: relative; overflow: hidden; padding: 6rem 0 4.5rem; }
+    .page-hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 55% 90% at 95% 50%, rgba(12,12,168,.45) 0%, transparent 65%),
+        radial-gradient(ellipse 35% 50% at 5% 80%, rgba(201,168,76,.1) 0%, transparent 55%),
+        linear-gradient(150deg, #020240 0%, #04045d 50%, #06067a 100%);
+    }
+    .grid-lines { position: absolute; inset: 0; opacity: .035;
+      background: repeating-linear-gradient(0deg, transparent 0, transparent 59px, rgba(255,255,255,.6) 59px, rgba(255,255,255,.6) 60px),
+                  repeating-linear-gradient(90deg, transparent 0, transparent 59px, rgba(255,255,255,.6) 59px, rgba(255,255,255,.6) 60px); }
+    .page-hero-inner { position: relative; z-index: 1; max-width: 1280px; margin: auto; padding: 0 2rem; }
+    .breadcrumb { display: flex; gap: .5rem; font-size: .75rem; color: rgba(255,255,255,.5); margin-bottom: 1.5rem; }
+    .breadcrumb a { color: var(--gold); text-decoration: none; } .breadcrumb span { color: rgba(255,255,255,.3); }
+    .page-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 4vw, 3.4rem); font-weight: 700; color: var(--white); line-height: 1.2; margin-bottom: .8rem; }
+    .page-hero h1 em { color: var(--gold-light); font-style: normal; }
+    .page-hero p { color: rgba(255,255,255,.65); font-size: .95rem; line-height: 1.75; max-width: 560px; }
+
+    /* ── STOCK HERO CARD ── */
+    .stock-hero { max-width: 1280px; margin: -2.5rem auto 0; padding: 0 2rem; position: relative; z-index: 10; }
+    .stock-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 2.2rem 2.5rem;
+      box-shadow: 0 20px 60px rgba(4,4,93,.18);
+      border: 1px solid rgba(4,4,93,.08);
+      display: grid;
+      grid-template-columns: auto 1fr auto auto;
+      gap: 2.5rem;
+      align-items: center;
+    }
+    .stock-ticker-block { }
+    .stock-ticker-label { font-size: .65rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: .3rem; }
+    .stock-ticker-code { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 700; color: var(--navy); line-height: 1; }
+    .stock-exchange { font-size: .7rem; color: var(--muted); margin-top: .2rem; }
+    .stock-divider { width: 1px; background: var(--gray); align-self: stretch; }
+    .stock-price-block { }
+    .stock-price-label { font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: .3rem; }
+    .stock-price { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; color: var(--navy); line-height: 1; }
+    .stock-price .vnd { font-size: 1.2rem; color: var(--muted); font-weight: 400; }
+    .stock-change-up { display: inline-flex; align-items: center; gap: .4rem; background: var(--green-bg); color: var(--green); font-size: .8rem; font-weight: 700; padding: .3rem .8rem; border-radius: 100px; margin-top: .5rem; }
+    .stock-change-down { display: inline-flex; align-items: center; gap: .4rem; background: var(--red-bg); color: var(--red); font-size: .8rem; font-weight: 700; padding: .3rem .8rem; border-radius: 100px; margin-top: .5rem; }
+    .stock-meta-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem 2.5rem; }
+    .stock-meta-item { }
+    .stock-meta-label { font-size: .68rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: .2rem; }
+    .stock-meta-val { font-size: .95rem; font-weight: 700; color: var(--text); }
+    .stock-update { font-size: .68rem; color: var(--muted); }
+    .stock-cta { display: flex; flex-direction: column; gap: .7rem; }
+    .btn-navy { background: var(--navy); color: var(--white); padding: .75rem 1.6rem; border-radius: 8px; font-size: .82rem; font-weight: 700; text-decoration: none; text-align: center; transition: background .2s; }
+    .btn-navy:hover { background: var(--navy2); }
+    .btn-outline-n { border: 1.5px solid var(--navy); color: var(--navy); padding: .72rem 1.6rem; border-radius: 8px; font-size: .82rem; font-weight: 700; text-decoration: none; text-align: center; transition: background .2s; }
+    .btn-outline-n:hover { background: var(--gray); }
+
+    /* ── CHART SECTION ── */
+    .chart-section { background: var(--cream); padding: 4rem 0; }
+    .chart-inner { max-width: 1280px; margin: auto; padding: 0 2rem; }
+    .chart-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; }
+    .chart-tabs { display: flex; gap: .4rem; }
+    .chart-tab { padding: .4rem .9rem; border-radius: 6px; font-size: .75rem; font-weight: 700; cursor: pointer; border: 1.5px solid transparent; transition: all .2s; color: var(--muted); }
+    .chart-tab.active, .chart-tab:hover { background: var(--navy); color: var(--white); border-color: var(--navy); }
+    .chart-wrap { background: var(--white); border-radius: 14px; padding: 1.5rem; box-shadow: 0 2px 20px rgba(4,4,93,.06); overflow: hidden; }
+    .chart-svg { width: 100%; height: 220px; display: block; }
+    .chart-legend { display: flex; gap: 1.5rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--gray); }
+    .chart-legend-item { display: flex; align-items: center; gap: .5rem; font-size: .75rem; color: var(--muted); }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+    /* ── KPI BAND ── */
+    .kpi-band { background: var(--navy); padding: 3.5rem 0; }
+    .kpi-grid { max-width: 1280px; margin: auto; padding: 0 2rem; display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; }
+    .kpi-item { text-align: center; padding: 1.5rem 1rem; border-right: 1px solid rgba(255,255,255,.1); }
+    .kpi-item:last-child { border-right: none; }
+    .kpi-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--gold-light); line-height: 1; margin-bottom: .35rem; }
+    .kpi-label { color: rgba(255,255,255,.55); font-size: .72rem; line-height: 1.4; }
+
+    /* ── SECTION COMMONS ── */
+    .sec { padding: 5rem 0; }
+    .sec-alt { background: var(--cream); }
+    .sec-inner { max-width: 1280px; margin: auto; padding: 0 2rem; }
+    .sec-tag { font-size: .7rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); margin-bottom: .6rem; display: flex; align-items: center; gap: .5rem; }
+    .sec-tag::before { content: ''; width: 22px; height: 2px; background: var(--gold); }
+    .sec-title { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 2.6vw, 2.2rem); font-weight: 700; color: var(--navy); line-height: 1.25; margin-bottom: 2rem; }
+    .sec-anchor { scroll-margin-top: 90px; }
+
+    /* ── INNER NAV ── */
+    .ir-nav { background: var(--white); border-bottom: 1px solid rgba(4,4,93,.1); position: sticky; top: 72px; z-index: 90; }
+    .ir-tabs { max-width: 1280px; margin: auto; padding: 0 2rem; display: flex; overflow-x: auto; }
+    .ir-tab { padding: 1rem 1.4rem; font-size: .8rem; font-weight: 600; color: var(--muted); text-decoration: none; border-bottom: 3px solid transparent; transition: all .2s; white-space: nowrap; }
+    .ir-tab:hover { color: var(--navy); } .ir-tab.active { color: var(--navy); border-color: var(--gold); }
+
+    /* ── FINANCIAL HIGHLIGHTS ── */
+    .fin-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 3rem; }
+    .fin-card { background: var(--white); border-radius: 14px; padding: 1.8rem; border: 1px solid rgba(4,4,93,.08); box-shadow: 0 2px 14px rgba(4,4,93,.05); transition: transform .2s, box-shadow .2s; }
+    .fin-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(4,4,93,.1); }
+    .fin-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.2rem; }
+    .fin-card-icon { width: 44px; height: 44px; border-radius: 10px; background: var(--gray); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+    .fin-change-pos { font-size: .72rem; font-weight: 700; color: var(--green); background: var(--green-bg); padding: .25rem .7rem; border-radius: 100px; }
+    .fin-change-neg { font-size: .72rem; font-weight: 700; color: var(--red); background: var(--red-bg); padding: .25rem .7rem; border-radius: 100px; }
+    .fin-label { font-size: .75rem; color: var(--muted); margin-bottom: .4rem; }
+    .fin-value { font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 700; color: var(--navy); }
+    .fin-unit { font-size: .78rem; color: var(--muted); font-weight: 400; margin-left: .3rem; }
+    .fin-period { font-size: .7rem; color: var(--muted); margin-top: .3rem; }
+
+    /* ── DOCUMENTS TABLE ── */
+    .doc-table { width: 100%; border-collapse: collapse; }
+    .doc-table thead tr { background: var(--navy); }
+    .doc-table th { padding: .9rem 1.2rem; font-size: .75rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--white); text-align: left; }
+    .doc-table tbody tr { border-bottom: 1px solid var(--gray); transition: background .15s; }
+    .doc-table tbody tr:hover { background: var(--gray); }
+    .doc-table td { padding: .9rem 1.2rem; font-size: .82rem; vertical-align: middle; }
+    .doc-table td:first-child { font-weight: 600; color: var(--navy); }
+    .doc-type-badge { font-size: .65rem; font-weight: 700; padding: .2rem .65rem; border-radius: 100px; letter-spacing: .06em; text-transform: uppercase; }
+    .badge-report { background: rgba(4,4,93,.1); color: var(--navy); }
+    .badge-audit { background: rgba(13,122,62,.12); color: var(--green); }
+    .badge-agm { background: rgba(201,168,76,.15); color: #7a5c10; }
+    .badge-prospect { background: rgba(155,17,17,.1); color: var(--red); }
+    .doc-download { display: inline-flex; align-items: center; gap: .4rem; color: var(--navy); font-size: .78rem; font-weight: 700; text-decoration: none; transition: color .2s; }
+    .doc-download:hover { color: var(--gold); }
+
+    /* ── SHAREHOLDER ── */
+    .share-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    .pie-wrap { background: var(--white); border-radius: 14px; padding: 2rem; box-shadow: 0 2px 16px rgba(4,4,93,.06); }
+    .pie-title { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--navy); font-weight: 600; margin-bottom: 1.5rem; display: flex; align-items: center; gap: .6rem; }
+    .pie-title::before { content: ''; width: 4px; height: 20px; background: var(--gold); border-radius: 2px; }
+    .pie-svg { width: 100%; max-width: 240px; display: block; margin: 0 auto 1.5rem; }
+    .pie-legend { display: flex; flex-direction: column; gap: .7rem; }
+    .pie-item { display: flex; align-items: center; justify-content: space-between; padding: .55rem .8rem; border-radius: 8px; background: var(--gray); }
+    .pie-item-left { display: flex; align-items: center; gap: .7rem; }
+    .pie-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+    .pie-name { font-size: .8rem; color: var(--text); font-weight: 500; }
+    .pie-pct { font-size: .82rem; font-weight: 700; color: var(--navy); }
+    .cap-table { display: flex; flex-direction: column; gap: 1rem; }
+    .cap-card { background: var(--white); border-radius: 12px; padding: 1.6rem; border: 1px solid rgba(4,4,93,.08); }
+    .cap-label { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: .5rem; }
+    .cap-val { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: var(--navy); }
+    .cap-unit { font-size: .78rem; color: var(--muted); margin-left: .3rem; font-weight: 400; }
+    .cap-sub { font-size: .75rem; color: var(--muted); margin-top: .3rem; }
+
+    /* ── CALENDAR ── */
+    .calendar-list { display: flex; flex-direction: column; gap: 1rem; }
+    .cal-item { display: flex; gap: 1.5rem; align-items: center; background: var(--white); border-radius: 12px; padding: 1.3rem 1.8rem; border: 1px solid rgba(4,4,93,.08); box-shadow: 0 2px 10px rgba(4,4,93,.04); transition: transform .2s, border-color .2s; }
+    .cal-item:hover { transform: translateX(4px); border-color: var(--gold); }
+    .cal-date { width: 64px; height: 64px; background: var(--navy); border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; }
+    .cal-day { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: var(--gold-light); line-height: 1; }
+    .cal-month { font-size: .6rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.6); }
+    .cal-type { font-size: .65rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); margin-bottom: .3rem; }
+    .cal-title { font-weight: 700; font-size: .9rem; color: var(--navy); margin-bottom: .2rem; }
+    .cal-sub { font-size: .78rem; color: var(--muted); }
+    .cal-status { margin-left: auto; font-size: .68rem; font-weight: 700; padding: .3rem .8rem; border-radius: 100px; white-space: nowrap; }
+    .status-upcoming { background: rgba(201,168,76,.15); color: #7a5c10; }
+    .status-done { background: var(--gray); color: var(--muted); }
+    .status-live { background: var(--green-bg); color: var(--green); }
+
+    /* ── CONTACT ── */
+    .contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .contact-card { background: var(--white); border-radius: 14px; padding: 2rem; border: 1px solid rgba(4,4,93,.08); }
+    .contact-card-icon { font-size: 1.8rem; margin-bottom: 1rem; }
+    .contact-card-title { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--navy); font-weight: 600; margin-bottom: .5rem; }
+    .contact-card-name { font-weight: 700; font-size: .88rem; color: var(--text); }
+    .contact-card-info { font-size: .8rem; color: var(--muted); margin-top: .3rem; line-height: 1.65; }
+
+    /* ── FOOTER ── */
+    footer { background: #020238; color: rgba(255,255,255,.6); padding-top: 3.5rem; }
+    .footer-grid { max-width: 1280px; margin: auto; padding: 0 2rem 2.5rem; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; }
+    .footer-logo-name { font-family: 'Playfair Display', serif; color: var(--white); font-size: 1.4rem; font-weight: 700; }
+    .footer-logo-sub { color: var(--gold); font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; margin-top: .15rem; }
+    .footer-about { margin-top: .9rem; font-size: .78rem; line-height: 1.7; max-width: 260px; }
+    .footer-col h4 { color: var(--white); font-size: .76rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; margin-bottom: .9rem; padding-bottom: .5rem; border-bottom: 1px solid rgba(255,255,255,.1); }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
+    .footer-col ul li a { color: rgba(255,255,255,.5); font-size: .78rem; text-decoration: none; transition: color .2s; }
+    .footer-col ul li a:hover { color: var(--gold-light); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.08); max-width: 1280px; margin: auto; padding: 1.1rem 2rem; display: flex; justify-content: space-between; font-size: .72rem; }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .5s ease, transform .5s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 1024px) {
+      .stock-card { grid-template-columns: 1fr 1fr; }
+      .stock-divider { display: none; }
+      .kpi-grid { grid-template-columns: repeat(3, 1fr); }
+      .fin-grid { grid-template-columns: 1fr 1fr; }
+      .share-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .stock-card { grid-template-columns: 1fr; }
+      .fin-grid { grid-template-columns: 1fr; }
+      .kpi-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-links">
+      <a href="#">Hỗ trợ: 1800 58 68</a>
+      <a href="#">Tỷ giá</a>
+      <a href="#">Chi nhánh</a>
+    </div>
+    <div class="topbar-links">
+      <a href="#">Tiếng Việt</a>
+      <a href="#">English</a>
+      <a href="#">Internet Banking</a>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-inner">
+    <a href="homebank.html" class="logo-wrap">
+      <img src="DOBN/bank.png" alt="DOB Bank" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
+      <div style="display:none"><div class="logo-name">DOB Bank</div><div class="logo-sub">Ngân hàng TMCP DOB</div></div>
+    </a>
+    <div class="nav-menu">
+      <div class="nav-item">
+        <a href="services.html" class="nav-link">Sản phẩm &amp; Dịch vụ ▾</a>
+        <div class="dropdown">
+          <a href="services.html#dinh-che">🏦 Định chế tài chính</a>
+          <a href="services.html#doanh-nghiep">🏢 Doanh nghiệp</a>
+          <a href="services.html#ca-nhan">👤 Cá nhân</a>
+          <a href="services.html#premium">💎 Cá nhân Premium</a>
+        </div>
+      </div>
+      <div class="nav-item"><a href="aboutb.html" class="nav-link">Về chúng tôi</a></div>
+      <div class="nav-item"><a href="shareholderb.html" class="nav-link active">Quan hệ nhà đầu tư</a></div>
+      <div class="nav-item"><a href="newsb.html" class="nav-link">Tin tức</a></div>
+      <div class="nav-item"><a href="esgb.html" class="nav-link">Phát triển bền vững</a></div>
+      <div class="nav-item"><a href="#" class="nav-link nav-cta">Internet Banking</a></div>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="grid-lines"></div>
+  <div class="page-hero-inner">
+    <div class="breadcrumb"><a href="homebank.html">Trang chủ</a><span>›</span><span>Quan hệ nhà đầu tư</span></div>
+    <h1>Quan hệ <em>Nhà đầu tư</em></h1>
+    <p>Thông tin tài chính, báo cáo thường niên và các công bố minh bạch dành cho cổ đông và nhà đầu tư của Ngân hàng TMCP DOB – mã chứng khoán DBB niêm yết trên HoSE.</p>
+  </div>
+</div>
+
+<!-- STOCK CARD -->
+<div class="stock-hero">
+  <div class="stock-card reveal">
+    <div class="stock-ticker-block">
+      <div class="stock-ticker-label">Mã cổ phiếu</div>
+      <div class="stock-ticker-code">DBB</div>
+      <div class="stock-exchange">HoSE · HOSE:DBB</div>
+    </div>
+    <div class="stock-divider"></div>
+    <div class="stock-price-block">
+      <div class="stock-price-label">Giá hiện tại</div>
+      <div class="stock-price">28,350 <span class="vnd">đ</span></div>
+      <span class="stock-change-up">▲ +450 (+1.61%) · 08/06/2026</span>
+    </div>
+    <div class="stock-meta-grid">
+      <div class="stock-meta-item">
+        <div class="stock-meta-label">Giá mở cửa</div>
+        <div class="stock-meta-val">27,900 đ</div>
+      </div>
+      <div class="stock-meta-item">
+        <div class="stock-meta-label">Giá cao nhất</div>
+        <div class="stock-meta-val">28,500 đ</div>
+      </div>
+      <div class="stock-meta-item">
+        <div class="stock-meta-label">Giá thấp nhất</div>
+        <div class="stock-meta-val">27,850 đ</div>
+      </div>
+      <div class="stock-meta-item">
+        <div class="stock-meta-label">Khối lượng GD</div>
+        <div class="stock-meta-val">3.42M cp</div>
+      </div>
+      <div class="stock-meta-item">
+        <div class="stock-meta-label">Vốn hóa TT</div>
+        <div class="stock-meta-val">42,525 tỷ</div>
+      </div>
+      <div class="stock-meta-item">
+        <div class="stock-meta-label">P/E · P/B</div>
+        <div class="stock-meta-val">8.2 · 1.15</div>
+      </div>
+    </div>
+    <div class="stock-cta">
+      <a href="#tai-lieu" class="btn-navy">Tải báo cáo</a>
+      <a href="#co-dong" class="btn-outline-n">Cơ cấu cổ đông</a>
+    </div>
+  </div>
+</div>
+
+<!-- CHART -->
+<div class="chart-section">
+  <div class="chart-inner">
+    <div class="chart-header reveal">
+      <div>
+        <div class="sec-tag">Biến động giá</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--navy)">Lịch sử giá cổ phiếu DBB</div>
+      </div>
+      <div class="chart-tabs">
+        <span class="chart-tab active">1T</span>
+        <span class="chart-tab">3T</span>
+        <span class="chart-tab">6T</span>
+        <span class="chart-tab">1N</span>
+        <span class="chart-tab">3N</span>
+      </div>
+    </div>
+    <div class="chart-wrap reveal">
+      <!-- SVG Line Chart -->
+      <svg class="chart-svg" viewBox="0 0 900 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#04045d" stop-opacity=".18"/>
+            <stop offset="100%" stop-color="#04045d" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#07078a"/>
+            <stop offset="100%" stop-color="#c9a84c"/>
+          </linearGradient>
+        </defs>
+        <!-- Grid lines -->
+        <line x1="0" y1="44" x2="900" y2="44" stroke="#f0eff9" stroke-width="1"/>
+        <line x1="0" y1="88" x2="900" y2="88" stroke="#f0eff9" stroke-width="1"/>
+        <line x1="0" y1="132" x2="900" y2="132" stroke="#f0eff9" stroke-width="1"/>
+        <line x1="0" y1="176" x2="900" y2="176" stroke="#f0eff9" stroke-width="1"/>
+        <!-- Y-axis labels -->
+        <text x="8" y="48" font-size="10" fill="#6b6b9a">30,000</text>
+        <text x="8" y="92" font-size="10" fill="#6b6b9a">28,500</text>
+        <text x="8" y="136" font-size="10" fill="#6b6b9a">27,000</text>
+        <text x="8" y="180" font-size="10" fill="#6b6b9a">25,500</text>
+        <!-- Area fill -->
+        <path d="M60,160 C80,155 100,148 120,140 C140,132 160,125 180,118 C200,111 220,108 240,102 C260,96 280,90 300,88 C320,86 340,90 360,95 C380,100 400,105 420,100 C440,95 460,88 480,82 C500,76 520,72 540,68 C560,64 580,60 600,58 C620,56 640,62 660,68 C680,74 700,80 720,75 C740,70 760,62 780,56 C800,50 820,46 840,44 L840,210 L60,210 Z" fill="url(#chartGrad)"/>
+        <!-- Line -->
+        <path d="M60,160 C80,155 100,148 120,140 C140,132 160,125 180,118 C200,111 220,108 240,102 C260,96 280,90 300,88 C320,86 340,90 360,95 C380,100 400,105 420,100 C440,95 460,88 480,82 C500,76 520,72 540,68 C560,64 580,60 600,58 C620,56 640,62 660,68 C680,74 700,80 720,75 C740,70 760,62 780,56 C800,50 820,46 840,44" fill="none" stroke="url(#lineGrad)" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- End dot -->
+        <circle cx="840" cy="44" r="5" fill="#c9a84c"/>
+        <circle cx="840" cy="44" r="9" fill="#c9a84c" opacity=".2"/>
+        <!-- X labels -->
+        <text x="60" y="215" font-size="10" fill="#6b6b9a" text-anchor="middle">10/05</text>
+        <text x="200" y="215" font-size="10" fill="#6b6b9a" text-anchor="middle">17/05</text>
+        <text x="360" y="215" font-size="10" fill="#6b6b9a" text-anchor="middle">24/05</text>
+        <text x="510" y="215" font-size="10" fill="#6b6b9a" text-anchor="middle">31/05</text>
+        <text x="680" y="215" font-size="10" fill="#6b6b9a" text-anchor="middle">07/06</text>
+        <text x="840" y="215" font-size="10" fill="#c9a84c" text-anchor="middle" font-weight="700">08/06</text>
+      </svg>
+      <div class="chart-legend">
+        <div class="chart-legend-item"><div class="legend-dot" style="background:var(--navy)"></div> DBB – DOB Bank</div>
+        <div class="chart-legend-item" style="margin-left:auto">Nguồn: HoSE · Cập nhật: 08/06/2026 17:00</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- KPI BAND -->
+<div class="kpi-band">
+  <div class="kpi-grid reveal">
+    <div class="kpi-item"><div class="kpi-num">285K tỷ</div><div class="kpi-label">Tổng tài sản Q1/2026</div></div>
+    <div class="kpi-item"><div class="kpi-num">3,850 tỷ</div><div class="kpi-label">Lợi nhuận trước thuế Q1/2026</div></div>
+    <div class="kpi-item"><div class="kpi-num">18.5%</div><div class="kpi-label">Tăng trưởng LNTT YoY</div></div>
+    <div class="kpi-item"><div class="kpi-num">18.2%</div><div class="kpi-label">Hệ số CAR (Basel III)</div></div>
+    <div class="kpi-item"><div class="kpi-num">1.2%</div><div class="kpi-label">Tỷ lệ nợ xấu NPL</div></div>
+  </div>
+</div>
+
+<!-- IR NAV -->
+<div class="ir-nav">
+  <div class="ir-tabs">
+    <a class="ir-tab" href="#ket-qua">Kết quả tài chính</a>
+    <a class="ir-tab" href="#tai-lieu">Tài liệu & Báo cáo</a>
+    <a class="ir-tab" href="#co-dong">Cơ cấu cổ đông</a>
+    <a class="ir-tab" href="#lich">Lịch sự kiện</a>
+    <a class="ir-tab" href="#lien-he-ir">Liên hệ IR</a>
+  </div>
+</div>
+
+<!-- KẾT QUẢ TÀI CHÍNH -->
+<section class="sec sec-anchor" id="ket-qua">
+  <div class="sec-inner">
+    <div class="sec-tag reveal">Hiệu quả kinh doanh</div>
+    <h2 class="sec-title reveal">Kết quả tài chính nổi bật</h2>
+    <div class="fin-grid reveal">
+      <div class="fin-card">
+        <div class="fin-card-header"><div class="fin-card-icon">💰</div><span class="fin-change-pos">▲ +18.5%</span></div>
+        <div class="fin-label">Lợi nhuận trước thuế Q1/2026</div>
+        <div class="fin-value">3,850 <span class="fin-unit">tỷ VNĐ</span></div>
+        <div class="fin-period">So với Q1/2025: 3,248 tỷ VNĐ</div>
+      </div>
+      <div class="fin-card">
+        <div class="fin-card-header"><div class="fin-card-icon">📈</div><span class="fin-change-pos">▲ +14.2%</span></div>
+        <div class="fin-label">Tổng thu nhập hoạt động</div>
+        <div class="fin-value">8,920 <span class="fin-unit">tỷ VNĐ</span></div>
+        <div class="fin-period">Lũy kế Q1/2026</div>
+      </div>
+      <div class="fin-card">
+        <div class="fin-card-header"><div class="fin-card-icon">🏦</div><span class="fin-change-pos">▲ +12.8%</span></div>
+        <div class="fin-label">Tổng tài sản</div>
+        <div class="fin-value">285,000 <span class="fin-unit">tỷ VNĐ</span></div>
+        <div class="fin-period">Tại 31/03/2026</div>
+      </div>
+      <div class="fin-card">
+        <div class="fin-card-header"><div class="fin-card-icon">🏛️</div><span class="fin-change-pos">▲ +11.5%</span></div>
+        <div class="fin-label">Dư nợ cho vay</div>
+        <div class="fin-value">185,400 <span class="fin-unit">tỷ VNĐ</span></div>
+        <div class="fin-period">Tăng trưởng tín dụng YTD: +4.2%</div>
+      </div>
+      <div class="fin-card">
+        <div class="fin-card-header"><div class="fin-card-icon">💵</div><span class="fin-change-pos">▲ +9.8%</span></div>
+        <div class="fin-label">Tiền gửi khách hàng</div>
+        <div class="fin-value">218,600 <span class="fin-unit">tỷ VNĐ</span></div>
+        <div class="fin-period">Tỷ lệ CASA: 32.4%</div>
+      </div>
+      <div class="fin-card">
+        <div class="fin-card-header"><div class="fin-card-icon">📊</div><span class="fin-change-pos">▲ 0.3pp</span></div>
+        <div class="fin-label">ROE / ROA</div>
+        <div class="fin-value">18.4% <span class="fin-unit">/ 1.82%</span></div>
+        <div class="fin-period">Annualized Q1/2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TÀI LIỆU -->
+<section class="sec sec-alt sec-anchor" id="tai-lieu">
+  <div class="sec-inner">
+    <div class="sec-tag reveal">Tài liệu công bố</div>
+    <h2 class="sec-title reveal">Báo cáo &amp; Tài liệu nhà đầu tư</h2>
+    <div class="chart-wrap reveal">
+      <table class="doc-table">
+        <thead>
+          <tr>
+            <th>Tên tài liệu</th>
+            <th>Loại</th>
+            <th>Ngày phát hành</th>
+            <th>Tải xuống</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Báo cáo tài chính Q1/2026 (đã kiểm toán)</td>
+            <td><span class="doc-type-badge badge-audit">Kiểm toán</span></td>
+            <td>15/05/2026</td>
+            <td><a href="#" class="doc-download">📥 PDF (2.4MB)</a></td>
+          </tr>
+          <tr>
+            <td>Báo cáo thường niên 2025</td>
+            <td><span class="doc-type-badge badge-report">Thường niên</span></td>
+            <td>20/03/2026</td>
+            <td><a href="#" class="doc-download">📥 PDF (15.2MB)</a></td>
+          </tr>
+          <tr>
+            <td>Nghị quyết Đại hội cổ đông thường niên 2026</td>
+            <td><span class="doc-type-badge badge-agm">ĐHCĐ</span></td>
+            <td>10/04/2026</td>
+            <td><a href="#" class="doc-download">📥 PDF (0.8MB)</a></td>
+          </tr>
+          <tr>
+            <td>Tài liệu họp ĐHCĐ thường niên 2026</td>
+            <td><span class="doc-type-badge badge-agm">ĐHCĐ</span></td>
+            <td>25/03/2026</td>
+            <td><a href="#" class="doc-download">📥 ZIP (8.5MB)</a></td>
+          </tr>
+          <tr>
+            <td>Báo cáo tài chính Q4/2025 (kiểm toán)</td>
+            <td><span class="doc-type-badge badge-audit">Kiểm toán</span></td>
+            <td>15/02/2026</td>
+            <td><a href="#" class="doc-download">📥 PDF (3.1MB)</a></td>
+          </tr>
+          <tr>
+            <td>Bản cáo bạch phát hành trái phiếu xanh 2025</td>
+            <td><span class="doc-type-badge badge-prospect">Bản cáo bạch</span></td>
+            <td>01/10/2025</td>
+            <td><a href="#" class="doc-download">📥 PDF (4.7MB)</a></td>
+          </tr>
+          <tr>
+            <td>Báo cáo ESG & Phát triển bền vững 2025</td>
+            <td><span class="doc-type-badge badge-report">ESG</span></td>
+            <td>30/03/2026</td>
+            <td><a href="#" class="doc-download">📥 PDF (6.8MB)</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- CƠ CẤU CỔ ĐÔNG -->
+<section class="sec sec-anchor" id="co-dong">
+  <div class="sec-inner">
+    <div class="sec-tag reveal">Sở hữu cổ phần</div>
+    <h2 class="sec-title reveal">Cơ cấu cổ đông</h2>
+    <div class="share-grid reveal">
+      <div class="pie-wrap">
+        <div class="pie-title">Phân bổ cổ đông</div>
+        <svg class="pie-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <!-- Pie chart slices -->
+          <!-- 35% major shareholders -->
+          <path d="M100,100 L100,10 A90,90 0,0,1 189.4,127 Z" fill="#04045d"/>
+          <!-- 28% domestic institutional -->
+          <path d="M100,100 L189.4,127 A90,90 0,0,1 73.2,189.1 Z" fill="#07078a"/>
+          <!-- 22% foreign investors -->
+          <path d="M100,100 L73.2,189.1 A90,90 0,0,1 10,127 Z" fill="#c9a84c"/>
+          <!-- 15% retail -->
+          <path d="M100,100 L10,127 A90,90 0,0,1 100,10 Z" fill="#e8c96e"/>
+          <!-- Center -->
+          <circle cx="100" cy="100" r="50" fill="white"/>
+          <text x="100" y="96" font-size="11" fill="#04045d" font-weight="700" text-anchor="middle" font-family="serif">DBB</text>
+          <text x="100" y="112" font-size="9" fill="#6b6b9a" text-anchor="middle">1,500M cp</text>
+        </svg>
+        <div class="pie-legend">
+          <div class="pie-item"><div class="pie-item-left"><div class="pie-dot" style="background:#04045d"></div><div class="pie-name">Cổ đông lớn trong nước</div></div><div class="pie-pct">35%</div></div>
+          <div class="pie-item"><div class="pie-item-left"><div class="pie-dot" style="background:#07078a"></div><div class="pie-name">Tổ chức trong nước</div></div><div class="pie-pct">28%</div></div>
+          <div class="pie-item"><div class="pie-item-left"><div class="pie-dot" style="background:#c9a84c"></div><div class="pie-name">Nhà đầu tư nước ngoài</div></div><div class="pie-pct">22%</div></div>
+          <div class="pie-item"><div class="pie-item-left"><div class="pie-dot" style="background:#e8c96e"></div><div class="pie-name">Cổ đông cá nhân</div></div><div class="pie-pct">15%</div></div>
+        </div>
+      </div>
+      <div class="cap-table">
+        <div class="cap-card">
+          <div class="cap-label">Vốn điều lệ</div>
+          <div class="cap-val">15,000 <span class="cap-unit">tỷ VNĐ</span></div>
+          <div class="cap-sub">Tại ngày 31/03/2026</div>
+        </div>
+        <div class="cap-card">
+          <div class="cap-label">Tổng số cổ phiếu lưu hành</div>
+          <div class="cap-val">1,500,000,000 <span class="cap-unit">cổ phiếu</span></div>
+          <div class="cap-sub">Mệnh giá: 10,000 đồng/cổ phiếu</div>
+        </div>
+        <div class="cap-card">
+          <div class="cap-label">Vốn hóa thị trường</div>
+          <div class="cap-val">42,525 <span class="cap-unit">tỷ VNĐ</span></div>
+          <div class="cap-sub">Theo giá đóng cửa 08/06/2026: 28,350đ/cp</div>
+        </div>
+        <div class="cap-card">
+          <div class="cap-label">Tỷ lệ sở hữu nước ngoài</div>
+          <div class="cap-val">22% <span class="cap-unit">/ room 30%</span></div>
+          <div class="cap-sub">Còn room: 120,000,000 cổ phiếu (8%)</div>
+        </div>
+        <div class="cap-card">
+          <div class="cap-label">Cổ tức 2025</div>
+          <div class="cap-val">15% <span class="cap-unit">bằng tiền mặt</span></div>
+          <div class="cap-sub">1,500 đồng/cổ phiếu · Ngày chốt: 20/03/2026</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LỊCH SỰ KIỆN -->
+<section class="sec sec-alt sec-anchor" id="lich">
+  <div class="sec-inner">
+    <div class="sec-tag reveal">Sự kiện sắp diễn ra</div>
+    <h2 class="sec-title reveal">Lịch sự kiện nhà đầu tư</h2>
+    <div class="calendar-list reveal">
+      <div class="cal-item">
+        <div class="cal-date"><div class="cal-day">20</div><div class="cal-month">06/2026</div></div>
+        <div><div class="cal-type">Kết quả kinh doanh</div><div class="cal-title">Công bố KQKD Q2/2026 (sơ bộ)</div><div class="cal-sub">Hội trường DOB Tower, TP.HCM · 14:00 ICT</div></div>
+        <div class="cal-status status-upcoming">Sắp diễn ra</div>
+      </div>
+      <div class="cal-item">
+        <div class="cal-date"><div class="cal-day">15</div><div class="cal-month">07/2026</div></div>
+        <div><div class="cal-type">Báo cáo tài chính</div><div class="cal-title">Phát hành BCTC Q2/2026 (kiểm toán)</div><div class="cal-sub">Công bố chính thức trên HoSE và website</div></div>
+        <div class="cal-status status-upcoming">Sắp diễn ra</div>
+      </div>
+      <div class="cal-item">
+        <div class="cal-date"><div class="cal-day">25</div><div class="cal-month">08/2026</div></div>
+        <div><div class="cal-type">Investor Day</div><div class="cal-title">DOB Bank Investor Day 2026</div><div class="cal-sub">Trực tiếp & Online · Đăng ký tham dự tại website</div></div>
+        <div class="cal-status status-upcoming">Sắp diễn ra</div>
+      </div>
+      <div class="cal-item">
+        <div class="cal-date" style="background:var(--gray)"><div class="cal-day" style="color:var(--muted)">10</div><div class="cal-month" style="color:var(--muted)">04/2026</div></div>
+        <div><div class="cal-type">ĐHCĐ</div><div class="cal-title">Đại hội cổ đông thường niên 2026</div><div class="cal-sub">Tỷ lệ tham dự: 91.3% · Nghị quyết đã được thông qua</div></div>
+        <div class="cal-status status-done">Đã diễn ra</div>
+      </div>
+      <div class="cal-item">
+        <div class="cal-date" style="background:var(--gray)"><div class="cal-day" style="color:var(--muted)">15</div><div class="cal-month" style="color:var(--muted)">05/2026</div></div>
+        <div><div class="cal-type">Kết quả kinh doanh</div><div class="cal-title">Công bố KQKD Q1/2026</div><div class="cal-sub">LNTT đạt 3,850 tỷ đồng, +18.5% YoY</div></div>
+        <div class="cal-status status-done">Đã diễn ra</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIÊN HỆ IR -->
+<section class="sec sec-anchor" id="lien-he-ir">
+  <div class="sec-inner">
+    <div class="sec-tag reveal">Liên hệ</div>
+    <h2 class="sec-title reveal">Ban Quan hệ Nhà đầu tư</h2>
+    <div class="contact-grid reveal">
+      <div class="contact-card">
+        <div class="contact-card-icon">👤</div>
+        <div class="contact-card-title">Trưởng Ban IR</div>
+        <div class="contact-card-name">Bà Hoàng Minh Châu</div>
+        <div class="contact-card-info">
+          Phó Giám đốc phụ trách Quan hệ Nhà đầu tư<br/>
+          📞 (028) 3820 5868 – Ext. 1200<br/>
+          ✉️ ir@dobbank.com.vn
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon">📋</div>
+        <div class="contact-card-title">Công bố thông tin</div>
+        <div class="contact-card-name">Bộ phận Thư ký công ty</div>
+        <div class="contact-card-info">
+          Chuyên trách công bố thông tin HoSE/SSC<br/>
+          📞 (028) 3820 5868 – Ext. 1201<br/>
+          ✉️ disclosure@dobbank.com.vn
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon">🏢</div>
+        <div class="contact-card-title">Địa chỉ</div>
+        <div class="contact-card-name">DOB Tower – Trụ sở chính</div>
+        <div class="contact-card-info">
+          15 Lê Duẩn, Phường Bến Nghé<br/>
+          Quận 1, TP. Hồ Chí Minh<br/>
+          Giờ làm việc: 8:00 – 17:00 (T2–T6)
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo-name">DOB Bank</div>
+      <div class="footer-logo-sub">Ngân hàng Thương mại Cổ phần DOB</div>
+      <p class="footer-about">Mã CK: DBB · Sàn: HoSE. Thông tin trên trang này chỉ mang tính tham khảo, không phải lời khuyên đầu tư.</p>
+    </div>
+    <div class="footer-col"><h4>Quan hệ NĐT</h4><ul>
+      <li><a href="#ket-qua">Kết quả tài chính</a></li>
+      <li><a href="#tai-lieu">Tài liệu & Báo cáo</a></li>
+      <li><a href="#co-dong">Cơ cấu cổ đông</a></li>
+      <li><a href="#lich">Lịch sự kiện</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Liên kết</h4><ul>
+      <li><a href="homebank.html">Trang chủ</a></li>
+      <li><a href="aboutb.html">Về chúng tôi</a></li>
+      <li><a href="newsb.html">Tin tức</a></li>
+      <li><a href="services.html">Sản phẩm</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Hỗ trợ</h4><ul>
+      <li><a href="#">ir@dobbank.com.vn</a></li>
+      <li><a href="#">(028) 3820 5868</a></li>
+      <li><a href="#">HoSE: DBB</a></li>
+      <li><a href="#">SSC Việt Nam</a></li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Ngân hàng Thương mại Cổ phần DOB. Bảo lưu mọi quyền.</p>
+    <p>Mã CK DBB · HoSE</p>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver(e => e.forEach(x => x.isIntersecting && (x.target.classList.add('visible'), io.unobserve(x.target))), { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // IR tab active on scroll
+  const irTabs = document.querySelectorAll('.ir-tab');
+  const irSecs = ['ket-qua','tai-lieu','co-dong','lich','lien-he-ir'].map(id => document.getElementById(id));
+  window.addEventListener('scroll', () => {
+    let cur = 0;
+    irSecs.forEach((s, i) => { if (s && window.scrollY >= s.offsetTop - 160) cur = i; });
+    irTabs.forEach((t, i) => t.classList.toggle('active', i === cur));
+  });
+
+  // Chart tabs (visual only)
+  document.querySelectorAll('.chart-tab').forEach(t => {
+    t.addEventListener('click', () => { document.querySelectorAll('.chart-tab').forEach(x => x.classList.remove('active')); t.classList.add('active'); });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Khách Hàng Tổ Chức — DOBN Securities Corporation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy: #0a1628; --navy-mid: #122040; --navy-light: #1a2f50;
+      --gold: #c9a84c; --gold-light: #e2c47a; --gold-dim: rgba(201,168,76,0.15);
+      --cream: #f5f0e8; --white: #ffffff; --gray: #8a8f9a;
+      --light-bg: #f8f6f1; --green: #22c55e; --red: #ef4444; --blue: #3b82f6;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--white); overflow-x: hidden; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 60px; height: 72px;
+      background: rgba(10,22,40,0.95); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,168,76,0.2); transition: background 0.3s;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-box { width: 40px; height: 40px; background: var(--gold); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-weight: 900; font-size: 18px; color: var(--navy); clip-path: polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%); }
+    .logo-text { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--white); letter-spacing: 0.04em; }
+    .logo-text span { color: var(--gold); }
+    .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+    .nav-links a { text-decoration: none; color: rgba(255,255,255,0.75); font-size: 14px; font-weight: 500; letter-spacing: 0.03em; position: relative; transition: color 0.25s; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 1px; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold-light); }
+    .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+    .nav-cta { background: var(--gold); color: var(--navy) !important; padding: 8px 22px; border-radius: 2px; font-weight: 600 !important; transition: background 0.25s !important; }
+    .nav-cta:hover { background: var(--gold-light) !important; }
+    .nav-cta::after { display: none !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      min-height: 100vh; position: relative; overflow: hidden;
+      display: flex; align-items: center;
+      background: linear-gradient(135deg, #040c1a 0%, #0a1628 50%, #0f1e38 100%);
+      padding: 0 60px;
+    }
+    .hero-grid-bg {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(201,168,76,0.035) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(201,168,76,0.035) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+    .hero-glow-tr { position: absolute; top: -200px; right: -200px; width: 700px; height: 700px; border-radius: 50%; background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 65%); }
+    .hero-glow-bl { position: absolute; bottom: -200px; left: -100px; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(59,130,246,0.05) 0%, transparent 65%); }
+
+    /* Animated particle lines */
+    .hero-lines { position: absolute; inset: 0; overflow: hidden; opacity: 0.15; }
+    .hero-line {
+      position: absolute; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      animation: lineSweep 6s ease-in-out infinite;
+    }
+    .hero-line:nth-child(1) { top: 20%; width: 60%; left: -100%; animation-delay: 0s; }
+    .hero-line:nth-child(2) { top: 40%; width: 45%; left: -100%; animation-delay: 1.5s; }
+    .hero-line:nth-child(3) { top: 65%; width: 70%; left: -100%; animation-delay: 3s; }
+    .hero-line:nth-child(4) { top: 80%; width: 40%; left: -100%; animation-delay: 4.5s; }
+    @keyframes lineSweep { 0%{left:-100%;} 60%{left:120%;} 100%{left:120%;} }
+
+    .page-hero-inner {
+      position: relative; z-index: 2;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+      width: 100%; padding-top: 72px;
+      animation: fadeUp 1s ease both;
+    }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+
+    .breadcrumb { display: flex; align-items: center; gap: 10px; font-size: 13px; color: rgba(255,255,255,0.4); margin-bottom: 24px; }
+    .breadcrumb a { color: var(--gold); text-decoration: none; }
+    .page-label { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+    .page-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(38px,4.8vw,64px); font-weight: 700; line-height: 1.1; margin-bottom: 24px; }
+    .page-hero h1 em { font-style: normal; color: var(--gold); display: block; }
+    .page-hero-desc { font-size: 17px; line-height: 1.75; color: rgba(255,255,255,0.6); margin-bottom: 40px; max-width: 500px; }
+
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 52px; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 10px; background: var(--gold); color: var(--navy); padding: 14px 32px; border-radius: 2px; font-weight: 700; font-size: 15px; text-decoration: none; transition: background 0.2s, transform 0.2s; }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .btn-outline { display: inline-flex; align-items: center; gap: 10px; border: 1px solid rgba(201,168,76,0.4); color: var(--gold-light); padding: 14px 32px; border-radius: 2px; font-weight: 500; font-size: 15px; text-decoration: none; transition: 0.2s; }
+    .btn-outline:hover { border-color: var(--gold); background: var(--gold-dim); }
+
+    .hero-trust { display: flex; gap: 32px; }
+    .trust-item { display: flex; align-items: center; gap: 10px; }
+    .trust-icon { width: 36px; height: 36px; background: var(--gold-dim); border: 1px solid rgba(201,168,76,0.2); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+    .trust-text { font-size: 12px; line-height: 1.4; color: rgba(255,255,255,0.5); }
+    .trust-text strong { display: block; color: var(--white); font-weight: 600; font-size: 13px; }
+
+    /* Hero right — animated dashboard */
+    .hero-dashboard {
+      background: rgba(18,32,64,0.7); border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 8px; padding: 28px; backdrop-filter: blur(16px);
+    }
+    .db-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .db-title { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; color: var(--white); }
+    .db-date { font-size: 11px; color: rgba(255,255,255,0.35); }
+    .db-portfolio { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+    .db-stat { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); border-radius: 4px; padding: 16px; }
+    .db-stat label { font-size: 10px; color: rgba(255,255,255,0.35); letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 6px; }
+    .db-stat .val { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--white); }
+    .db-stat .chg { font-size: 12px; font-weight: 600; margin-top: 4px; }
+    .pos { color: var(--green); } .neg { color: var(--red); }
+
+    /* Mini chart */
+    .db-chart { margin-bottom: 20px; }
+    .db-chart-label { font-size: 11px; color: rgba(255,255,255,0.4); margin-bottom: 10px; letter-spacing: 0.06em; }
+    .mini-chart svg { width: 100%; height: 80px; }
+
+    /* Holdings list */
+    .db-holdings { display: flex; flex-direction: column; gap: 2px; }
+    .holding-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; background: rgba(255,255,255,0.03); border-radius: 3px; }
+    .h-left { display: flex; align-items: center; gap: 10px; }
+    .h-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .h-sym { font-weight: 700; font-size: 13px; color: var(--white); }
+    .h-pct { font-size: 11px; color: rgba(255,255,255,0.4); }
+    .h-val { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.8); }
+    .h-chg { font-size: 11px; font-weight: 700; }
+
+    /* ── SECTIONS ── */
+    section { padding: 100px 60px; }
+    .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(28px,3.5vw,44px); font-weight: 700; line-height: 1.2; margin-bottom: 20px; }
+    .section-desc { font-size: 16px; line-height: 1.75; color: rgba(255,255,255,0.6); max-width: 600px; margin-bottom: 56px; }
+
+    /* ── CLIENT TYPES ── */
+    .client-types { background: var(--navy-mid); }
+    .client-types .section-desc { color: rgba(255,255,255,0.55); }
+    .client-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; }
+    .client-card {
+      background: var(--navy); padding: 48px 36px; position: relative; overflow: hidden;
+      cursor: default; transition: transform 0.3s; text-decoration: none; color: inherit; display: block;
+    }
+    .client-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.35s; }
+    .client-card:hover { transform: translateY(-5px); }
+    .client-card:hover::before { transform: scaleX(1); }
+    .client-card.highlight { background: linear-gradient(160deg, #0f1e38, #122040); border: 1px solid rgba(201,168,76,0.15); }
+    .client-icon { width: 56px; height: 56px; background: var(--gold-dim); border: 1px solid rgba(201,168,76,0.25); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 28px; }
+    .client-card h3 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--white); margin-bottom: 14px; }
+    .client-card p { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,0.55); margin-bottom: 24px; }
+    .client-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .ctag { font-size: 11px; font-weight: 600; padding: 4px 10px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); border-radius: 2px; }
+
+    /* ── SERVICES DEEP DIVE ── */
+    .services-deep { background: var(--light-bg); color: var(--navy); }
+    .services-deep .section-label { color: var(--gold); }
+    .services-deep .section-title { color: var(--navy); }
+    .services-deep .section-desc { color: rgba(10,22,40,0.65); }
+    .service-accordion { max-width: 860px; }
+    .acc-item { background: var(--white); border: 1px solid rgba(10,22,40,0.08); margin-bottom: 2px; }
+    .acc-header {
+      display: flex; align-items: center; gap: 20px; padding: 24px 28px;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .acc-header:hover { background: rgba(201,168,76,0.04); }
+    .acc-item.open .acc-header { background: rgba(201,168,76,0.06); }
+    .acc-num { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 900; color: rgba(201,168,76,0.3); width: 36px; flex-shrink: 0; }
+    .acc-item.open .acc-num { color: var(--gold); }
+    .acc-icon { font-size: 22px; flex-shrink: 0; }
+    .acc-info { flex: 1; }
+    .acc-title { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--navy); }
+    .acc-subtitle { font-size: 13px; color: rgba(10,22,40,0.5); margin-top: 3px; }
+    .acc-arrow { font-size: 18px; color: var(--gold); transition: transform 0.3s; }
+    .acc-item.open .acc-arrow { transform: rotate(180deg); }
+    .acc-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+    .acc-item.open .acc-body { max-height: 600px; }
+    .acc-body-inner { padding: 0 28px 28px 84px; }
+    .acc-body-inner p { font-size: 15px; line-height: 1.75; color: rgba(10,22,40,0.65); margin-bottom: 20px; }
+    .acc-features { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .acc-feat { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: rgba(10,22,40,0.7); }
+    .acc-feat::before { content: '✓'; color: var(--gold); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+    /* ── EXECUTION ── */
+    .execution { background: var(--navy); }
+    .exec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .exec-visual { position: relative; }
+    .exec-card-main {
+      background: var(--navy-mid); border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 6px; padding: 36px; margin-bottom: 16px;
+    }
+    .exec-metrics { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-bottom: 28px; }
+    .exec-metric label { font-size: 10px; color: rgba(255,255,255,0.35); letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 6px; }
+    .exec-metric .val { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 900; color: var(--gold); }
+    .exec-metric .sub { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 3px; }
+    .exec-chart-label { font-size: 11px; color: rgba(255,255,255,0.35); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px; }
+    .exec-bars { display: flex; flex-direction: column; gap: 10px; }
+    .exec-bar-row { display: flex; align-items: center; gap: 12px; }
+    .exec-bar-name { font-size: 12px; color: rgba(255,255,255,0.5); width: 100px; flex-shrink: 0; }
+    .exec-bar-bg { flex: 1; height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; }
+    .exec-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--gold), var(--gold-light)); transition: width 1s ease; }
+    .exec-bar-val { font-size: 12px; font-weight: 700; color: var(--gold-light); width: 45px; text-align: right; }
+    .exec-sub-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .exec-sub { background: var(--navy-mid); border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; padding: 20px; }
+    .exec-sub label { font-size: 10px; color: rgba(255,255,255,0.35); letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 8px; }
+    .exec-sub .big { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: var(--green); }
+
+    .exec-content .section-desc { margin-bottom: 40px; }
+    .exec-list { display: flex; flex-direction: column; gap: 20px; }
+    .exec-item { display: flex; gap: 18px; align-items: flex-start; }
+    .exec-item-icon { width: 48px; height: 48px; background: var(--gold-dim); border: 1px solid rgba(201,168,76,0.25); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+    .exec-item-text h4 { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 5px; }
+    .exec-item-text p { font-size: 13px; line-height: 1.65; color: rgba(255,255,255,0.5); }
+
+    /* ── RESEARCH ── */
+    .research-inst { background: var(--navy-mid); }
+    .research-inst .section-desc { color: rgba(255,255,255,0.55); }
+    .research-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+    .research-list { display: flex; flex-direction: column; gap: 2px; }
+    .research-item {
+      background: var(--navy); border: 1px solid rgba(255,255,255,0.05); padding: 24px 28px;
+      display: flex; gap: 20px; cursor: pointer; transition: border-color 0.2s; text-decoration: none; color: inherit;
+    }
+    .research-item:hover { border-color: rgba(201,168,76,0.25); }
+    .ri-type { font-size: 10px; font-weight: 700; color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 6px; }
+    .ri-title { font-size: 15px; font-weight: 600; color: var(--white); line-height: 1.4; margin-bottom: 6px; }
+    .ri-meta { font-size: 12px; color: rgba(255,255,255,0.35); }
+    .ri-badge { flex-shrink: 0; display: flex; align-items: flex-start; }
+    .rb { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 2px; }
+    .rb-buy { background: rgba(34,197,94,0.12); color: var(--green); }
+    .rb-hold { background: rgba(251,191,36,0.12); color: #fbbf24; }
+    .rb-macro { background: rgba(201,168,76,0.15); color: var(--gold); }
+
+    .research-access {
+      background: var(--navy); border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 4px; padding: 40px; position: sticky; top: 100px;
+    }
+    .ra-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--white); margin-bottom: 16px; }
+    .ra-desc { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,0.55); margin-bottom: 28px; }
+    .ra-features { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+    .ra-feat { display: flex; gap: 12px; align-items: center; font-size: 14px; color: rgba(255,255,255,0.7); }
+    .ra-feat-icon { width: 28px; height: 28px; background: var(--gold-dim); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+    .ra-btn { display: block; text-align: center; padding: 14px; background: var(--gold); color: var(--navy); font-weight: 700; font-size: 15px; text-decoration: none; border-radius: 2px; transition: background 0.2s; }
+    .ra-btn:hover { background: var(--gold-light); }
+    .ra-note { font-size: 11px; color: rgba(255,255,255,0.3); text-align: center; margin-top: 12px; }
+
+    /* ── IB / ADVISORY ── */
+    .advisory { background: var(--light-bg); color: var(--navy); }
+    .advisory .section-label { color: var(--gold); }
+    .advisory .section-title { color: var(--navy); }
+    .advisory .section-desc { color: rgba(10,22,40,0.65); }
+    .advisory-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 24px; }
+    .adv-card {
+      background: var(--white); border-radius: 2px; overflow: hidden;
+      display: grid; grid-template-columns: 6px 1fr; transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .adv-card:hover { transform: translateY(-5px); box-shadow: 0 20px 48px rgba(10,22,40,0.12); }
+    .adv-stripe { background: var(--gold); }
+    .adv-body { padding: 36px; }
+    .adv-icon { font-size: 32px; margin-bottom: 20px; }
+    .adv-card h3 { font-family: 'Playfair Display', serif; font-size: 21px; font-weight: 700; color: var(--navy); margin-bottom: 12px; }
+    .adv-card p { font-size: 14px; line-height: 1.75; color: rgba(10,22,40,0.65); margin-bottom: 20px; }
+    .adv-deal { background: var(--light-bg); border-radius: 2px; padding: 14px 16px; margin-bottom: 12px; }
+    .adv-deal label { font-size: 10px; font-weight: 700; color: rgba(10,22,40,0.4); letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 4px; }
+    .adv-deal span { font-size: 13px; font-weight: 600; color: var(--navy); }
+    .adv-link { font-size: 13px; font-weight: 700; color: var(--gold); text-decoration: none; letter-spacing: 0.06em; }
+
+    /* ── CREDENTIALS ── */
+    .credentials { background: var(--navy); }
+    .cred-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 40px; }
+    .cred-card { text-align: center; }
+    .cred-circle {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: var(--gold-dim); border: 2px solid rgba(201,168,76,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; margin: 0 auto 20px;
+    }
+    .cred-num { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 900; color: var(--gold); line-height: 1; margin-bottom: 8px; }
+    .cred-label { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.5; max-width: 150px; margin: 0 auto; }
+
+    /* ── TECHNOLOGY ── */
+    .technology { background: var(--navy-mid); }
+    .technology .section-desc { color: rgba(255,255,255,0.55); }
+    .tech-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; }
+    .tech-card {
+      background: var(--navy); padding: 40px 32px; position: relative; overflow: hidden;
+      transition: transform 0.3s;
+    }
+    .tech-card:hover { transform: translateY(-4px); }
+    .tech-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.35s; }
+    .tech-card:hover::after { transform: scaleX(1); }
+    .tech-icon { font-size: 32px; margin-bottom: 20px; }
+    .tech-card h4 { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 12px; }
+    .tech-card p { font-size: 13px; line-height: 1.7; color: rgba(255,255,255,0.5); margin-bottom: 20px; }
+    .tech-spec { font-size: 11px; font-weight: 700; color: var(--gold); letter-spacing: 0.08em; text-transform: uppercase; }
+
+    /* ── CASE STUDIES ── */
+    .cases { background: var(--light-bg); color: var(--navy); padding: 100px 60px; }
+    .cases .section-label { color: var(--gold); }
+    .cases .section-title { color: var(--navy); }
+    .cases .section-desc { color: rgba(10,22,40,0.65); }
+    .cases-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+    .case-card {
+      background: var(--white); border-radius: 2px; overflow: hidden;
+      border-bottom: 3px solid transparent; transition: all 0.3s;
+    }
+    .case-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(10,22,40,0.1); border-bottom-color: var(--gold); }
+    .case-header { padding: 32px 28px 0; }
+    .case-type { font-size: 10px; font-weight: 700; color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 12px; }
+    .case-title { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--navy); line-height: 1.4; margin-bottom: 14px; }
+    .case-desc { font-size: 13px; line-height: 1.65; color: rgba(10,22,40,0.6); }
+    .case-body { padding: 20px 28px 28px; }
+    .case-results { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+    .case-result { display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+    .cr-label { color: rgba(10,22,40,0.55); }
+    .cr-val { font-weight: 700; color: var(--navy); }
+    .cr-pos { color: #16a34a; }
+    .case-divider { border: none; border-top: 1px solid rgba(10,22,40,0.06); margin-bottom: 16px; }
+    .case-client { font-size: 11px; color: rgba(10,22,40,0.4); }
+
+    /* ── CONTACT FORM ── */
+    .contact-inst { background: var(--navy); }
+    .contact-inst .section-desc { color: rgba(255,255,255,0.55); }
+    .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
+    .contact-info { }
+    .contact-info p { font-size: 15px; line-height: 1.75; color: rgba(255,255,255,0.6); margin-bottom: 36px; }
+    .contact-detail-list { display: flex; flex-direction: column; gap: 20px; margin-bottom: 40px; }
+    .cd-item { display: flex; gap: 16px; align-items: flex-start; }
+    .cd-icon { width: 44px; height: 44px; background: var(--gold-dim); border: 1px solid rgba(201,168,76,0.2); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .cd-text label { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.35); letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 4px; }
+    .cd-text span { font-size: 15px; font-weight: 600; color: var(--white); }
+    .team-cards-mini { display: flex; flex-direction: column; gap: 14px; }
+    .tcm { display: flex; gap: 14px; align-items: center; background: var(--navy-mid); border: 1px solid rgba(255,255,255,0.06); padding: 16px; border-radius: 4px; }
+    .tcm-avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--gold-dim); border: 2px solid rgba(201,168,76,0.2); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .tcm-name { font-size: 14px; font-weight: 600; color: var(--white); }
+    .tcm-role { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+
+    .contact-form-card { background: var(--navy-mid); border: 1px solid rgba(201,168,76,0.12); border-radius: 4px; padding: 40px; }
+    .cf-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+    .cf-sub { font-size: 14px; color: rgba(255,255,255,0.45); margin-bottom: 28px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 7px; margin-bottom: 16px; }
+    .form-group label { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.45); letter-spacing: 0.1em; text-transform: uppercase; }
+    .form-group input, .form-group select, .form-group textarea {
+      padding: 12px 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 2px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--white);
+      outline: none; transition: border-color 0.2s; resize: none;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--gold); }
+    .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.25); }
+    .form-group select option { background: var(--navy-mid); }
+    .btn-form { width: 100%; padding: 15px; background: var(--gold); color: var(--navy); font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 700; border: none; border-radius: 2px; cursor: pointer; transition: background 0.2s; letter-spacing: 0.03em; }
+    .btn-form:hover { background: var(--gold-light); }
+    .form-security { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 14px; font-size: 11px; color: rgba(255,255,255,0.3); }
+
+    /* ── CTA BANNER ── */
+    .cta-banner { background: var(--gold); padding: 80px 60px; text-align: center; }
+    .cta-banner h2 { font-family: 'Playfair Display', serif; font-size: clamp(28px,4vw,48px); font-weight: 700; color: var(--navy); margin-bottom: 16px; }
+    .cta-banner p { font-size: 17px; color: rgba(10,22,40,0.75); max-width: 560px; margin: 0 auto 36px; line-height: 1.6; }
+    .btn-dark { display: inline-flex; align-items: center; gap: 10px; background: var(--navy); color: var(--white); padding: 15px 36px; border-radius: 2px; font-weight: 600; font-size: 15px; text-decoration: none; transition: background 0.2s; }
+    .btn-dark:hover { background: var(--navy-mid); }
+
+    /* ── FOOTER ── */
+    footer { background: #060e1c; padding: 72px 60px 40px; border-top: 1px solid rgba(201,168,76,0.12); }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; margin-bottom: 56px; }
+    .footer-brand p { font-size: 14px; line-height: 1.75; color: rgba(255,255,255,0.45); margin-top: 20px; max-width: 280px; }
+    .footer-col h4 { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-col ul a { font-size: 14px; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--gold-light); }
+    .footer-bottom { padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: space-between; }
+    .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.3); }
+    .footer-socials { display: flex; gap: 16px; }
+    .social-btn { width: 36px; height: 36px; border: 1px solid rgba(201,168,76,0.2); border-radius: 2px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.4); font-size: 14px; text-decoration: none; transition: border-color 0.2s, color 0.2s; }
+    .social-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ── ANIMATE ── */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s, transform 0.7s; }
+    .reveal.visible { opacity: 1; transform: none; }
+    @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+    .live-dot::before { content:''; display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--green); animation: pulse 2s infinite; margin-right:6px; vertical-align: middle; }
+
+    @media (max-width: 1100px) { .client-grid { grid-template-columns: 1fr 1fr; } .cred-grid { grid-template-columns: 1fr 1fr; gap: 32px; } }
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; } .nav-links { display: none; } .hamburger { display: flex; }
+      .page-hero { min-height: auto; padding: 120px 24px 72px; }
+      .page-hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .hero-dashboard { display: none; }
+      section, .advisory, .cases, .contact-inst { padding: 72px 24px; }
+      .client-grid { grid-template-columns: 1fr; gap: 1px; }
+      .exec-grid { grid-template-columns: 1fr; gap: 48px; }
+      .research-grid { grid-template-columns: 1fr; }
+      .advisory-grid { grid-template-columns: 1fr; }
+      .cred-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+      .tech-grid { grid-template-columns: 1fr; gap: 1px; }
+      .cases-grid { grid-template-columns: 1fr; }
+      .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+      .cta-banner { padding: 60px 24px; }
+      footer { padding: 60px 24px 32px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="home.html" class="nav-logo"><div class="logo-box">DB</div><span class="logo-text">DOBN <span>Securities</span></span></a>
+  <ul class="nav-links">
+    <li><a href="abouts.html">About Us</a></li>
+    <li><a href="individual.html">Khách Hàng Cá Nhân</a></li>
+    <li><a href="institutional.html" class="active">Khách Hàng Tổ Chức</a></li>
+    <li><a href="shareholder.html">Quan Hệ Cổ Đông</a></li>
+    <li><a href="newss.html">Tin Tức</a></li>
+    <li><a href="#contact-inst" class="nav-cta">Liên Hệ Tư Vấn</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow-tr"></div>
+  <div class="hero-glow-bl"></div>
+  <div class="hero-lines">
+    <div class="hero-line"></div><div class="hero-line"></div>
+    <div class="hero-line"></div><div class="hero-line"></div>
+  </div>
+  <div class="page-hero-inner">
+    <div>
+      <div class="breadcrumb"><a href="home.html">Trang Chủ</a><span>›</span><span>Khách Hàng Tổ Chức</span></div>
+      <div class="page-label">Institutional Services</div>
+      <h1>Giải Pháp<br/><em>Đẳng Cấp Tổ Chức</em></h1>
+      <p class="page-hero-desc">Dịch vụ tài chính toàn diện được thiết kế riêng cho quỹ đầu tư, ngân hàng, công ty bảo hiểm và doanh nghiệp lớn — với đội ngũ chuyên gia và công nghệ hàng đầu thị trường.</p>
+      <div class="hero-actions">
+        <a href="#contact-inst" class="btn-primary">Đặt Lịch Tư Vấn ↗</a>
+        <a href="#services" class="btn-outline">Xem Dịch Vụ →</a>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-item">
+          <div class="trust-icon">🏛️</div>
+          <div class="trust-text"><strong>200+ Tổ Chức</strong>Khách hàng tin tưởng</div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">💰</div>
+          <div class="trust-text"><strong>50,000 tỷ+</strong>Tài sản quản lý</div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">⚡</div>
+          <div class="trust-text"><strong>&lt; 1ms</strong>Tốc độ thực thi lệnh</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard mockup -->
+    <div class="hero-dashboard">
+      <div class="db-header">
+        <div class="db-title">DOBN Institutional Portal</div>
+        <div class="db-date"><span class="live-dot"></span>Live — 07/06/2025</div>
+      </div>
+      <div class="db-portfolio">
+        <div class="db-stat">
+          <label>AUM</label>
+          <div class="val">12,480<span style="font-size:14px;color:rgba(255,255,255,0.4)"> tỷ</span></div>
+          <div class="chg pos">▲ +2.4% tháng này</div>
+        </div>
+        <div class="db-stat">
+          <label>Lợi Nhuận YTD</label>
+          <div class="val">+18.6<span style="font-size:14px;color:rgba(255,255,255,0.4)">%</span></div>
+          <div class="chg pos">▲ vs benchmark +11.2%</div>
+        </div>
+        <div class="db-stat">
+          <label>Giao Dịch Hôm Nay</label>
+          <div class="val">84</div>
+          <div class="chg" style="color:rgba(255,255,255,0.4)">48 mua · 36 bán</div>
+        </div>
+        <div class="db-stat">
+          <label>Giá Trị GD</label>
+          <div class="val">3,240<span style="font-size:14px;color:rgba(255,255,255,0.4)"> tỷ</span></div>
+          <div class="chg pos">▲ +12% vs hôm qua</div>
+        </div>
+      </div>
+      <div class="db-chart">
+        <div class="db-chart-label">HIỆU SUẤT DANH MỤC — 6 THÁNG</div>
+        <div class="mini-chart">
+          <svg viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#c9a84c" stop-opacity="0.3"/>
+                <stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <polygon points="0,65 45,58 90,50 135,42 180,35 225,25 270,18 320,12 320,80 0,80" fill="url(#chartGrad)"/>
+            <polyline points="0,65 45,58 90,50 135,42 180,35 225,25 270,18 320,12" stroke="#c9a84c" stroke-width="2" fill="none"/>
+            <circle cx="320" cy="12" r="4" fill="#c9a84c"/>
+          </svg>
+        </div>
+      </div>
+      <div class="db-holdings">
+        <div class="holding-row"><div class="h-left"><div class="h-dot" style="background:#c9a84c"></div><div><div class="h-sym">VCB</div><div class="h-pct">18.4%</div></div></div><div class="h-val">2,295 tỷ</div><div class="h-chg pos">+2.1%</div></div>
+        <div class="holding-row"><div class="h-left"><div class="h-dot" style="background:#4f7bb8"></div><div><div class="h-sym">HPG</div><div class="h-pct">12.2%</div></div></div><div class="h-val">1,522 tỷ</div><div class="h-chg pos">+1.4%</div></div>
+        <div class="holding-row"><div class="h-left"><div class="h-dot" style="background:#22c55e"></div><div><div class="h-sym">VIC</div><div class="h-pct">9.8%</div></div></div><div class="h-val">1,223 tỷ</div><div class="h-chg neg">-0.6%</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CLIENT TYPES -->
+<section class="client-types reveal" id="services">
+  <div class="section-label">Đối Tượng Phục Vụ</div>
+  <div class="section-title">Giải Pháp Cho Mọi Loại Tổ Chức</div>
+  <div class="section-desc">Từ quỹ đầu tư quy mô nhỏ đến tập đoàn tài chính đa quốc gia — DOBN có giải pháp phù hợp cho từng nhu cầu.</div>
+
+  <div class="client-grid">
+    <a href="#contact-inst" class="client-card highlight">
+      <div class="client-icon">📊</div>
+      <h3>Quỹ Đầu Tư</h3>
+      <p>Dịch vụ môi giới cao cấp, prime brokerage và quản lý danh mục cho các quỹ tương hỗ, quỹ ETF, quỹ phòng hộ và quỹ đầu tư tư nhân.</p>
+      <div class="client-tags"><span class="ctag">Mutual Funds</span><span class="ctag">ETF</span><span class="ctag">Hedge Funds</span><span class="ctag">Private Equity</span></div>
+    </a>
+    <a href="#contact-inst" class="client-card">
+      <div class="client-icon">🏦</div>
+      <h3>Ngân Hàng & TCTD</h3>
+      <p>Giải pháp quản lý tài sản, giao dịch trái phiếu, thị trường tiền tệ và dịch vụ lưu ký chứng khoán cho các ngân hàng thương mại và tổ chức tín dụng.</p>
+      <div class="client-tags"><span class="ctag">Commercial Banks</span><span class="ctag">Credit Unions</span><span class="ctag">Treasury</span></div>
+    </a>
+    <a href="#contact-inst" class="client-card">
+      <div class="client-icon">🛡️</div>
+      <h3>Bảo Hiểm & Hưu Trí</h3>
+      <p>Quản lý danh mục đầu tư dài hạn, tập trung vào trái phiếu và tài sản có lợi suất ổn định, phù hợp với yêu cầu ALM của công ty bảo hiểm và quỹ hưu trí.</p>
+      <div class="client-tags"><span class="ctag">Insurance</span><span class="ctag">Pension Funds</span><span class="ctag">ALM</span></div>
+    </a>
+    <a href="#contact-inst" class="client-card">
+      <div class="client-icon">🏢</div>
+      <h3>Doanh Nghiệp</h3>
+      <p>Tư vấn phát hành chứng khoán, quản lý dòng tiền dư thừa, tư vấn M&A và cấu trúc tài chính doanh nghiệp cho các công ty niêm yết và phi niêm yết.</p>
+      <div class="client-tags"><span class="ctag">IPO</span><span class="ctag">M&A</span><span class="ctag">Bond Issuance</span><span class="ctag">Treasury</span></div>
+    </a>
+    <a href="#contact-inst" class="client-card">
+      <div class="client-icon">🌐</div>
+      <h3>Nhà Đầu Tư Nước Ngoài</h3>
+      <p>Dịch vụ onboarding nhanh, sub-account cho QFII, báo cáo compliance theo chuẩn quốc tế và đội ngũ hỗ trợ song ngữ Anh-Việt chuyên nghiệp.</p>
+      <div class="client-tags"><span class="ctag">QFII</span><span class="ctag">FDI</span><span class="ctag">Cross-border</span></div>
+    </a>
+    <a href="#contact-inst" class="client-card">
+      <div class="client-icon">👑</div>
+      <h3>Gia Đình Giàu Có (Family Office)</h3>
+      <p>Quản lý tài sản toàn diện cho các gia đình HNWI và UHNWI với chiến lược đầu tư đa tài sản, bảo toàn và tăng trưởng vốn qua các thế hệ.</p>
+      <div class="client-tags"><span class="ctag">HNWI</span><span class="ctag">UHNWI</span><span class="ctag">Multi-asset</span><span class="ctag">Legacy</span></div>
+    </a>
+  </div>
+</section>
+
+<!-- SERVICES DEEP DIVE -->
+<section class="services-deep reveal">
+  <div class="section-label">Dịch Vụ Chuyên Sâu</div>
+  <div class="section-title">Giải Pháp Toàn Diện</div>
+  <div class="section-desc">Mỗi dịch vụ được thiết kế riêng để đáp ứng yêu cầu phức tạp nhất của nhà đầu tư tổ chức.</div>
+
+  <div class="service-accordion">
+    <div class="acc-item open">
+      <div class="acc-header" onclick="toggleAcc(this)">
+        <div class="acc-num">01</div>
+        <div class="acc-icon">📈</div>
+        <div class="acc-info"><div class="acc-title">Môi Giới Cao Cấp & Execution</div><div class="acc-subtitle">High-touch & Algorithmic Trading</div></div>
+        <div class="acc-arrow">▾</div>
+      </div>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          <p>Dịch vụ môi giới chứng khoán dành riêng cho tổ chức với team sales-trading chuyên biệt, hỗ trợ giao dịch khối lượng lớn (block trade) với tác động thị trường tối thiểu. Tích hợp đầy đủ thuật toán VWAP, TWAP, IS và POV.</p>
+          <div class="acc-features">
+            <div class="acc-feat">Dedicated sales-trader riêng cho từng tổ chức</div>
+            <div class="acc-feat">Dark pool & block trade execution</div>
+            <div class="acc-feat">Thuật toán giao dịch VWAP / TWAP / IS</div>
+            <div class="acc-feat">FIX API tích hợp OMS/PMS</div>
+            <div class="acc-feat">Pre-trade & post-trade analytics</div>
+            <div class="acc-feat">Transaction Cost Analysis (TCA) chi tiết</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">
+        <div class="acc-num">02</div>
+        <div class="acc-icon">🏦</div>
+        <div class="acc-info"><div class="acc-title">Prime Brokerage</div><div class="acc-subtitle">Securities Lending & Financing</div></div>
+        <div class="acc-arrow">▾</div>
+      </div>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          <p>Dịch vụ prime brokerage toàn diện bao gồm cho vay chứng khoán, financing và lưu ký tập trung. Tối ưu hóa việc sử dụng tài sản thế chấp và giảm chi phí hoạt động.</p>
+          <div class="acc-features">
+            <div class="acc-feat">Securities lending với pool 5,000+ mã</div>
+            <div class="acc-feat">Margin financing lãi suất ưu đãi</div>
+            <div class="acc-feat">Tri-party collateral management</div>
+            <div class="acc-feat">Cross-margining across asset classes</div>
+            <div class="acc-feat">Real-time collateral monitoring</div>
+            <div class="acc-feat">Rehypothecation optimization</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">
+        <div class="acc-num">03</div>
+        <div class="acc-icon">💼</div>
+        <div class="acc-info"><div class="acc-title">Quản Lý Danh Mục Định Chế</div><div class="acc-subtitle">Discretionary & Advisory Portfolio Management</div></div>
+        <div class="acc-arrow">▾</div>
+      </div>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          <p>Dịch vụ quản lý tài sản theo ủy thác (discretionary) hoặc tư vấn (advisory) với chiến lược đầu tư tùy chỉnh theo mục tiêu lợi nhuận, khẩu vị rủi ro và ràng buộc pháp lý của từng tổ chức.</p>
+          <div class="acc-features">
+            <div class="acc-feat">Investment Policy Statement (IPS) riêng</div>
+            <div class="acc-feat">Benchmark customization</div>
+            <div class="acc-feat">ESG-integrated portfolio construction</div>
+            <div class="acc-feat">Risk factor decomposition & attribution</div>
+            <div class="acc-feat">Báo cáo GIPS-compliant hàng tháng</div>
+            <div class="acc-feat">Dedicated portfolio manager</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">
+        <div class="acc-num">04</div>
+        <div class="acc-icon">🏗️</div>
+        <div class="acc-info"><div class="acc-title">Ngân Hàng Đầu Tư (IB)</div><div class="acc-subtitle">ECM, DCM & M&A Advisory</div></div>
+        <div class="acc-arrow">▾</div>
+      </div>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          <p>Dịch vụ ngân hàng đầu tư đầy đủ: tư vấn phát hành cổ phiếu (IPO, rights issue), phát hành trái phiếu và tư vấn M&A. Đội ngũ IB với kinh nghiệm thực hiện hàng trăm thương vụ lớn.</p>
+          <div class="acc-features">
+            <div class="acc-feat">IPO & secondary offering management</div>
+            <div class="acc-feat">Phát hành trái phiếu doanh nghiệp</div>
+            <div class="acc-feat">M&A buy-side & sell-side advisory</div>
+            <div class="acc-feat">Valuation & financial modeling</div>
+            <div class="acc-feat">Roadshow & investor targeting</div>
+            <div class="acc-feat">Restructuring & recapitalization</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">
+        <div class="acc-num">05</div>
+        <div class="acc-icon">🔒</div>
+        <div class="acc-info"><div class="acc-title">Lưu Ký & Dịch Vụ Sau Giao Dịch</div><div class="acc-subtitle">Custody, Clearing & Settlement</div></div>
+        <div class="acc-arrow">▾</div>
+      </div>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          <p>Dịch vụ lưu ký chứng khoán chuyên nghiệp đảm bảo an toàn tài sản, xử lý thanh toán bù trừ T+2 và quản lý corporate actions (cổ tức, quyền mua, chia tách cổ phiếu) tự động.</p>
+          <div class="acc-features">
+            <div class="acc-feat">Lưu ký tập trung tại VSD</div>
+            <div class="acc-feat">Thanh toán T+2 tự động</div>
+            <div class="acc-feat">Corporate actions processing</div>
+            <div class="acc-feat">Tax reclaim management</div>
+            <div class="acc-feat">Báo cáo SOX-compliant</div>
+            <div class="acc-feat">Swift messaging integration</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXECUTION QUALITY -->
+<section class="execution reveal">
+  <div class="exec-grid">
+    <div class="exec-visual">
+      <div class="exec-card-main">
+        <div class="exec-metrics">
+          <div class="exec-metric"><label>Tốc Độ Lệnh</label><div class="val">&lt;1ms</div><div class="sub">Order latency</div></div>
+          <div class="exec-metric"><label>Fill Rate</label><div class="val">99.8%</div><div class="sub">Năm 2024</div></div>
+          <div class="exec-metric"><label>Uptime</label><div class="val">99.99%</div><div class="sub">SLA cam kết</div></div>
+        </div>
+        <div class="exec-chart-label">PHÂN TÍCH CHẤT LƯỢNG THỰC THI — Q1/2025</div>
+        <div class="exec-bars">
+          <div class="exec-bar-row"><div class="exec-bar-name">Fill Rate</div><div class="exec-bar-bg"><div class="exec-bar-fill" style="width:99.8%"></div></div><div class="exec-bar-val">99.8%</div></div>
+          <div class="exec-bar-row"><div class="exec-bar-name">At / Better</div><div class="exec-bar-bg"><div class="exec-bar-fill" style="width:94%"></div></div><div class="exec-bar-val">94.0%</div></div>
+          <div class="exec-bar-row"><div class="exec-bar-name">VWAP Beat</div><div class="exec-bar-bg"><div class="exec-bar-fill" style="width:78%"></div></div><div class="exec-bar-val">78.0%</div></div>
+          <div class="exec-bar-row"><div class="exec-bar-name">Low Slippage</div><div class="exec-bar-bg"><div class="exec-bar-fill" style="width:91%"></div></div><div class="exec-bar-val">91.0%</div></div>
+        </div>
+      </div>
+      <div class="exec-sub-cards">
+        <div class="exec-sub"><label>Giá Trị GD/Ngày</label><div class="big">3,200+<span style="font-size:14px;font-weight:400;color:rgba(255,255,255,0.4)"> tỷ</span></div></div>
+        <div class="exec-sub"><label>Thuật Toán</label><div class="big" style="color:var(--gold)">12+<span style="font-size:14px;font-weight:400;color:rgba(255,255,255,0.4)"> loại</span></div></div>
+      </div>
+    </div>
+
+    <div class="exec-content">
+      <div class="section-label">Chất Lượng Thực Thi</div>
+      <div class="section-title">Best Execution Cam Kết</div>
+      <div class="section-desc">DOBN cam kết mang đến chất lượng thực thi lệnh tốt nhất thị trường — đo lường và báo cáo minh bạch theo tiêu chuẩn MiFID II.</div>
+      <div class="exec-list">
+        <div class="exec-item">
+          <div class="exec-item-icon">⚡</div>
+          <div class="exec-item-text"><h4>Low-Latency Infrastructure</h4><p>Co-location tại HOSE data center, kết nối trực tiếp với matching engine với độ trễ dưới 1 millisecond.</p></div>
+        </div>
+        <div class="exec-item">
+          <div class="exec-item-icon">🤖</div>
+          <div class="exec-item-text"><h4>Algorithmic Trading Suite</h4><p>12+ thuật toán giao dịch tối ưu hóa: VWAP, TWAP, IS, POV, Sniper, Iceberg và các chiến lược tùy chỉnh.</p></div>
+        </div>
+        <div class="exec-item">
+          <div class="exec-item-icon">📊</div>
+          <div class="exec-item-text"><h4>Transaction Cost Analysis</h4><p>Báo cáo TCA chi tiết sau mỗi giao dịch: market impact, timing cost, slippage và so sánh với benchmark.</p></div>
+        </div>
+        <div class="exec-item">
+          <div class="exec-item-icon">🔗</div>
+          <div class="exec-item-text"><h4>FIX API & OMS Integration</h4><p>Tích hợp liền mạch với các hệ thống OMS/PMS phổ biến: Charles River, SimCorp, Bloomberg AIM thông qua FIX 4.2/4.4.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH ACCESS -->
+<section class="research-inst reveal">
+  <div class="section-label">DOBN Research Định Chế</div>
+  <div class="section-title">Phân Tích Độc Quyền</div>
+  <div class="section-desc">Báo cáo nghiên cứu chuyên sâu, định kỳ và theo yêu cầu từ đội ngũ 50+ chuyên gia phân tích.</div>
+
+  <div class="research-grid">
+    <div class="research-list">
+      <a href="#" class="research-item">
+        <div><div class="ri-type">Chiến Lược Vĩ Mô</div><div class="ri-title">Vietnam Macro Outlook Q3/2025: Navigating the Upcycle</div><div class="ri-meta">Vũ Thị Lan Anh, CFA · 07/06/2025 · 48 trang</div></div>
+        <div class="ri-badge"><span class="rb rb-macro">MACRO</span></div>
+      </a>
+      <a href="#" class="research-item">
+        <div><div class="ri-type">Phân Tích Ngành</div><div class="ri-title">Banking Sector Deep-Dive: Credit Cycle Recovery & NIM Expansion</div><div class="ri-meta">Nguyễn Hữu Đạt, CFA · 06/06/2025 · 64 trang</div></div>
+        <div class="ri-badge"><span class="rb rb-buy">MUA</span></div>
+      </a>
+      <a href="#" class="research-item">
+        <div><div class="ri-type">Cổ Phiếu</div><div class="ri-title">VCB — Initiating Coverage: Premier Franchise, Premium Valuation Justified</div><div class="ri-meta">Nguyễn Hữu Đạt, CFA · 05/06/2025 · TP: 102,000đ</div></div>
+        <div class="ri-badge"><span class="rb rb-buy">MUA</span></div>
+      </a>
+      <a href="#" class="research-item">
+        <div><div class="ri-type">Thị Trường Trái Phiếu</div><div class="ri-title">Vietnam Fixed Income Monthly: Yield Curve Normalisation in Progress</div><div class="ri-meta">Ngô Thanh Tâm, FRM · 04/06/2025 · 36 trang</div></div>
+        <div class="ri-badge"><span class="rb rb-macro">BONDS</span></div>
+      </a>
+      <a href="#" class="research-item">
+        <div><div class="ri-type">Quant Strategy</div><div class="ri-title">Factor Investing in Vietnam: Momentum + Value Multi-Factor Model</div><div class="ri-meta">Phạm Minh Hoàng, CMT · 03/06/2025 · 52 trang</div></div>
+        <div class="ri-badge"><span class="rb rb-macro">QUANT</span></div>
+      </a>
+      <a href="#" class="research-item">
+        <div><div class="ri-type">Cổ Phiếu</div><div class="ri-title">HPG — Steel Upcycle 2025-2026: Time to Add Aggressively</div><div class="ri-meta">Trần Minh Quân · 02/06/2025 · TP: 38,000đ</div></div>
+        <div class="ri-badge"><span class="rb rb-buy">MUA</span></div>
+      </a>
+    </div>
+
+    <div class="research-access">
+      <div class="ra-title">Truy Cập Research Định Chế</div>
+      <div class="ra-desc">Toàn bộ báo cáo phân tích, mô hình tài chính và dữ liệu độc quyền của DOBN Research dành riêng cho khách hàng tổ chức đã ký hợp đồng dịch vụ.</div>
+      <div class="ra-features">
+        <div class="ra-feat"><div class="ra-feat-icon">📄</div>200+ báo cáo mới mỗi năm</div>
+        <div class="ra-feat"><div class="ra-feat-icon">📊</div>Mô hình tài chính Excel đầy đủ</div>
+        <div class="ra-feat"><div class="ra-feat-icon">🔔</div>Alert tức thì khi có cập nhật</div>
+        <div class="ra-feat"><div class="ra-feat-icon">📞</div>Analyst access — gặp trực tiếp</div>
+        <div class="ra-feat"><div class="ra-feat-icon">🗄️</div>Data API tích hợp hệ thống nội bộ</div>
+        <div class="ra-feat"><div class="ra-feat-icon">🌐</div>Báo cáo song ngữ Anh-Việt</div>
+      </div>
+      <a href="#contact-inst" class="ra-btn">Đăng Ký Truy Cập →</a>
+      <div class="ra-note">Miễn phí cho khách hàng có AUM từ 500 tỷ trở lên</div>
+    </div>
+  </div>
+</section>
+
+<!-- IB / ADVISORY -->
+<section class="advisory reveal">
+  <div class="section-label">Ngân Hàng Đầu Tư</div>
+  <div class="section-title">Tư Vấn Thương Vụ Lớn</div>
+  <div class="section-desc">Đội ngũ IB với 15+ năm kinh nghiệm, đã tư vấn thành công hàng trăm thương vụ phát hành và M&A tại Việt Nam.</div>
+
+  <div class="advisory-grid">
+    <div class="adv-card">
+      <div class="adv-stripe"></div>
+      <div class="adv-body">
+        <div class="adv-icon">🚀</div>
+        <h3>Phát Hành Cổ Phiếu (ECM)</h3>
+        <p>Tư vấn toàn trình từ cấu trúc thương vụ, định giá, marketing đến thực hiện: IPO, rights issue, private placement và block sale cho cổ đông chiến lược.</p>
+        <div class="adv-deal"><label>Thương Vụ Tiêu Biểu</label><span>IPO Công ty X — 2,400 tỷ VNĐ — 2024</span></div>
+        <div class="adv-deal"><label>Gần Nhất</label><span>Rights Issue Tập đoàn Y — 1,800 tỷ VNĐ — Q1/2025</span></div>
+        <a href="#contact-inst" class="adv-link">Tư Vấn Ngay →</a>
+      </div>
+    </div>
+    <div class="adv-card">
+      <div class="adv-stripe"></div>
+      <div class="adv-body">
+        <div class="adv-icon">📋</div>
+        <h3>Phát Hành Trái Phiếu (DCM)</h3>
+        <p>Tư vấn phát hành trái phiếu doanh nghiệp, trái phiếu xanh (green bond) và các sản phẩm nợ sáng tạo. Phân phối đến mạng lưới 500+ nhà đầu tư tổ chức.</p>
+        <div class="adv-deal"><label>Thương Vụ Tiêu Biểu</label><span>Corporate Bond — 5,000 tỷ VNĐ — 2024</span></div>
+        <div class="adv-deal"><label>Gần Nhất</label><span>Green Bond Công ty Z — 2,000 tỷ VNĐ — Q2/2025</span></div>
+        <a href="#contact-inst" class="adv-link">Tư Vấn Ngay →</a>
+      </div>
+    </div>
+    <div class="adv-card">
+      <div class="adv-stripe"></div>
+      <div class="adv-body">
+        <div class="adv-icon">🤝</div>
+        <h3>Tư Vấn M&A</h3>
+        <p>Tư vấn mua bán sáp nhập toàn diện: định giá, due diligence tài chính, đàm phán, cấu trúc thương vụ và quản lý sau sáp nhập cho cả bên mua và bên bán.</p>
+        <div class="adv-deal"><label>Thương Vụ Tiêu Biểu</label><span>Sell-side Advisory — 8,500 tỷ VNĐ — 2023</span></div>
+        <div class="adv-deal"><label>Gần Nhất</label><span>Cross-border M&A — USD 85M — Q1/2025</span></div>
+        <a href="#contact-inst" class="adv-link">Tư Vấn Ngay →</a>
+      </div>
+    </div>
+    <div class="adv-card">
+      <div class="adv-stripe"></div>
+      <div class="adv-body">
+        <div class="adv-icon">⚖️</div>
+        <h3>Tái Cơ Cấu Tài Chính</h3>
+        <p>Tư vấn tái cơ cấu nợ, tái cấu trúc vốn và giải pháp tài chính sáng tạo cho doanh nghiệp trong giai đoạn chuyển đổi hoặc khó khăn tài chính.</p>
+        <div class="adv-deal"><label>Thương Vụ Tiêu Biểu</label><span>Debt Restructuring — 3,200 tỷ VNĐ — 2024</span></div>
+        <div class="adv-deal"><label>Gần Nhất</label><span>Recapitalization Plan — 1,500 tỷ VNĐ — Q2/2025</span></div>
+        <a href="#contact-inst" class="adv-link">Tư Vấn Ngay →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CREDENTIALS -->
+<section class="credentials reveal">
+  <div class="section-label">Năng Lực & Kinh Nghiệm</div>
+  <div class="section-title">Số Liệu Nói Lên Tất Cả</div>
+  <div class="cred-grid">
+    <div class="cred-card"><div class="cred-circle">🏛️</div><div class="cred-num">200+</div><div class="cred-label">Khách hàng tổ chức đang phục vụ</div></div>
+    <div class="cred-card"><div class="cred-circle">💰</div><div class="cred-num">50,000<span style="font-size:18px">tỷ</span></div><div class="cred-label">Tổng tài sản dưới quản lý</div></div>
+    <div class="cred-card"><div class="cred-circle">📊</div><div class="cred-num">500+</div><div class="cred-label">Thương vụ IB đã thực hiện thành công</div></div>
+    <div class="cred-card"><div class="cred-circle">🌐</div><div class="cred-num">30+</div><div class="cred-label">Đối tác tổ chức quốc tế tại 15 quốc gia</div></div>
+  </div>
+</section>
+
+<!-- TECHNOLOGY -->
+<section class="technology reveal">
+  <div class="section-label">Nền Tảng Công Nghệ</div>
+  <div class="section-title">Infrastructure Đẳng Cấp</div>
+  <div class="section-desc">Hạ tầng công nghệ được đầu tư xây dựng theo tiêu chuẩn quốc tế, đảm bảo độ ổn định và bảo mật cao nhất.</div>
+
+  <div class="tech-grid">
+    <div class="tech-card">
+      <div class="tech-icon">⚡</div>
+      <h4>Ultra-Low Latency Engine</h4>
+      <p>Hệ thống khớp lệnh co-location tại data center HOSE, kết nối trực tiếp matching engine. Latency end-to-end dưới 1ms với throughput 100,000+ orders/giây.</p>
+      <div class="tech-spec">Latency: &lt;1ms · Throughput: 100K OPS</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">🔗</div>
+      <h4>FIX Protocol & API Suite</h4>
+      <p>FIX 4.2/4.4/5.0 đầy đủ, REST & WebSocket API real-time, tích hợp với Bloomberg AIM, Charles River, SimCorp Dimension và các OMS/PMS phổ biến.</p>
+      <div class="tech-spec">FIX 4.2 / 4.4 · REST API · WebSocket</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">🤖</div>
+      <h4>Algorithmic Trading Platform</h4>
+      <p>Bộ 12+ thuật toán giao dịch được kiểm chứng: VWAP, TWAP, IS, POV, Arrival Price, Iceberg, Sniper. Backtesting engine và custom algo development theo yêu cầu.</p>
+      <div class="tech-spec">12+ Algos · Custom Development · Backtest</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">📊</div>
+      <h4>Analytics & Reporting Portal</h4>
+      <p>Portal phân tích danh mục thời gian thực, risk dashboard, TCA reporting và báo cáo tuân thủ tự động. Xuất dữ liệu Excel, PDF và API cho hệ thống nội bộ.</p>
+      <div class="tech-spec">Real-time · Risk Dashboard · TCA Reports</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">🔒</div>
+      <h4>Bảo Mật Dữ Liệu</h4>
+      <p>Mã hóa AES-256 end-to-end, xác thực đa yếu tố (MFA), audit trail đầy đủ. Tuân thủ ISO 27001, SOC 2 Type II và các quy định bảo mật tài chính quốc tế.</p>
+      <div class="tech-spec">AES-256 · ISO 27001 · SOC 2 Type II</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">☁️</div>
+      <h4>High Availability Infrastructure</h4>
+      <p>Kiến trúc active-active data center với failover tự động, SLA 99.99% uptime, backup site độc lập và DRP (Disaster Recovery Plan) được kiểm tra định kỳ.</p>
+      <div class="tech-spec">99.99% Uptime · Active-Active · DRP</div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDIES -->
+<section class="cases reveal">
+  <div class="section-label">Case Studies</div>
+  <div class="section-title">Thương Vụ Tiêu Biểu</div>
+  <div class="section-desc">Một số thương vụ và dự án tiêu biểu DOBN đã thực hiện thành công cho khách hàng tổ chức.</div>
+
+  <div class="cases-grid">
+    <div class="case-card">
+      <div class="case-header">
+        <div class="case-type">📈 Quản Lý Danh Mục</div>
+        <div class="case-title">Quỹ Đầu Tư Tăng Trưởng VN — Tái Cơ Cấu Danh Mục 3,500 tỷ</div>
+        <div class="case-desc">Tái cơ cấu toàn bộ danh mục từ concentrated holdings sang đa dạng hóa, triển khai chiến lược factor investing kết hợp smart beta.</div>
+      </div>
+      <div class="case-body">
+        <div class="case-results">
+          <div class="case-result"><span class="cr-label">AUM</span><span class="cr-val">3,500 tỷ VNĐ</span></div>
+          <div class="case-result"><span class="cr-label">Lợi nhuận YTD</span><span class="cr-val cr-pos">+24.8% vs benchmark +15.2%</span></div>
+          <div class="case-result"><span class="cr-label">Sharpe Ratio</span><span class="cr-val cr-pos">1.84 (cải thiện từ 0.92)</span></div>
+          <div class="case-result"><span class="cr-label">Max Drawdown</span><span class="cr-val">-8.2% (giảm từ -18.5%)</span></div>
+        </div>
+        <hr class="case-divider"/>
+        <div class="case-client">🔒 Danh tính khách hàng được bảo mật theo thỏa thuận NDA</div>
+      </div>
+    </div>
+    <div class="case-card">
+      <div class="case-header">
+        <div class="case-type">🏗️ Ngân Hàng Đầu Tư</div>
+        <div class="case-title">IPO Tập Đoàn Bất Động Sản — Huy Động 2,400 tỷ VNĐ</div>
+        <div class="case-desc">Tư vấn và thực hiện toàn bộ quy trình IPO trên sàn HoSE: định giá, book-building, roadshow và phân phối cho 200+ nhà đầu tư tổ chức.</div>
+      </div>
+      <div class="case-body">
+        <div class="case-results">
+          <div class="case-result"><span class="cr-label">Quy Mô Huy Động</span><span class="cr-val">2,400 tỷ VNĐ</span></div>
+          <div class="case-result"><span class="cr-label">Tỷ Lệ Đặt Mua</span><span class="cr-val cr-pos">4.8x oversubscribed</span></div>
+          <div class="case-result"><span class="cr-label">Số NĐT Tổ Chức</span><span class="cr-val">200+ tổ chức trong & ngoài nước</span></div>
+          <div class="case-result"><span class="cr-label">Tăng Giá Ngày Đầu</span><span class="cr-val cr-pos">+22.5% so với giá IPO</span></div>
+        </div>
+        <hr class="case-divider"/>
+        <div class="case-client">🔒 Danh tính khách hàng được bảo mật theo thỏa thuận NDA</div>
+      </div>
+    </div>
+    <div class="case-card">
+      <div class="case-header">
+        <div class="case-type">⚡ Giao Dịch Thuật Toán</div>
+        <div class="case-title">Quỹ Nước Ngoài — Triển Khai Algo Trading Giảm Market Impact</div>
+        <div class="case-desc">Thiết kế và triển khai bộ thuật toán VWAP/IS custom cho quỹ đầu tư Singapore muốn tích lũy vị thế lớn tại VN với market impact tối thiểu.</div>
+      </div>
+      <div class="case-body">
+        <div class="case-results">
+          <div class="case-result"><span class="cr-label">AUM Trading</span><span class="cr-val">1,200 tỷ VNĐ/tháng</span></div>
+          <div class="case-result"><span class="cr-label">Giảm Market Impact</span><span class="cr-val cr-pos">-65% so với thủ công</span></div>
+          <div class="case-result"><span class="cr-label">VWAP Performance</span><span class="cr-val cr-pos">Beat VWAP 78% phiên</span></div>
+          <div class="case-result"><span class="cr-label">Chi Phí Giao Dịch</span><span class="cr-val cr-pos">Giảm 40bps vs trước</span></div>
+        </div>
+        <hr class="case-divider"/>
+        <div class="case-client">🔒 Danh tính khách hàng được bảo mật theo thỏa thuận NDA</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-inst reveal" id="contact-inst">
+  <div class="section-label">Liên Hệ</div>
+  <div class="section-title">Bắt Đầu Hợp Tác</div>
+  <div class="section-desc">Đội ngũ Institutional Sales của DOBN sẽ liên hệ trong vòng 4 giờ làm việc để sắp xếp buổi tư vấn phù hợp nhất.</div>
+
+  <div class="contact-inner">
+    <div class="contact-info">
+      <p>Chúng tôi hiểu rằng mỗi tổ chức có nhu cầu và ràng buộc khác nhau. Hãy chia sẻ để đội ngũ DOBN Institutional có thể chuẩn bị đề xuất giải pháp tùy chỉnh cho bạn.</p>
+      <div class="contact-detail-list">
+        <div class="cd-item">
+          <div class="cd-icon">📧</div>
+          <div class="cd-text"><label>Email</label><span>institutional@dobn.com.vn</span></div>
+        </div>
+        <div class="cd-item">
+          <div class="cd-icon">📞</div>
+          <div class="cd-text"><label>Hotline Tổ Chức</label><span>(028) 3823 xxxx — Ext. 301</span></div>
+        </div>
+        <div class="cd-item">
+          <div class="cd-icon">🏢</div>
+          <div class="cd-text"><label>Địa Chỉ</label><span>Tầng 20, Tòa nhà Bitexco, Quận 1, TP.HCM</span></div>
+        </div>
+        <div class="cd-item">
+          <div class="cd-icon">🌐</div>
+          <div class="cd-text"><label>Văn Phòng Hà Nội</label><span>Tầng 12, Tòa nhà Indochina, Hoàn Kiếm, HN</span></div>
+        </div>
+      </div>
+      <div class="team-cards-mini">
+        <div class="tcm"><div class="tcm-avatar">👨‍💼</div><div><div class="tcm-name">Đỗ Văn Nam</div><div class="tcm-role">Giám Đốc Institutional Sales</div></div></div>
+        <div class="tcm"><div class="tcm-avatar">👩‍💼</div><div><div class="tcm-name">Nguyễn Thanh Huyền, CFA</div><div class="tcm-role">Head of Prime Brokerage</div></div></div>
+        <div class="tcm"><div class="tcm-avatar">👨‍💻</div><div><div class="tcm-name">Đinh Văn Khải</div><div class="tcm-role">Head of Quantitative Solutions</div></div></div>
+      </div>
+    </div>
+
+    <div class="contact-form-card">
+      <div class="cf-title">Gửi Yêu Cầu Tư Vấn</div>
+      <div class="cf-sub">Chuyên viên DOBN sẽ phản hồi trong 4 giờ làm việc.</div>
+      <div class="form-row">
+        <div class="form-group"><label>Họ Tên *</label><input type="text" placeholder="Nguyễn Văn A"/></div>
+        <div class="form-group"><label>Chức Danh *</label><input type="text" placeholder="CIO / Fund Manager..."/></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Tổ Chức *</label><input type="text" placeholder="Tên công ty / quỹ"/></div>
+        <div class="form-group"><label>Loại Tổ Chức</label>
+          <select>
+            <option>Quỹ đầu tư trong nước</option>
+            <option>Quỹ đầu tư nước ngoài</option>
+            <option>Ngân hàng thương mại</option>
+            <option>Công ty bảo hiểm</option>
+            <option>Quỹ hưu trí</option>
+            <option>Family Office</option>
+            <option>Doanh nghiệp</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Email *</label><input type="email" placeholder="email@company.com"/></div>
+        <div class="form-group"><label>Số Điện Thoại</label><input type="tel" placeholder="+84 xxx xxx xxxx"/></div>
+      </div>
+      <div class="form-group"><label>AUM / Quy Mô Tài Sản</label>
+        <select>
+          <option>Dưới 500 tỷ VNĐ</option>
+          <option>500 tỷ – 2,000 tỷ VNĐ</option>
+          <option>2,000 tỷ – 10,000 tỷ VNĐ</option>
+          <option>Trên 10,000 tỷ VNĐ</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Dịch Vụ Quan Tâm</label>
+        <select>
+          <option>Môi giới & Execution</option>
+          <option>Prime Brokerage</option>
+          <option>Quản lý danh mục định chế</option>
+          <option>Ngân hàng đầu tư (IB)</option>
+          <option>Research Access</option>
+          <option>Giải pháp toàn diện</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Nội Dung Yêu Cầu</label><textarea rows="4" placeholder="Mô tả nhu cầu, quy mô giao dịch, yêu cầu đặc thù..."></textarea></div>
+      <button class="btn-form" onclick="alert('Yêu cầu đã được gửi! Chuyên viên DOBN Institutional sẽ liên hệ trong 4 giờ.')">Gửi Yêu Cầu Tư Vấn →</button>
+      <div class="form-security">🔒 Thông tin được bảo mật tuyệt đối theo NDA tiêu chuẩn ngành</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-banner reveal">
+  <h2>Sẵn Sàng Nâng Tầm Đầu Tư Tổ Chức?</h2>
+  <p>Hàng trăm quỹ đầu tư và tổ chức tài chính đã tin tưởng chọn DOBN làm đối tác chiến lược. Hãy là người tiếp theo.</p>
+  <a href="#contact-inst" class="btn-dark">Đặt Lịch Tư Vấn Ngay ↗</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="home.html" class="nav-logo"><div class="logo-box">DB</div><span class="logo-text">DOBN <span>Securities</span></span></a>
+      <p>Công ty Cổ phần Chứng khoán DOBN — Giấy phép kinh doanh chứng khoán số 01/UBCK-GPKD. Thành viên HOSE, HNX, UPCOM.</p>
+    </div>
+    <div class="footer-col"><h4>Dịch Vụ</h4><ul><li><a href="individual.html">Khách Hàng Cá Nhân</a></li><li><a href="institutional.html">Khách Hàng Tổ Chức</a></li><li><a href="individual.html">Margin & Tài Chính</a></li><li><a href="individual.html">Phân Tích Đầu Tư</a></li></ul></div>
+    <div class="footer-col"><h4>Công Ty</h4><ul><li><a href="about.html">Giới Thiệu</a></li><li><a href="shareholder.html">Quan Hệ Cổ Đông</a></li><li><a href="news.html">Tin Tức</a></li><li><a href="about.html">Tuyển Dụng</a></li></ul></div>
+    <div class="footer-col"><h4>Tổ Chức</h4><ul><li><a href="mailto:institutional@dobn.com.vn">institutional@dobn.com.vn</a></li><li><a href="#">Hotline: (028) 3823 xxxx</a></li><li><a href="#">Prime Brokerage</a></li><li><a href="#">Research Access</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 DOBN Securities Corporation. All rights reserved.</p>
+    <div class="footer-socials">
+      <a href="#" class="social-btn">f</a><a href="#" class="social-btn">in</a><a href="#" class="social-btn">▶</a><a href="#" class="social-btn">Z</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting){ x.target.classList.add('visible'); io.unobserve(x.target); } }), {threshold:0.08});
+  reveals.forEach(r => io.observe(r));
+
+  // Nav
+  window.addEventListener('scroll', () => {
+    document.querySelector('nav').style.background = window.scrollY>40?'rgba(6,14,28,0.98)':'rgba(10,22,40,0.95)';
+  });
+
+  // Mobile menu
+  function toggleMenu() {
+    const l = document.querySelector('.nav-links');
+    l.style.cssText = l.style.display==='flex' ? '' : 'display:flex;flex-direction:column;position:fixed;top:72px;left:0;right:0;background:#0a1628;padding:24px;gap:20px;border-bottom:1px solid rgba(201,168,76,0.2);z-index:99;';
+  }
+
+  // Accordion
+  function toggleAcc(header) {
+    const item = header.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.acc-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+</script>
+</body>
+</html>

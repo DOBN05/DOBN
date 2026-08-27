@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dịch Vụ Tư Vấn — DOBN CAPITAL</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+/* ═══════════════════════════ TOKENS */
+:root{
+  --ink:#09131e; --ink2:#152234;
+  --gold:#c4922a; --gold2:#e0b55a; --goldlt:#f5dfa0;
+  --navy:#04045d;
+  --cream:#f7f3ec; --cream2:#ede8df;
+  --mist:#8596a8; --white:#fff;
+  --ff-d:'Cormorant Garamond',Georgia,serif;
+  --ff-b:'Sora',sans-serif;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --r:12px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--ff-b);background:var(--cream);color:var(--ink);font-weight:300;overflow-x:hidden}
+
+/* ═══════════════════════════ HERO BANNER */
+.svc-hero{
+  background:linear-gradient(135deg,var(--ink) 0%,var(--ink2) 60%,#1c3a6e 100%);
+  padding:72px 40px 64px;
+  text-align:center;position:relative;overflow:hidden;
+}
+.svc-hero::before{
+  content:'';position:absolute;inset:0;
+  background-image:linear-gradient(rgba(196,146,42,.05) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(196,146,42,.05) 1px,transparent 1px);
+  background-size:52px 52px;
+}
+.svc-hero::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 80% at 50% 0%,rgba(196,146,42,.12),transparent);
+}
+.svc-hero .bc{
+  font-size:11px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--gold);margin-bottom:20px;position:relative;z-index:1;
+}
+.svc-hero h1{
+  font-family:var(--ff-d);font-size:clamp(2.4rem,4vw,4rem);
+  font-weight:300;color:var(--white);line-height:1.1;
+  margin-bottom:14px;position:relative;z-index:1;
+}
+.svc-hero h1 em{font-style:italic;color:var(--gold2);}
+.svc-hero p{
+  font-size:.95rem;color:rgba(255,255,255,.55);
+  max-width:520px;margin:0 auto;line-height:1.75;
+  position:relative;z-index:1;font-weight:300;
+}
+
+/* step pills */
+.step-pills{
+  display:flex;justify-content:center;gap:0;margin-top:40px;
+  position:relative;z-index:1;flex-wrap:wrap;
+}
+.step-pill{
+  display:flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(196,146,42,.2);
+  color:rgba(255,255,255,.65);
+  padding:10px 22px;font-size:.78rem;font-weight:500;letter-spacing:.5px;
+  transition:background .25s,border-color .25s;
+}
+.step-pill:first-child{border-radius:50px 0 0 50px;}
+.step-pill:last-child{border-radius:0 50px 50px 0;}
+.step-pill.active{background:rgba(196,146,42,.18);border-color:var(--gold);color:var(--gold2);}
+.step-pill .sp-num{
+  width:22px;height:22px;border-radius:50%;
+  background:rgba(196,146,42,.25);color:var(--gold2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.72rem;font-weight:700;flex-shrink:0;
+}
+
+/* ═══════════════════════════ LAYOUT */
+.svc-wrapper{max-width:1060px;margin:0 auto;padding:56px 24px 80px;}
+
+/* ═══════════════════════════ FORM CARD */
+.form-card{
+  background:var(--white);border-radius:16px;
+  box-shadow:0 4px 40px rgba(9,19,30,.10);
+  overflow:hidden;margin-bottom:40px;
+}
+.form-card-header{
+  background:linear-gradient(135deg,var(--navy) 0%,#0a0a8a 100%);
+  padding:36px 44px;
+  display:flex;align-items:center;gap:24px;
+  position:relative;overflow:hidden;
+}
+.form-card-header::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 100% at 100% 50%,rgba(196,146,42,.15),transparent);
+}
+.form-card-header img{height:72px;width:auto;object-fit:contain;position:relative;z-index:1;}
+.fch-text{position:relative;z-index:1;}
+.fch-text h2{
+  font-family:var(--ff-d);font-size:2.2rem;font-weight:700;
+  color:var(--white);letter-spacing:.02em;line-height:1;
+}
+.fch-text p{
+  font-size:.72rem;letter-spacing:4px;text-transform:uppercase;
+  color:rgba(255,255,255,.45);margin-top:6px;
+}
+.fch-divider{width:1px;height:60px;background:rgba(255,255,255,.15);margin:0 4px;}
+
+/* ═══════════════════════════ FORM BODY */
+.form-body{padding:44px;}
+
+/* section headers */
+.fsec-head{
+  display:flex;align-items:center;gap:14px;
+  margin-bottom:28px;padding-bottom:16px;
+  border-bottom:1px solid rgba(9,19,30,.08);
+}
+.fsec-icon{
+  width:40px;height:40px;border-radius:10px;
+  background:rgba(196,146,42,.1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;color:var(--gold);flex-shrink:0;
+}
+.fsec-title{
+  font-family:var(--ff-d);font-size:1.5rem;font-weight:600;color:var(--navy);
+}
+.fsec-subtitle{font-size:.72rem;color:var(--mist);letter-spacing:1px;text-transform:uppercase;margin-top:2px;}
+.fsec-num{
+  margin-left:auto;
+  font-family:var(--ff-d);font-size:2rem;font-weight:300;
+  color:rgba(196,146,42,.2);
+}
+
+.form-section{margin-bottom:44px;}
+
+/* field groups */
+.field-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.field-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.field-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+@media(max-width:700px){
+  .field-grid-2,.field-grid-3,.field-grid-4{grid-template-columns:1fr;}
+}
+
+.field-group{display:flex;flex-direction:column;gap:6px;}
+.field-group label{
+  font-size:.7rem;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--mist);font-weight:500;
+}
+.field-group input,
+.field-group select{
+  width:100%;padding:12px 14px;
+  border:1.5px solid rgba(9,19,30,.12);border-radius:8px;
+  font-family:var(--ff-b);font-size:.88rem;color:var(--ink);
+  background:var(--cream);outline:none;
+  transition:border-color .2s,background .2s;
+  -webkit-appearance:none;
+}
+.field-group input:focus,
+.field-group select:focus{border-color:var(--gold);background:var(--white);}
+.field-group input[type="number"]{font-weight:500;}
+
+/* subsection labels */
+.sub-head{
+  display:flex;align-items:center;gap:8px;
+  font-size:.78rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+  color:var(--navy);margin:24px 0 14px;
+}
+.sub-head::before{content:'';width:16px;height:2px;background:var(--gold);}
+
+/* question cards */
+.q-card{
+  background:var(--cream);border:1px solid rgba(9,19,30,.07);
+  border-radius:10px;padding:18px 20px;
+  transition:border-color .2s,background .2s;
+}
+.q-card:focus-within{border-color:rgba(196,146,42,.4);background:var(--white);}
+.q-num{
+  font-size:.68rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--gold);font-weight:600;margin-bottom:6px;
+}
+.q-text{font-size:.88rem;font-weight:500;color:var(--ink);margin-bottom:10px;line-height:1.5;}
+.q-card select{
+  width:100%;padding:10px 12px;
+  border:1.5px solid rgba(9,19,30,.12);border-radius:7px;
+  font-family:var(--ff-b);font-size:.84rem;color:var(--ink);
+  background:var(--white);outline:none;
+  transition:border-color .2s;
+}
+.q-card select:focus{border-color:var(--gold);}
+
+/* submit button */
+.btn-submit-main{
+  width:100%;padding:18px;
+  background:linear-gradient(135deg,var(--navy),#0a0a8a);
+  color:var(--white);border:none;border-radius:10px;
+  font-family:var(--ff-b);font-size:1rem;font-weight:600;
+  letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  box-shadow:0 6px 24px rgba(4,4,93,.25);
+  transition:transform .2s,box-shadow .2s;
+}
+.btn-submit-main:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(4,4,93,.35);}
+.btn-submit-main i{font-size:18px;}
+
+/* ═══════════════════════════ PDF PAGES */
+.a4-page{
+  width:210mm;min-height:297mm;
+  background:white;
+  margin:0 auto;
+  box-shadow:0 8px 48px rgba(9,19,30,.18);
+  border-radius:4px;
+  position:relative;overflow:hidden;
+}
+.a4-page + .a4-page{margin-top:16px;}
+.watermark{
+  position:absolute;inset:0;
+  display:flex;justify-content:center;align-items:center;
+  pointer-events:none;opacity:.04;z-index:0;
+}
+.watermark img{width:500px;}
+.content-layer{position:relative;z-index:2;}
+
+/* pdf typography */
+.pdf-section-title{
+  font-family:var(--ff-d);font-size:1.4rem;font-weight:700;
+  color:var(--navy);margin-bottom:14px;
+  padding-bottom:8px;border-bottom:2px solid var(--navy);
+  letter-spacing:.02em;
+}
+.pdf-sub-title{
+  font-size:.95rem;font-weight:700;color:var(--navy);
+  margin:14px 0 8px;
+}
+.pdf-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.pdf-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+
+.pdf-info-row{
+  font-size:.82rem;padding:5px 0;
+  border-bottom:1px solid rgba(9,19,30,.06);
+  display:flex;gap:8px;
+}
+.pdf-info-row strong{color:var(--navy);min-width:110px;flex-shrink:0;}
+
+.pdf-box{
+  border:1.5px solid var(--navy);border-radius:10px;padding:16px;
+}
+.pdf-box-head{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:12px;padding-bottom:8px;
+  border-bottom:1px solid rgba(4,4,93,.15);
+}
+.pdf-box-head h3{font-size:.9rem;font-weight:700;color:var(--navy);}
+.pdf-box-head span{font-size:.68rem;color:var(--mist);font-style:italic;}
+.pdf-row{
+  display:flex;justify-content:space-between;
+  font-size:.8rem;padding:4px 0;
+  border-bottom:1px solid rgba(9,19,30,.05);
+}
+.pdf-row:last-child{border-bottom:none;}
+.pdf-row.total{
+  font-weight:700;color:var(--navy);
+  border-top:1px solid rgba(4,4,93,.2);
+  margin-top:6px;padding-top:8px;
+}
+
+.pdf-risk-card{
+  border:1px solid rgba(4,4,93,.15);border-radius:10px;
+  padding:16px;text-align:center;
+}
+.pdf-risk-card .rc-label{font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--mist);margin-bottom:8px;}
+.pdf-risk-card .rc-val{
+  font-family:var(--ff-d);font-size:1.8rem;font-weight:700;
+  color:var(--navy);line-height:1;
+}
+
+.pdf-stock-card{
+  border:1px solid rgba(4,4,93,.15);border-radius:10px;
+  padding:14px 10px;text-align:center;
+  transition:box-shadow .2s;
+}
+.pdf-stock-card:hover{box-shadow:0 4px 16px rgba(9,19,30,.12);}
+.pdf-stock-card img{width:52px;height:52px;object-fit:contain;margin:0 auto 8px;}
+.pdf-stock-card h3{font-size:.88rem;font-weight:700;color:var(--navy);}
+.pdf-stock-card p{font-size:.68rem;color:var(--mist);margin-top:4px;line-height:1.4;}
+
+.pdf-note{margin-top:20px;border-top:1px solid rgba(9,19,30,.08);padding-top:16px;}
+.pdf-note h3{font-size:.82rem;font-weight:700;color:var(--navy);margin-bottom:10px;letter-spacing:1px;}
+.pdf-note p{font-size:.75rem;color:#333;line-height:1.7;margin-bottom:6px;}
+
+.pdf-footer{
+  position:absolute;bottom:20px;right:36px;left:36px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.pdf-footer p{font-size:.65rem;color:var(--navy);font-weight:700;letter-spacing:1px;}
+.pdf-footer .pf-line{height:1px;background:rgba(4,4,93,.15);flex:1;margin:0 12px;}
+
+/* ═══════════════════════════ DOWNLOAD BTN */
+.btn-download-wrap{
+  text-align:center;margin-top:32px;
+  display:none;
+}
+.btn-download-wrap.show{display:block;}
+.btn-download{
+  display:inline-flex;align-items:center;gap:10px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:var(--ink);padding:16px 40px;border-radius:50px;
+  font-family:var(--ff-b);font-size:.9rem;font-weight:700;
+  border:none;cursor:pointer;letter-spacing:.5px;
+  box-shadow:0 6px 24px rgba(196,146,42,.35);
+  transition:transform .2s,box-shadow .2s;
+}
+.btn-download:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(196,146,42,.45);}
+
+/* ═══════════════════════════ REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .65s var(--ease),transform .65s var(--ease);}
+.reveal.on{opacity:1;transform:translateY(0);}
+.rv1{transition-delay:.1s}.rv2{transition-delay:.2s}.rv3{transition-delay:.3s}
+
+/* report-logo for PDF compat */
+.report-logo{height:100px;width:auto;object-fit:contain;display:block;}
+
+/* hidden — thay thế Tailwind .hidden vì không còn dùng Tailwind */
+.hidden{display:none !important;}
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header>
+  <div class="logo"><img src="DOBN/logo.jpg"></div>
+  <nav>
+    <a href="index.html"><i class="fas fa-home"></i> Homepage</a>
+    <a href="about.html"><i class="fas fa-building"></i> About Us</a>
+    <a href="products.html"><i class="fas fa-briefcase"></i> Products</a>
+    <a href="customer.html" class="active"><i class="fas fa-user-tie"></i> Services</a>
+    <a href="stocks.html"><i class="fas fa-chart-line"></i> Stock</a>
+    <a href="shareholderc.html"><i class="fas fa-handshake"></i> Investor Relations</a>
+    <a href="esg.html"><i class="fas fa-leaf"></i> ESG</a>
+    <a href="news.html"><i class="fas fa-newspaper"></i> News</a>
+    <a href="support.html"><i class="fas fa-headset"></i> Support</a>
+  </nav>
+  <div class="auth-buttons">
+    <button class="btn-login">Đăng Nhập</button>
+    <button class="btn-register">Mở Tài Khoản</button>
+  </div>
+</header>
+
+<!-- Google tag -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VVRTLD2GMN"></script>
+<script>
+  window.dataLayer=window.dataLayer||[];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-VVRTLD2GMN');
+</script>
+
+<!-- ══ HERO ══ -->
+<section class="svc-hero">
+  <p class="bc"><i class="fas fa-home"></i> &nbsp;Trang Chủ &nbsp;/&nbsp; Dịch Vụ Tư Vấn</p>
+  <h1>Investment<br><em>Recommendation Report</em></h1>
+  <p>Điền thông tin tài chính và hoàn thành khảo sát để nhận báo cáo khuyến nghị đầu tư cá nhân hoá từ đội ngũ DOBN Capital.</p>
+  <div class="step-pills">
+    <div class="step-pill active"><span class="sp-num">1</span> Thông tin cá nhân</div>
+    <div class="step-pill"><span class="sp-num">2</span> Tình hình tài chính</div>
+    <div class="step-pill"><span class="sp-num">3</span> Khảo sát rủi ro</div>
+    <div class="step-pill"><span class="sp-num">4</span> Nhận báo cáo</div>
+  </div>
+</section>
+
+<!-- ══ MAIN WRAPPER ══ -->
+<div class="svc-wrapper">
+
+<!-- ════════════════════════════════
+     FORM
+════════════════════════════════ -->
+<form id="financialForm">
+<div class="form-card reveal">
+
+  <!-- card header -->
+  <div class="form-card-header">
+    <img src="DOBN/logo.jpg">
+    <div class="fch-divider"></div>
+    <div class="fch-text">
+      <h2>DOBN CAPITAL</h2>
+      <p>Investment Recommendation Report</p>
+    </div>
+  </div>
+
+  <div class="form-body">
+
+    <!-- ── SECTION 1: CLIENT INFO ── -->
+    <div class="form-section">
+      <div class="fsec-head">
+        <div class="fsec-icon"><i class="fas fa-user-circle"></i></div>
+        <div>
+          <div class="fsec-title">Thông Tin Khách Hàng</div>
+          <div class="fsec-subtitle">Client's Information</div>
+        </div>
+        <div class="fsec-num">01</div>
+      </div>
+      <div class="field-grid-2">
+        <div class="field-group">
+          <label>Họ và Tên (Name)</label>
+          <input type="text" id="custName" required placeholder="Nguyễn Văn A">
+        </div>
+        <div class="field-group">
+          <label>Số CCCD (ID)</label>
+          <input type="text" id="custID" placeholder="012345678901">
+        </div>
+        <div class="field-group">
+          <label>Quốc Tịch (Nationality)</label>
+          <select id="custNationality">
+            <option>Vietnam</option><option>Singapore</option>
+            <option>Thailand</option><option>Malaysia</option>
+            <option>Japan</option><option>Korea</option>
+            <option>France</option><option>United Kingdom</option>
+            <option>Russia</option><option>Australia</option>
+            <option>United States</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label>Email</label>
+          <input type="email" id="custEmail" placeholder="email@example.com">
+        </div>
+        <div class="field-group">
+          <label>Số Điện Thoại (Phone)</label>
+          <input type="text" id="custPhone" placeholder="09x xxx xxxx">
+        </div>
+        <div class="field-group">
+          <label>Địa Chỉ (Address)</label>
+          <input type="text" id="custAddress" placeholder="Số nhà, đường, quận, thành phố">
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SECTION 2: FINANCIAL ── -->
+    <div class="form-section">
+      <div class="fsec-head">
+        <div class="fsec-icon"><i class="fas fa-landmark"></i></div>
+        <div>
+          <div class="fsec-title">Tình Hình Tài Chính</div>
+          <div class="fsec-subtitle">Financial Situation</div>
+        </div>
+        <div class="fsec-num">02</div>
+      </div>
+
+      <div class="sub-head">Tài Sản (Assets)</div>
+      <div class="field-grid-4">
+        <div class="field-group">
+          <label>Tiền mặt (VND)</label>
+          <input type="number" min="0" id="cash" placeholder="0">
+        </div>
+        <div class="field-group">
+          <label>Tiết kiệm (VND)</label>
+          <input type="number" min="0" id="saving" placeholder="0">
+        </div>
+        <div class="field-group">
+          <label>Tài sản cố định (VND)</label>
+          <input type="number" min="0" id="fixedAssets" placeholder="0">
+        </div>
+        <div class="field-group">
+          <label>Tài sản khác (VND)</label>
+          <input type="number" min="0" id="otherAssets" placeholder="0">
+        </div>
+      </div>
+
+      <div class="sub-head">Nợ Phải Trả (Liabilities)</div>
+      <div class="field-grid-2" style="max-width:540px">
+        <div class="field-group">
+          <label>Nợ ngắn hạn (VND)</label>
+          <input type="number" min="0" id="shortDebt" placeholder="0">
+        </div>
+        <div class="field-group">
+          <label>Nợ dài hạn (VND)</label>
+          <input type="number" min="0" id="longDebt" placeholder="0">
+        </div>
+      </div>
+
+      <div class="sub-head">Thu Chi Hàng Tháng (Monthly Cashflow)</div>
+      <div class="field-grid-2" style="max-width:540px">
+        <div class="field-group">
+          <label>Thu nhập hàng tháng (VND)</label>
+          <input type="number" min="0" id="monthlyIncome" placeholder="0">
+        </div>
+        <div class="field-group">
+          <label>Chi phí hàng tháng (VND)</label>
+          <input type="number" min="0" id="monthlyExpense" placeholder="0">
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SECTION 3: SURVEY ── -->
+    <div class="form-section">
+      <div class="fsec-head">
+        <div class="fsec-icon"><i class="fas fa-clipboard-list"></i></div>
+        <div>
+          <div class="fsec-title">Khảo Sát Đầu Tư</div>
+          <div class="fsec-subtitle">Investment Survey</div>
+        </div>
+        <div class="fsec-num">03</div>
+      </div>
+
+      <div class="field-grid-3" style="margin-bottom:28px">
+        <div class="field-group">
+          <label>Mức chấp nhận rủi ro (%)</label>
+          <input type="number" id="riskPercent" placeholder="e.g. 20">
+        </div>
+        <div class="field-group">
+          <label>Lợi suất kỳ vọng (%)</label>
+          <input type="number" id="expectedReturn" placeholder="e.g. 15">
+        </div>
+        <div class="field-group">
+          <label>Thời gian đầu tư</label>
+          <select id="investmentHorizon">
+            <option>Short Term</option>
+            <option>Medium Term</option>
+            <option>Long Term</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:14px;">
+
+        <div class="q-card">
+          <div class="q-num">Câu hỏi 01</div>
+          <div class="q-text">Mục tiêu đầu tư của bạn là gì?</div>
+          <select class="risk-question">
+            <option value="1">Bảo toàn vốn và tránh rủi ro</option>
+            <option value="2">Tăng trưởng vốn ổn định kết hợp với bảo toàn vốn</option>
+            <option value="3">Tăng trưởng vốn nhanh nhưng vẫn chú trọng đến an toàn 1 phần</option>
+            <option value="4">Tìm kiếm lợi nhuận cực cao mặc dù có rủi ro lớn</option>
+          </select>
+        </div>
+
+        <div class="q-card">
+          <div class="q-num">Câu hỏi 02</div>
+          <div class="q-text">Nếu danh mục đầu tư của bạn giảm 20% trong thời gian ngắn bạn sẽ làm gì?</div>
+          <select class="risk-question">
+            <option value="1">Bán ra ngay để cắt lỗ</option>
+            <option value="2">Cảm thấy lo lắng nhưng giữ nguyên danh mục và chờ phục hồi</option>
+            <option value="3">Xem đây là cơ hội để mua vào thêm</option>
+            <option value="4">Mua vào ngay lập tức vì tin thị trường sẽ phục hồi</option>
+          </select>
+        </div>
+
+        <div class="q-card">
+          <div class="q-num">Câu hỏi 03</div>
+          <div class="q-text">Mức độ hiểu biết của bạn về thị trường tài chính là:</div>
+          <select class="risk-question">
+            <option value="1">Rất ít kinh nghiệm</option>
+            <option value="2">Hiểu biết cơ bản, mới bắt đầu đầu tư</option>
+            <option value="3">Trung bình – theo dõi và nghiên cứu thường xuyên</option>
+            <option value="4">Rất hiểu biết, có chiến lược đầu tư riêng</option>
+          </select>
+        </div>
+
+        <div class="q-card">
+          <div class="q-num">Câu hỏi 04</div>
+          <div class="q-text">Khi nghe tin về cơ hội đầu tư với lợi nhuận cao nhưng rủi ro lớn, bạn sẽ:</div>
+          <select class="risk-question">
+            <option value="1">Không đầu tư vì quá rủi ro</option>
+            <option value="2">Đầu tư với số tiền nhỏ để thử nghiệm</option>
+            <option value="3">Đầu tư một phần nếu có đủ thông tin và nghiên cứu kỹ</option>
+            <option value="4">Đầu tư mạnh mẽ vì tin rằng lợi nhuận sẽ bù đắp rủi ro</option>
+          </select>
+        </div>
+
+        <div class="q-card">
+          <div class="q-num">Câu hỏi 05</div>
+          <div class="q-text">Khi thị trường biến động mạnh, bạn thường:</div>
+          <select class="risk-question">
+            <option value="1">Hoảng loạn và bán ra ngay</option>
+            <option value="2">Cảm thấy lo lắng nhưng giữ bình tĩnh</option>
+            <option value="3">Theo dõi sát sao và tìm cơ hội mua vào</option>
+            <option value="4">Tận dụng biến động để đầu tư thêm</option>
+          </select>
+        </div>
+
+        <div class="q-card">
+          <div class="q-num">Câu hỏi 06</div>
+          <div class="q-text">Trong bối cảnh kinh tế không ổn định, bạn sẽ:</div>
+          <select class="risk-question">
+            <option value="1">Chuyển sang tài sản an toàn (tiền mặt, trái phiếu)</option>
+            <option value="2">Giữ nguyên danh mục và theo dõi tình hình</option>
+            <option value="3">Tìm cơ hội đầu tư vào cổ phiếu bị giảm giá</option>
+            <option value="4">Mua vào thêm mạnh mẽ vì tin thị trường sẽ phục hồi</option>
+          </select>
+        </div>
+
+        <div class="q-card">
+          <div class="q-num">Câu hỏi 07</div>
+          <div class="q-text">Khi có cơ hội đầu tư mạo hiểm với tiềm năng lợi nhuận lớn, bạn sẽ:</div>
+          <select class="risk-question">
+            <option value="1">Từ chối vì không muốn mạo hiểm</option>
+            <option value="2">Cân nhắc và đầu tư một phần nhỏ</option>
+            <option value="3">Đầu tư nếu có sự tư vấn và nghiên cứu đầy đủ</option>
+            <option value="4">Đầu tư mà không do dự</option>
+          </select>
+        </div>
+
+        <div class="q-card">
+          <div class="q-num">Câu hỏi 08</div>
+          <div class="q-text">Bạn tự đánh giá khả năng chấp nhận rủi ro của mình là:</div>
+          <select class="risk-question">
+            <option value="1">Rất thấp – ưu tiên an toàn tuyệt đối</option>
+            <option value="2">Thấp – không muốn biến động quá lớn</option>
+            <option value="3">Trung bình – sẵn sàng chịu rủi ro vừa phải để có lợi nhuận tốt hơn</option>
+            <option value="4">Cao – sẵn sàng mạo hiểm để đạt được lợi nhuận vượt trội</option>
+          </select>
+        </div>
+
+        <div class="q-card">
+          <div class="q-num">Câu hỏi 09</div>
+          <div class="q-text">Mục tiêu đầu tư về thời gian của bạn là:</div>
+          <select class="risk-question">
+            <option value="1">Ngắn hạn (dưới 3 năm)</option>
+            <option value="2">Trung hạn (3–5 năm)</option>
+            <option value="3">Dài hạn (5–10 năm)</option>
+            <option value="4">Rất dài hạn (trên 10 năm)</option>
+          </select>
+        </div>
+
+        <div class="q-card">
+          <div class="q-num">Câu hỏi 10</div>
+          <div class="q-text">Khoản tiền bạn sẵn sàng đầu tư (mà nếu mất đi vẫn đảm bảo cuộc sống) chiếm bao nhiêu % tổng tài sản?</div>
+          <select class="risk-question">
+            <option value="1">Dưới 10%</option>
+            <option value="2">Từ 10% – 25%</option>
+            <option value="3">Từ 25% – 50%</option>
+            <option value="4">Trên 50%</option>
+          </select>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SUBMIT -->
+    <button type="submit" class="btn-submit-main">
+      <i class="fas fa-file-chart-line"></i>
+      Tạo Báo Cáo Khuyến Nghị
+    </button>
+
+  </div><!-- /form-body -->
+</div><!-- /form-card -->
+</form>
+
+<!-- ════════════════════════════════
+     PDF PAGE 1
+════════════════════════════════ -->
+<div id="pdfPage1" class="a4-page hidden" style="margin-top:40px">
+  <div class="watermark"><img src="DOBN/logo.jpg"></div>
+  <div class="content-layer" style="padding:44px 48px 60px">
+
+    <!-- header -->
+    <div style="display:flex;align-items:center;border-bottom:3px solid var(--navy);padding-bottom:20px;margin-bottom:28px">
+      <img src="DOBN/logo.jpg" class="report-logo" style="margin-right:20px">
+      <div>
+        <h1 style="font-family:var(--ff-d);font-size:2.6rem;font-weight:700;color:var(--navy);line-height:1">DOBN CAPITAL</h1>
+        <p style="font-size:.68rem;letter-spacing:5px;color:#888;margin-top:6px">INVESTMENT RECOMMENDATION REPORT</p>
+      </div>
+    </div>
+
+    <!-- client info -->
+    <div style="margin-bottom:22px">
+      <div class="pdf-section-title">THÔNG TIN KHÁCH HÀNG <span style="font-size:.9rem;color:#888;font-weight:400">(Client's Information)</span></div>
+      <div class="pdf-grid-2">
+        <div>
+          <div class="pdf-info-row"><strong>NAME:</strong><span id="pdfName"></span></div>
+          <div class="pdf-info-row"><strong>NATIONALITY:</strong><span id="pdfNationality"></span></div>
+          <div class="pdf-info-row"><strong>PHONE:</strong><span id="pdfPhone"></span></div>
+        </div>
+        <div>
+          <div class="pdf-info-row"><strong>ID:</strong><span id="pdfID"></span></div>
+          <div class="pdf-info-row"><strong>EMAIL:</strong><span id="pdfEmail"></span></div>
+          <div class="pdf-info-row"><strong>ADDRESS:</strong><span id="pdfAddress"></span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- financial -->
+    <div style="margin-bottom:22px">
+      <div class="pdf-section-title">TÌNH HÌNH TÀI CHÍNH <span style="font-size:.9rem;color:#888;font-weight:400">(Financial Situation)</span></div>
+      <div class="pdf-grid-2">
+
+        <div class="pdf-box">
+          <div class="pdf-box-head"><h3>ASSETS</h3><span>Unit: VND</span></div>
+          <div class="pdf-row"><span>Cash</span><span id="pdfCash"></span></div>
+          <div class="pdf-row"><span>Saving</span><span id="pdfSaving"></span></div>
+          <div class="pdf-row"><span>Fixed Assets</span><span id="pdfFixedAssets"></span></div>
+          <div class="pdf-row"><span>Other Assets</span><span id="pdfOtherAssets"></span></div>
+          <div class="pdf-row total"><span>Total Assets</span><span id="pdfTotalAssets"></span></div>
+        </div>
+
+        <div class="pdf-box">
+          <div class="pdf-box-head"><h3>LIABILITIES</h3><span>Unit: VND</span></div>
+          <div class="pdf-row"><span>Short-term Debt</span><span id="pdfShortDebt"></span></div>
+          <div class="pdf-row"><span>Long-term Debt</span><span id="pdfLongDebt"></span></div>
+          <div class="pdf-row total"><span>Total Debt</span><span id="pdfTotalDebt"></span></div>
+        </div>
+
+        <div class="pdf-box">
+          <div class="pdf-box-head"><h3>MONTHLY CASHFLOW</h3><span>Unit: VND</span></div>
+          <div class="pdf-row"><span>Monthly Income</span><span id="pdfIncome"></span></div>
+          <div class="pdf-row"><span>Monthly Expense</span><span id="pdfExpense"></span></div>
+          <div class="pdf-row total"><span>Net Cashflow</span><span id="pdfCashflow"></span></div>
+        </div>
+
+        <div class="pdf-box">
+          <div class="pdf-box-head"><h3>FINANCIAL INDICATORS</h3><span>Unit: %</span></div>
+          <div class="pdf-row"><span>Debt to Assets Ratio</span><span id="pdfDebtRatio"></span></div>
+          <div class="pdf-row"><span>Liquidity Ratio</span><span id="pdfLiquidRatio"></span></div>
+          <div class="pdf-row total"><span>Net Worth</span><span id="pdfNetWorth"></span></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="pdf-footer">
+      <p>CÔNG TY CỔ PHẦN QUẢN LÝ QUỸ DOBN</p>
+      <div class="pf-line"></div>
+      <p>Page 1 / 2</p>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     PDF PAGE 2
+════════════════════════════════ -->
+<div id="pdfPage2" class="a4-page hidden" style="margin-top:16px">
+  <div class="watermark"><img src="DOBN/logo.jpg"></div>
+  <div class="content-layer" style="padding:44px 48px 60px">
+
+    <!-- header small -->
+    <div style="display:flex;align-items:center;border-bottom:2px solid var(--navy);padding-bottom:14px;margin-bottom:26px">
+      <img src="DOBN/logo.jpg" style="height:60px;width:auto;object-fit:contain;margin-right:16px">
+      <div>
+        <h1 style="font-family:var(--ff-d);font-size:1.8rem;font-weight:700;color:var(--navy);line-height:1">DOBN CAPITAL</h1>
+        <p style="font-size:.62rem;letter-spacing:4px;color:#888;margin-top:4px">INVESTMENT RECOMMENDATION REPORT</p>
+      </div>
+    </div>
+
+    <!-- risk profile -->
+    <div style="margin-bottom:24px">
+      <div class="pdf-section-title">RISK PROFILE</div>
+      <div class="pdf-grid-3">
+        <div class="pdf-risk-card">
+          <div class="rc-label">Expected Return</div>
+          <div class="rc-val" id="pdfExpectedReturn"></div>
+        </div>
+        <div class="pdf-risk-card">
+          <div class="rc-label">Risk Tolerance</div>
+          <div class="rc-val" id="pdfRisk"></div>
+        </div>
+        <div class="pdf-risk-card">
+          <div class="rc-label">Time Horizon</div>
+          <div class="rc-val" id="pdfType"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- recommended stocks -->
+    <div style="margin-bottom:24px">
+      <div class="pdf-section-title">RECOMMENDED STOCKS</div>
+      <div id="recommendedStocksList" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px"></div>
+    </div>
+
+    <!-- note -->
+    <div class="pdf-note">
+      <h3>NOTE</h3>
+      <p>Các mã cổ phiếu được đề xuất dựa trên tình hình tài chính hiện tại, mục tiêu đầu tư và mức độ chấp nhận rủi ro của khách hàng tại thời điểm đánh giá.</p>
+      <p>Danh mục và các mã cổ phiếu được cung cấp chỉ mang tính chất tham khảo, không được xem là khuyến nghị mua, bán hoặc cam kết lợi nhuận đầu tư dưới bất kỳ hình thức nào.</p>
+      <p>Trong trường hợp khách hàng có nhu cầu triển khai đầu tư hoặc cần thêm thông tin tư vấn, vui lòng xác nhận thông qua địa chỉ email: <strong>Investment@DOBNCapital.com.vn</strong></p>
+      <p>Toàn bộ thông tin cá nhân, tài chính và dữ liệu liên quan của khách hàng được Công ty cam kết bảo mật theo quy định nội bộ và các quy định pháp luật hiện hành.</p>
+    </div>
+
+    <div class="pdf-footer">
+      <p>CÔNG TY CỔ PHẦN QUẢN LÝ QUỸ DOBN</p>
+      <div class="pf-line"></div>
+      <p>Page 2 / 2</p>
+    </div>
+  </div>
+</div>
+
+<!-- DOWNLOAD BTN -->
+<div id="downloadBtnContainer" class="btn-download-wrap">
+  <button class="btn-download" onclick="downloadPDFFile()">
+    <i class="fas fa-download"></i> Tải Xuống Báo Cáo PDF
+  </button>
+</div>
+
+</div><!-- /svc-wrapper -->
+
+<!-- JS -->
+<script>
+  // Đổi URL này khi deploy backend lên server thật (VD: 'https://api.dobncapital.com')
+  window.DOBN_API_BASE = "http://localhost:8000";
+</script>
+<script src="js/sendToGoogleSheet.js"></script>
+<script src="js/recommendation.js"></script>
+
+<script>
+/* ── Scroll reveal ── */
+const rv=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('on');});},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>rv.observe(el));
+
+/* ── Step pills update ── */
+function setStep(n){
+  document.querySelectorAll('.step-pill').forEach((p,i)=>{
+    p.classList.toggle('active',i<n);
+  });
+}
+
+/* ── Form submit ── */
+document.getElementById('financialForm').addEventListener('submit',async function(e){
+  e.preventDefault();
+  setStep(4);
+
+  // Hiện trạng thái đang phân tích (gọi AI + dữ liệu sống có thể mất vài giây)
+  const submitBtn = e.target.querySelector('[type="submit"], button');
+  const originalBtnHTML = submitBtn ? submitBtn.innerHTML : null;
+  if (submitBtn) {
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang phân tích & tạo khuyến nghị...';
+    submitBtn.disabled = true;
+  }
+
+  const name=document.getElementById('custName').value;
+  const id=document.getElementById('custID').value;
+  const nationality=document.getElementById('custNationality').value;
+  const email=document.getElementById('custEmail').value;
+  const phone=document.getElementById('custPhone').value;
+  const address=document.getElementById('custAddress').value;
+
+  const cash=Number(document.getElementById('cash').value);
+  const saving=Number(document.getElementById('saving').value);
+  const fixedAssets=Number(document.getElementById('fixedAssets').value);
+  const otherAssets=Number(document.getElementById('otherAssets').value);
+  const shortDebt=Number(document.getElementById('shortDebt').value);
+  const longDebt=Number(document.getElementById('longDebt').value);
+  const income=Number(document.getElementById('monthlyIncome').value);
+  const expense=Number(document.getElementById('monthlyExpense').value);
+
+  const totalAssets=cash+saving+fixedAssets+otherAssets;
+  const totalDebt=shortDebt+longDebt;
+  const netWorth=totalAssets-totalDebt;
+  const debtRatio=totalAssets>0?((totalDebt/totalAssets)*100).toFixed(1)+'%':'0%';
+  const liquidRatio=totalDebt>0?((cash+saving)/totalDebt).toFixed(2):'0';
+
+  let totalScore=0;
+  document.querySelectorAll('.risk-question').forEach(q=>{totalScore+=Number(q.value);});
+
+  const expectedReturn=Number(document.getElementById('expectedReturn').value);
+  const investmentHorizon=document.getElementById('investmentHorizon').value;
+
+  let riskLevel='',investmentType='';
+  if(totalScore<=18){riskLevel='LOW RISK';investmentType='Conservative';}
+  else if(totalScore<=27){riskLevel='MEDIUM RISK';investmentType='Balanced';}
+  else{riskLevel='HIGH RISK';investmentType='Aggressive';}
+
+  const recommendedStocks=await getRecommendations(totalScore,investmentType,investmentHorizon);
+
+  if (submitBtn) {
+    submitBtn.innerHTML = originalBtnHTML;
+    submitBtn.disabled = false;
+  }
+
+  // fill PDF
+  document.getElementById('pdfName').innerText=name;
+  document.getElementById('pdfID').innerText=id;
+  document.getElementById('pdfNationality').innerText=nationality;
+  document.getElementById('pdfEmail').innerText=email;
+  document.getElementById('pdfPhone').innerText=phone;
+  document.getElementById('pdfAddress').innerText=address;
+  document.getElementById('pdfCash').innerText=cash.toLocaleString('vi-VN')+' VND';
+  document.getElementById('pdfSaving').innerText=saving.toLocaleString('vi-VN')+' VND';
+  document.getElementById('pdfFixedAssets').innerText=fixedAssets.toLocaleString('vi-VN')+' VND';
+  document.getElementById('pdfOtherAssets').innerText=otherAssets.toLocaleString('vi-VN')+' VND';
+  document.getElementById('pdfTotalAssets').innerText=totalAssets.toLocaleString('vi-VN')+' VND';
+  document.getElementById('pdfShortDebt').innerText=shortDebt.toLocaleString('vi-VN')+' VND';
+  document.getElementById('pdfLongDebt').innerText=longDebt.toLocaleString('vi-VN')+' VND';
+  document.getElementById('pdfTotalDebt').innerText=totalDebt.toLocaleString('vi-VN')+' VND';
+  document.getElementById('pdfIncome').innerText=income.toLocaleString('vi-VN')+' VND';
+  document.getElementById('pdfExpense').innerText=expense.toLocaleString('vi-VN')+' VND';
+  document.getElementById('pdfCashflow').innerText=(income-expense).toLocaleString('vi-VN')+' VND';
+  document.getElementById('pdfDebtRatio').innerText=debtRatio;
+  document.getElementById('pdfLiquidRatio').innerText=liquidRatio;
+  document.getElementById('pdfNetWorth').innerText=netWorth.toLocaleString('vi-VN')+' VND';
+  document.getElementById('pdfExpectedReturn').innerText=expectedReturn+'%';
+  document.getElementById('pdfRisk').innerText=riskLevel;
+  document.getElementById('pdfType').innerText=investmentHorizon;
+
+  // stocks
+  const container=document.getElementById('recommendedStocksList');
+  container.innerHTML='';
+  recommendedStocks.forEach(stock=>{
+    const scoreBadge = stock.matchScore
+      ? `<span style="display:block;font-size:.7rem;color:#c4922a;margin-top:2px">${stock.matchScore}% phù hợp</span>`
+      : '';
+    const reasonAttr = stock.reason ? stock.reason.replace(/"/g,'&quot;') : '';
+    container.innerHTML+=`
+    <a href="report.html?code=${stock.code}" target="_blank" class="pdf-stock-card" style="text-decoration:none" title="${reasonAttr}">
+      <img src="logo/${stock.code}.png" onerror="this.src='logo/default.png'">
+      <h3>${stock.code}</h3>
+      <p>${stock.name}</p>
+      ${scoreBadge}
+    </a>`;
+  });
+
+  sendToGoogleSheet({name,phone,email,nationality,totalScore,riskTolerance:riskLevel,timeHorizon:investmentHorizon,
+    stock1:recommendedStocks[0]?.code||'',stock2:recommendedStocks[1]?.code||'',
+    stock3:recommendedStocks[2]?.code||'',stock4:recommendedStocks[3]?.code||'',stock5:recommendedStocks[4]?.code||''});
+
+  document.getElementById('pdfPage1').classList.remove('hidden');
+  document.getElementById('pdfPage2').classList.remove('hidden');
+  document.getElementById('downloadBtnContainer').classList.add('show');
+
+  setTimeout(()=>{
+    document.getElementById('pdfPage1').scrollIntoView({behavior:'smooth',block:'start'});
+  },200);
+});
+
+async function downloadPDFFile(){
+  const{jsPDF}=window.jspdf;
+  const page1=document.getElementById('pdfPage1');
+  const page2=document.getElementById('pdfPage2');
+  page1.classList.remove('hidden');
+  page2.classList.remove('hidden');
+  await new Promise(r=>setTimeout(r,800));
+  const pdf=new jsPDF('p','mm','a4');
+  const W=pdf.internal.pageSize.getWidth();
+  const H=pdf.internal.pageSize.getHeight();
+  const c1=await html2canvas(page1,{scale:2,useCORS:true,backgroundColor:'#ffffff'});
+  pdf.addImage(c1.toDataURL('image/png'),'PNG',0,0,W,H);
+  pdf.addPage();
+  const c2=await html2canvas(page2,{scale:2,useCORS:true,backgroundColor:'#ffffff'});
+  pdf.addImage(c2.toDataURL('image/png'),'PNG',0,0,W,H);
+  pdf.save('DOBN_Capital_Report.pdf');
+}
+</script>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 DOBN CAPITAL - Demo Website</p>
+</footer>
+</body>
+</html>
